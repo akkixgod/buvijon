@@ -81,11 +81,11 @@ export default function WaitlistPage() {
   };
 
   const inputClass = (hasError: boolean) =>
-    `w-full px-4 py-3 rounded-xl outline-none transition-all bg-white/5 backdrop-blur border ${
+    `w-full px-4 py-3 rounded-xl outline-none transition-all bg-white/80 backdrop-blur border ${
       hasError
-        ? "border-rose-400/60 focus:border-rose-400"
-        : "border-violet-500/20 focus:border-violet-400/70 focus:bg-white/[0.07]"
-    } text-violet-50 placeholder:text-violet-300/40`;
+        ? "border-rose-400/80 focus:border-rose-500"
+        : "border-violet-500/30 focus:border-violet-500 focus:bg-white"
+    } text-violet-900 placeholder:text-violet-400`;
 
   return (
     <div className="min-h-screen flex flex-col relative">
@@ -94,7 +94,7 @@ export default function WaitlistPage() {
       <div className="orb" style={{ width: 460, height: 460, bottom: -140, right: -120, background: "radial-gradient(circle, rgba(236,72,153,0.35), transparent 65%)", animationDelay: "2s" }} />
 
       {/* Navigation */}
-      <nav className="sticky top-0 px-4 md:px-6 py-4 backdrop-blur-xl bg-background/60 border-b border-violet-500/10" style={{ zIndex: 50 }}>
+      <nav className="sticky top-0 px-4 md:px-6 py-4 backdrop-blur-xl bg-background/60 border-b border-violet-500/25" style={{ zIndex: 50 }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
             <div className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 via-violet-600 to-pink-500 flex items-center justify-center shadow-[0_0_20px_rgba(139,92,246,0.7)]">
@@ -114,7 +114,7 @@ export default function WaitlistPage() {
           {/* Header */}
           <div className="text-center mb-10">
             <div className="fade-in-up inline-block mb-5 ring-glow rounded-full">
-              <div className="px-4 py-2 rounded-full bg-background/70 backdrop-blur border border-violet-500/30 text-sm text-violet-200 flex items-center gap-2">
+              <div className="px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-violet-500/30 text-sm text-violet-700 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
                 Join the Waitlist
               </div>
@@ -132,17 +132,17 @@ export default function WaitlistPage() {
           <div className="fade-in-up delay-300 glass-card rounded-3xl p-8 md:p-10 relative overflow-hidden">
             {success && (
               <div className="mb-6 p-4 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-300 text-xl">✓</div>
+                <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-600 text-xl">✓</div>
                 <div>
                   <div className="font-semibold text-emerald-200">You&apos;re on the list!</div>
-                  <div className="text-sm text-emerald-300/70">We&apos;ll reach out when Buvijon launches.</div>
+                  <div className="text-sm text-emerald-600/70">We&apos;ll reach out when Buvijon launches.</div>
                 </div>
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label htmlFor="fullName" className="block text-sm font-medium mb-2 text-violet-100">Full Name</label>
+                <label htmlFor="fullName" className="block text-sm font-medium mb-2 text-violet-800">Full Name</label>
                 <input
                   type="text"
                   id="fullName"
@@ -151,13 +151,13 @@ export default function WaitlistPage() {
                   placeholder="Enter your full name"
                   className={inputClass(!!errors.fullName)}
                 />
-                {errors.fullName && <p className="mt-1 text-sm text-rose-300">{errors.fullName}</p>}
+                {errors.fullName && <p className="mt-1 text-sm text-rose-600">{errors.fullName}</p>}
               </div>
 
               <div>
-                <label htmlFor="telegramUsername" className="block text-sm font-medium mb-2 text-violet-100">Telegram Username</label>
+                <label htmlFor="telegramUsername" className="block text-sm font-medium mb-2 text-violet-800">Telegram Username</label>
                 <div className="relative">
-                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-violet-300/70">@</div>
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-violet-500">@</div>
                   <input
                     type="text"
                     id="telegramUsername"
@@ -167,11 +167,11 @@ export default function WaitlistPage() {
                     className={`${inputClass(!!errors.telegramUsername)} pl-10`}
                   />
                 </div>
-                {errors.telegramUsername && <p className="mt-1 text-sm text-rose-300">{errors.telegramUsername}</p>}
+                {errors.telegramUsername && <p className="mt-1 text-sm text-rose-600">{errors.telegramUsername}</p>}
               </div>
 
               <div>
-                <label htmlFor="gmail" className="block text-sm font-medium mb-2 text-violet-100">Gmail Address</label>
+                <label htmlFor="gmail" className="block text-sm font-medium mb-2 text-violet-800">Gmail Address</label>
                 <input
                   type="email"
                   id="gmail"
@@ -180,11 +180,11 @@ export default function WaitlistPage() {
                   placeholder="yourname@gmail.com"
                   className={inputClass(!!errors.gmail)}
                 />
-                {errors.gmail && <p className="mt-1 text-sm text-rose-300">{errors.gmail}</p>}
+                {errors.gmail && <p className="mt-1 text-sm text-rose-600">{errors.gmail}</p>}
               </div>
 
               <div>
-                <label htmlFor="city" className="block text-sm font-medium mb-2 text-violet-100">City (Uzbekistan)</label>
+                <label htmlFor="city" className="block text-sm font-medium mb-2 text-violet-800">City (Uzbekistan)</label>
                 <select
                   id="city"
                   value={formData.city}
@@ -197,7 +197,7 @@ export default function WaitlistPage() {
                     <option key={city} value={city}>{city}</option>
                   ))}
                 </select>
-                {errors.city && <p className="mt-1 text-sm text-rose-300">{errors.city}</p>}
+                {errors.city && <p className="mt-1 text-sm text-rose-600">{errors.city}</p>}
               </div>
 
               <label htmlFor="agreed" className="flex items-start gap-3 cursor-pointer group">
@@ -208,7 +208,7 @@ export default function WaitlistPage() {
                   onChange={(e) => setFormData({ ...formData, agreed: e.target.checked })}
                   className="mt-1 w-5 h-5 rounded accent-violet-500 cursor-pointer"
                 />
-                <span className="text-sm text-[color:var(--text-muted)] leading-relaxed group-hover:text-violet-200 transition-colors">
+                <span className="text-sm text-[color:var(--text-muted)] leading-relaxed group-hover:text-violet-700 transition-colors">
                   I agree to receive updates about Buvijon&apos;s launch and can change my mind anytime.
                 </span>
               </label>
@@ -223,7 +223,7 @@ export default function WaitlistPage() {
             </form>
 
             <div className="text-center mt-6">
-              <Link href="/" className="text-sm text-[color:var(--text-muted)] hover:text-violet-200 transition-colors">
+              <Link href="/" className="text-sm text-[color:var(--text-muted)] hover:text-violet-700 transition-colors">
                 ← Back to Home
               </Link>
             </div>

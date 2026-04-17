@@ -104,10 +104,10 @@ const FeatureCard = ({
     cyan: "from-cyan-400/25 to-violet-700/10",
   };
   const iconBgMap: Record<string, string> = {
-    violet: "bg-violet-500/15 text-violet-300",
-    pink: "bg-pink-500/15 text-pink-300",
-    indigo: "bg-indigo-500/15 text-indigo-300",
-    cyan: "bg-cyan-500/15 text-cyan-300",
+    violet: "bg-violet-500/15 text-violet-600",
+    pink: "bg-pink-500/15 text-pink-600",
+    indigo: "bg-indigo-500/15 text-indigo-600",
+    cyan: "bg-cyan-500/15 text-cyan-600",
   };
 
   return (
@@ -120,7 +120,7 @@ const FeatureCard = ({
         <div className={`mb-6 flex items-center justify-center w-14 h-14 rounded-2xl ${iconBgMap[accent]} group-hover:scale-110 transition-transform duration-500`}>
           {icon}
         </div>
-        <h3 className="text-xl font-semibold mb-3 text-violet-50">{title}</h3>
+        <h3 className="text-xl font-semibold mb-3 text-violet-900">{title}</h3>
         <p className="text-[color:var(--text-muted)] leading-relaxed">{description}</p>
       </div>
     </div>
@@ -141,7 +141,7 @@ const FlowerState = ({ state, label, sub }: { state: "blooming" | "warning" | "w
         <div className="w-2.5 h-2.5 rounded-full bg-white animate-pulse" />
       </div>
       <div>
-        <div className="font-semibold text-lg text-violet-50">{label}</div>
+        <div className="font-semibold text-lg text-violet-900">{label}</div>
         <div className="text-sm text-[color:var(--text-muted)]">{sub}</div>
       </div>
     </div>
@@ -322,7 +322,7 @@ export default function Home() {
 
         <div className="relative z-10 max-w-5xl mx-auto text-center">
           <div className="fade-in-up inline-block mb-8 ring-glow rounded-full">
-            <div className="px-4 py-2 rounded-full bg-background/70 backdrop-blur border border-violet-500/30 text-sm text-violet-200 flex items-center gap-2">
+            <div className="px-4 py-2 rounded-full bg-background/70 backdrop-blur border border-violet-500/30 text-sm text-violet-700 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
               Nurturing Digital Wellness
             </div>
@@ -352,20 +352,20 @@ export default function Home() {
           <div className="fade-in-up delay-400 relative">
             <div className="mx-auto max-w-sm tilt">
               <div className="magnetic-card rounded-[2.5rem] p-2 bg-gradient-to-br from-violet-500/40 via-violet-800/30 to-pink-500/30 shadow-[0_40px_80px_rgba(109,40,217,0.55)]">
-                <div className="rounded-[2rem] bg-gradient-to-b from-[#130a2e] to-[#0a051b] overflow-hidden border border-white/5">
+                <div className="rounded-[2rem] bg-gradient-to-b from-violet-50 to-white overflow-hidden border border-violet-500/20">
                   <div className="aspect-[9/16] p-8 flex flex-col items-center relative">
-                    <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-1 rounded-full bg-white/10" />
+                    <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-1 rounded-full bg-violet-300" />
                     <div className="mt-6 flex flex-col items-center">
                       <AnimatedFlower variant="magenta" size="xl" className="animate-bloom-glow" />
-                      <div className="text-xl font-bold mt-4 text-violet-50">Emma&apos;s Garden</div>
-                      <div className="text-xs text-violet-300/80 mb-6">Today&apos;s Progress</div>
+                      <div className="text-xl font-bold mt-4 text-violet-900">Emma&apos;s Garden</div>
+                      <div className="text-xs text-violet-600 mb-6">Today&apos;s Progress</div>
                     </div>
                     <div className="w-full glass-card rounded-2xl p-4 mb-3">
                       <div className="flex justify-between items-center mb-2">
-                        <span className="text-xs font-medium text-violet-200">Screen Time</span>
-                        <span className="text-xs text-emerald-300 font-semibold">2h 15m / 3h</span>
+                        <span className="text-xs font-medium text-violet-700">Screen Time</span>
+                        <span className="text-xs text-emerald-600 font-semibold">2h 15m / 3h</span>
                       </div>
-                      <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                      <div className="h-2 bg-violet-500/10 rounded-full overflow-hidden">
                         <div className="h-full w-3/4 bg-gradient-to-r from-emerald-400 to-violet-400 rounded-full shadow-[0_0_10px_rgba(52,211,153,0.7)]" />
                       </div>
                     </div>
@@ -377,8 +377,8 @@ export default function Home() {
                       ].map((app) => (
                         <div key={app.label} className="glass-card rounded-xl p-2 text-center">
                           <div className={`w-7 h-7 mx-auto mb-1 rounded-lg bg-gradient-to-br ${app.color}`} />
-                          <div className="text-[10px] text-violet-200">{app.label}</div>
-                          <div className="text-[10px] text-violet-300/70">{app.time}</div>
+                          <div className="text-[10px] text-violet-700">{app.label}</div>
+                          <div className="text-[10px] text-violet-500">{app.time}</div>
                         </div>
                       ))}
                     </div>
@@ -485,7 +485,7 @@ export default function Home() {
                   <span className="relative z-10">{step.n}</span>
                   <div className="absolute inset-0 rounded-2xl bg-white/10 blur-md -z-10" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-violet-50">{step.title}</h3>
+                <h3 className="text-xl font-semibold mb-3 text-violet-900">{step.title}</h3>
                 <p className="text-[color:var(--text-muted)] max-w-xs mx-auto leading-relaxed">{step.desc}</p>
               </div>
             ))}
@@ -518,7 +518,7 @@ export default function Home() {
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center shadow-lg">
                   <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16z"/><path d="M12 6a1 1 0 00-1 1v5a1 1 0 00.29.71l3 3a1 1 0 001.42-1.42L13 11.59V7a1 1 0 00-1-1z"/></svg>
                 </div>
-                <h3 className="text-2xl font-semibold text-violet-50">Digital Wellness for Families</h3>
+                <h3 className="text-2xl font-semibold text-violet-900">Digital Wellness for Families</h3>
               </div>
               <p className="text-[color:var(--text-muted)] leading-relaxed mb-6">
                 In today&apos;s digital-first world, children spend more time than ever on screens. Buvijon helps families navigate this reality with compassion, not control.
@@ -526,8 +526,8 @@ export default function Home() {
               <ul className="space-y-3">
                 {["Teach balanced screen habits naturally", "Spark conversations about digital time", "Build trust through transparency"].map((line) => (
                   <li key={line} className="flex items-start gap-3">
-                    <span className="mt-1 w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-300">✓</span>
-                    <span className="text-violet-100">{line}</span>
+                    <span className="mt-1 w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-600">✓</span>
+                    <span className="text-violet-800">{line}</span>
                   </li>
                 ))}
               </ul>
@@ -538,7 +538,7 @@ export default function Home() {
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-indigo-500 flex items-center justify-center shadow-lg">
                   <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
                 </div>
-                <h3 className="text-2xl font-semibold text-violet-50">More Than Just Limits</h3>
+                <h3 className="text-2xl font-semibold text-violet-900">More Than Just Limits</h3>
               </div>
               <p className="text-[color:var(--text-muted)] leading-relaxed mb-6">
                 Unlike traditional parental control apps that focus solely on restriction, Buvijon emphasizes growth, understanding, and family connection.
@@ -546,8 +546,8 @@ export default function Home() {
               <ul className="space-y-3">
                 {["Celebrate healthy digital choices", "Track progress over time", "Support multiple languages and cultures"].map((line) => (
                   <li key={line} className="flex items-start gap-3">
-                    <span className="mt-1 w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-300">✓</span>
-                    <span className="text-violet-100">{line}</span>
+                    <span className="mt-1 w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-600">✓</span>
+                    <span className="text-violet-800">{line}</span>
                   </li>
                 ))}
               </ul>
@@ -586,7 +586,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="py-16 px-6 border-t border-violet-500/10 relative">
+      <footer className="py-16 px-6 border-t border-violet-500/25 relative">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
@@ -601,39 +601,39 @@ export default function Home() {
               </p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4 text-violet-100">Product</h4>
+              <h4 className="font-semibold mb-4 text-violet-800">Product</h4>
               <ul className="space-y-2 text-sm text-[color:var(--text-muted)]">
-                <li><a href="#features" className="hover:text-violet-200 transition-colors">Features</a></li>
-                <li><a href="#how-it-works" className="hover:text-violet-200 transition-colors">How it Works</a></li>
-                <li><a href="#purpose" className="hover:text-violet-200 transition-colors">Purpose</a></li>
-                <li><Link href="/waitlist" className="hover:text-violet-200 transition-colors">Waitlist</Link></li>
+                <li><a href="#features" className="hover:text-violet-700 transition-colors">Features</a></li>
+                <li><a href="#how-it-works" className="hover:text-violet-700 transition-colors">How it Works</a></li>
+                <li><a href="#purpose" className="hover:text-violet-700 transition-colors">Purpose</a></li>
+                <li><Link href="/waitlist" className="hover:text-violet-700 transition-colors">Waitlist</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4 text-violet-100">Company</h4>
+              <h4 className="font-semibold mb-4 text-violet-800">Company</h4>
               <ul className="space-y-2 text-sm text-[color:var(--text-muted)]">
-                <li><a href="#" className="hover:text-violet-200 transition-colors">About</a></li>
-                <li><a href="#" className="hover:text-violet-200 transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-violet-200 transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-violet-200 transition-colors">Contact</a></li>
+                <li><a href="#" className="hover:text-violet-700 transition-colors">About</a></li>
+                <li><a href="#" className="hover:text-violet-700 transition-colors">Blog</a></li>
+                <li><a href="#" className="hover:text-violet-700 transition-colors">Careers</a></li>
+                <li><a href="#" className="hover:text-violet-700 transition-colors">Contact</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4 text-violet-100">Legal</h4>
+              <h4 className="font-semibold mb-4 text-violet-800">Legal</h4>
               <ul className="space-y-2 text-sm text-[color:var(--text-muted)]">
-                <li><a href="#" className="hover:text-violet-200 transition-colors">Privacy</a></li>
-                <li><a href="#" className="hover:text-violet-200 transition-colors">Terms</a></li>
-                <li><a href="#" className="hover:text-violet-200 transition-colors">Cookies</a></li>
+                <li><a href="#" className="hover:text-violet-700 transition-colors">Privacy</a></li>
+                <li><a href="#" className="hover:text-violet-700 transition-colors">Terms</a></li>
+                <li><a href="#" className="hover:text-violet-700 transition-colors">Cookies</a></li>
               </ul>
             </div>
           </div>
-          <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-violet-500/10">
+          <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-violet-500/25">
             <p className="text-sm text-[color:var(--text-muted)]">© 2026 Buvijon. All rights reserved.</p>
             <div className="flex gap-6 mt-4 md:mt-0">
-              <a href="#" className="text-[color:var(--text-muted)] hover:text-violet-200 transition-colors">
+              <a href="#" className="text-[color:var(--text-muted)] hover:text-violet-700 transition-colors">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
               </a>
-              <a href="#" className="text-[color:var(--text-muted)] hover:text-violet-200 transition-colors">
+              <a href="#" className="text-[color:var(--text-muted)] hover:text-violet-700 transition-colors">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               </a>
             </div>

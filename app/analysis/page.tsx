@@ -22,7 +22,7 @@ export default function AnalysisPage() {
     `px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
       active
         ? "bg-gradient-to-r from-violet-500 to-pink-500 text-white shadow-[0_0_18px_rgba(139,92,246,0.5)]"
-        : "text-violet-300/80 hover:bg-white/5"
+        : "text-violet-600 hover:bg-violet-500/10"
     }`;
 
   return (
@@ -30,7 +30,7 @@ export default function AnalysisPage() {
       <div className="orb" style={{ width: 420, height: 420, top: -120, left: -100, background: "radial-gradient(circle, rgba(139,92,246,0.45), transparent 65%)" }} />
       <div className="orb" style={{ width: 460, height: 460, bottom: -140, right: -120, background: "radial-gradient(circle, rgba(236,72,153,0.28), transparent 65%)", animationDelay: "2s" }} />
 
-      <nav className="sticky top-0 px-6 py-4 backdrop-blur-xl bg-background/60 border-b border-violet-500/10" style={{ zIndex: 50 }}>
+      <nav className="sticky top-0 px-6 py-4 backdrop-blur-xl bg-background/60 border-b border-violet-500/25" style={{ zIndex: 50 }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
             <div className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 via-violet-600 to-pink-500 flex items-center justify-center shadow-[0_0_20px_rgba(139,92,246,0.6)]">
@@ -63,9 +63,9 @@ export default function AnalysisPage() {
         <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
             { icon: "⏱", value: "2h 15m", label: "Total Today", grad: "from-violet-500 to-pink-500", value_class: "gradient-text" },
-            { icon: "🎯", value: "75%", label: "Daily Goal", grad: "from-emerald-400 to-emerald-600", value_class: "text-emerald-300" },
-            { icon: "📱", value: "12", label: "Apps Used", grad: "from-amber-300 to-orange-500", value_class: "text-amber-300" },
-            { icon: "📅", value: "-15m", label: "vs Yesterday", grad: "from-rose-400 to-rose-600", value_class: "text-rose-300" },
+            { icon: "🎯", value: "75%", label: "Daily Goal", grad: "from-emerald-400 to-emerald-600", value_class: "text-emerald-600" },
+            { icon: "📱", value: "12", label: "Apps Used", grad: "from-amber-300 to-orange-500", value_class: "text-amber-600" },
+            { icon: "📅", value: "-15m", label: "vs Yesterday", grad: "from-rose-400 to-rose-600", value_class: "text-rose-600" },
           ].map((s, i) => (
             <div key={s.label} className="reveal glass-card magnetic-card rounded-2xl p-6 text-center" style={{ transitionDelay: `${i * 0.06}s` }}>
               <div className={`w-12 h-12 mx-auto mb-3 rounded-2xl bg-gradient-to-br ${s.grad} flex items-center justify-center shadow-lg`}>
@@ -79,7 +79,7 @@ export default function AnalysisPage() {
 
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 mb-8">
           <div className="reveal glass-card rounded-2xl p-6">
-            <h3 className="text-lg font-semibold mb-4 text-violet-50">Daily Progress</h3>
+            <h3 className="text-lg font-semibold mb-4 text-violet-900">Daily Progress</h3>
             <div className="space-y-3">
               {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day, i) => {
                 const heights = [65, 80, 45, 90, 75, 60, 85];
@@ -88,13 +88,13 @@ export default function AnalysisPage() {
                 return (
                   <div key={day} className="flex items-center gap-3">
                     <span className="w-12 text-sm text-[color:var(--text-muted)]">{day}</span>
-                    <div className="flex-1 h-12 bg-white/5 rounded-lg overflow-hidden relative border border-violet-500/10">
+                    <div className="flex-1 h-12 bg-violet-500/10 rounded-lg overflow-hidden relative border border-violet-500/25">
                       <div
                         className={`absolute bottom-0 w-full ${isToday ? "bg-gradient-to-t from-violet-500 to-pink-400 shadow-[inset_0_0_20px_rgba(236,72,153,0.3)]" : "bg-gradient-to-t from-emerald-500/40 to-emerald-400/70"}`}
                         style={{ height: `${height}%` }}
                       />
                     </div>
-                    <span className="w-16 text-sm text-right text-violet-200">{Math.floor(height * 0.018)}h</span>
+                    <span className="w-16 text-sm text-right text-violet-700">{Math.floor(height * 0.018)}h</span>
                   </div>
                 );
               })}
@@ -102,7 +102,7 @@ export default function AnalysisPage() {
           </div>
 
           <div className="reveal glass-card rounded-2xl p-6" style={{ transitionDelay: "0.1s" }}>
-            <h3 className="text-lg font-semibold mb-4 text-violet-50">Weekly Trend</h3>
+            <h3 className="text-lg font-semibold mb-4 text-violet-900">Weekly Trend</h3>
             <div className="h-48 flex items-end justify-between gap-2 px-2">
               {[45, 70, 60, 80, 75, 65, 85, 50, 90, 72, 55, 78].map((height, i) => (
                 <div key={i} className="flex-1 flex flex-col items-center h-full justify-end">
@@ -123,7 +123,7 @@ export default function AnalysisPage() {
 
         <div className="max-w-6xl mx-auto mb-8">
           <div className="reveal glass-card rounded-2xl p-6">
-            <h3 className="text-lg font-semibold mb-4 text-violet-50">App Usage Breakdown</h3>
+            <h3 className="text-lg font-semibold mb-4 text-violet-900">App Usage Breakdown</h3>
             <div className="space-y-3">
               {[
                 { app: "Instagram", time: "45m", percentage: 35, color: "from-pink-500 to-pink-400", icon: "📷" },
@@ -138,10 +138,10 @@ export default function AnalysisPage() {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="font-medium text-violet-100">{item.app}</span>
+                      <span className="font-medium text-violet-800">{item.app}</span>
                       <span className="text-[color:var(--text-muted)] text-sm">{item.time}</span>
                     </div>
-                    <div className="h-2 bg-white/5 rounded-full overflow-hidden border border-violet-500/10">
+                    <div className="h-2 bg-violet-500/10 rounded-full overflow-hidden border border-violet-500/25">
                       <div className={`h-full bg-gradient-to-r ${item.color}`} style={{ width: `${item.percentage}%` }} />
                     </div>
                   </div>
@@ -154,7 +154,7 @@ export default function AnalysisPage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-6">
             <div className="reveal glass-card rounded-2xl p-6">
-              <h3 className="text-lg font-semibold mb-4 text-emerald-300">💡 Positive Insights</h3>
+              <h3 className="text-lg font-semibold mb-4 text-emerald-600">💡 Positive Insights</h3>
               <ul className="space-y-3 text-[color:var(--text-muted)]">
                 {[
                   "Social media usage decreased by 20% this week",
@@ -162,23 +162,23 @@ export default function AnalysisPage() {
                   "Daily limit consistently achieved (75% of goal)",
                 ].map((line) => (
                   <li key={line} className="flex items-start gap-3">
-                    <span className="mt-1 w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-300 text-xs">✓</span>
-                    <span className="text-violet-100">{line}</span>
+                    <span className="mt-1 w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-600 text-xs">✓</span>
+                    <span className="text-violet-800">{line}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
             <div className="reveal glass-card rounded-2xl p-6" style={{ transitionDelay: "0.1s" }}>
-              <h3 className="text-lg font-semibold mb-4 text-amber-300">⚠️ Areas to Watch</h3>
+              <h3 className="text-lg font-semibold mb-4 text-amber-600">⚠️ Areas to Watch</h3>
               <ul className="space-y-3 text-[color:var(--text-muted)]">
                 {[
                   "Gaming spikes on weekend days (3+ hours)",
                   "Late night usage after 10 PM",
                 ].map((line) => (
                   <li key={line} className="flex items-start gap-3">
-                    <span className="mt-1 w-5 h-5 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-300 text-xs">!</span>
-                    <span className="text-violet-100">{line}</span>
+                    <span className="mt-1 w-5 h-5 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-600 text-xs">!</span>
+                    <span className="text-violet-800">{line}</span>
                   </li>
                 ))}
               </ul>
@@ -187,7 +187,7 @@ export default function AnalysisPage() {
         </div>
       </main>
 
-      <footer className="py-6 px-6 text-center text-sm text-[color:var(--text-muted)] border-t border-violet-500/10 relative" style={{ zIndex: 3 }}>
+      <footer className="py-6 px-6 text-center text-sm text-[color:var(--text-muted)] border-t border-violet-500/25 relative" style={{ zIndex: 3 }}>
         <p>© 2026 Buvijon. All rights reserved.</p>
       </footer>
     </div>
