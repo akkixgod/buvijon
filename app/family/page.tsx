@@ -29,7 +29,7 @@ const FAMILY_MEMBERS: FamilyMember[] = [
     name: "Nilufar",
     role: "child",
     avatar: "NL",
-    avatarColor: "from-blossom-pink to-pink-400",
+    avatarColor: "from-violet-500 to-pink-500",
     status: "online",
     screenTimeToday: 125,
     dailyLimit: 180,
@@ -50,7 +50,7 @@ const CHAT_THREADS = [
   {
     id: 1,
     from: "Buvijon",
-    fromAvatar: "bg-blossom-pink",
+    fromAvatar: "bg-gradient-to-br from-violet-500 to-pink-500",
     timestamp: "now",
     unread: 3,
     lastMessage: "Amir's screen time rising for 3 days. A gentle reminder might help!",
@@ -110,33 +110,36 @@ export default function FamilyPage() {
 
   const getFlowerColor = (state: string) => {
     const colors = {
-      blooming: "from-blooming to-emerald-600",
-      warning: "from-warning to-amber-600",
-      wilting: "from-wilting to-red-600",
+      blooming: "from-emerald-400 to-emerald-600",
+      warning: "from-amber-300 to-orange-500",
+      wilting: "from-rose-400 to-rose-600",
     };
     return colors[state as keyof typeof colors] || colors.blooming;
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-surface">
+    <div className="min-h-screen flex flex-col relative">
+      {/* Ambient orbs */}
+      <div className="orb" style={{ width: 420, height: 420, top: -120, left: -100, background: "radial-gradient(circle, rgba(139,92,246,0.45), transparent 65%)" }} />
+      <div className="orb" style={{ width: 460, height: 460, bottom: -140, right: -120, background: "radial-gradient(circle, rgba(236,72,153,0.28), transparent 65%)", animationDelay: "2s" }} />
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 px-6 py-4 bg-white/80 backdrop-blur-lg border-b border-border">
+      <nav className="sticky top-0 px-6 py-4 backdrop-blur-xl bg-background/60 border-b border-violet-500/10" style={{ zIndex: 50 }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blossom-pink to-pink-400 flex items-center justify-center">
-              <span className="text-white font-bold text-lg">B</span>
+          <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 via-violet-600 to-pink-500 flex items-center justify-center shadow-[0_0_20px_rgba(139,92,246,0.6)]">
+              <span className="text-white font-bold">B</span>
             </div>
-            <span className="font-bold text-xl text-foreground">Buvijon</span>
+            <span className="font-bold text-lg">Buvijon</span>
           </Link>
 
           {/* Tab Navigation */}
-          <div className="hidden md:flex items-center gap-2 bg-surface-secondary rounded-full p-1">
+          <div className="hidden md:flex items-center gap-2 glass-card rounded-full p-1">
             <button
               onClick={() => setActiveTab("family")}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                 activeTab === "family"
-                  ? "bg-blossom-pink text-white"
-                  : "text-muted-foreground hover:bg-surface"
+                  ? "bg-gradient-to-r from-violet-500 to-pink-500 text-white shadow-[0_0_18px_rgba(139,92,246,0.5)]"
+                  : "text-violet-300/80 hover:bg-white/5"
               }`}
             >
               Family
@@ -145,8 +148,8 @@ export default function FamilyPage() {
               onClick={() => setActiveTab("chats")}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                 activeTab === "chats"
-                  ? "bg-blossom-pink text-white"
-                  : "text-muted-foreground hover:bg-surface"
+                  ? "bg-gradient-to-r from-violet-500 to-pink-500 text-white shadow-[0_0_18px_rgba(139,92,246,0.5)]"
+                  : "text-violet-300/80 hover:bg-white/5"
               }`}
             >
               Chats
@@ -155,8 +158,8 @@ export default function FamilyPage() {
               onClick={() => setActiveTab("direct")}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                 activeTab === "direct"
-                  ? "bg-blossom-pink text-white"
-                  : "text-muted-foreground hover:bg-surface"
+                  ? "bg-gradient-to-r from-violet-500 to-pink-500 text-white shadow-[0_0_18px_rgba(139,92,246,0.5)]"
+                  : "text-violet-300/80 hover:bg-white/5"
               }`}
             >
               Direct
@@ -171,12 +174,12 @@ export default function FamilyPage() {
         {activeTab === "family" && (
           <div className="h-full flex">
             {/* Family Standing Section */}
-            <div className="w-1/3 border-r border-border flex flex-col">
-              <div className="p-4 border-b border-border bg-surface-secondary/30">
-                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">
+            <div className="w-1/3 border-r border-violet-500/10 flex flex-col">
+              <div className="p-4 border-b border-violet-500/10 bg-white/5/30">
+                <p className="text-xs font-medium text-violet-300/70 uppercase tracking-wider mb-2">
                   family hub
                 </p>
-                <h2 className="text-lg font-bold text-foreground">Messages</h2>
+                <h2 className="text-lg font-bold text-violet-50">Messages</h2>
               </div>
 
               {/* Chat Threads */}
@@ -184,8 +187,8 @@ export default function FamilyPage() {
                 {CHAT_THREADS.map((thread) => (
                   <div
                     key={thread.id}
-                    className={`glass-card rounded-xl p-4 cursor-pointer transition-all hover:bg-surface-secondary ${
-                      thread.unread ? "border-l-2 border-blossom-pink" : "border border-border"
+                    className={`glass-card rounded-xl p-4 cursor-pointer transition-all hover:bg-white/5 ${
+                      thread.unread ? "border-l-2 border-violet-400" : "border border-violet-500/10"
                     }`}
                   >
                     <div className="flex items-start gap-3">
@@ -199,17 +202,17 @@ export default function FamilyPage() {
                       {/* Content */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between mb-1">
-                          <span className="font-semibold text-foreground">{thread.from}</span>
-                          <span className="text-xs text-muted-foreground">{thread.timestamp}</span>
+                          <span className="font-semibold text-violet-50">{thread.from}</span>
+                          <span className="text-xs text-violet-300/70">{thread.timestamp}</span>
                         </div>
-                        <p className="text-sm text-muted-foreground line-clamp-2">
+                        <p className="text-sm text-violet-300/70 line-clamp-2">
                           {thread.lastMessage}
                         </p>
                       </div>
 
                       {/* Unread Badge */}
                       {thread.unread && (
-                        <div className="w-6 h-6 rounded-full bg-blossom-pink flex items-center justify-center text-white text-xs font-bold">
+                        <div className="w-6 h-6 rounded-full bg-violet-500 flex items-center justify-center text-white text-xs font-bold">
                           {thread.unread}
                         </div>
                       )}
@@ -220,13 +223,13 @@ export default function FamilyPage() {
             </div>
 
             {/* Family Members & Garden Section */}
-            <div className="flex-1 flex flex-col bg-gradient-to-b from-blossom-pink-pale/20 to-transparent">
+            <div className="flex-1 flex flex-col bg-gradient-to-b from-violet-900/15 to-transparent">
               {/* Family Standing */}
-              <div className="p-4 border-b border-border bg-white/50">
-                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">
+              <div className="p-4 border-b border-violet-500/10 bg-white/[0.03]">
+                <p className="text-xs font-medium text-violet-300/70 uppercase tracking-wider mb-2">
                   family standing
                 </p>
-                <h2 className="text-lg font-bold text-foreground">Tap to explore</h2>
+                <h2 className="text-lg font-bold text-violet-50">Tap to explore</h2>
               </div>
 
               {/* Family Members */}
@@ -248,9 +251,9 @@ export default function FamilyPage() {
 
                     {/* Name */}
                     <div className="mt-2">
-                      <div className="font-semibold text-foreground">{member.name}</div>
+                      <div className="font-semibold text-violet-50">{member.name}</div>
                       {member.role === "child" && (
-                        <div className="text-xs text-muted-foreground">my kid</div>
+                        <div className="text-xs text-violet-300/70">my kid</div>
                       )}
                     </div>
 
@@ -268,9 +271,9 @@ export default function FamilyPage() {
                     {/* Online Status */}
                     <div className="mt-2 flex items-center justify-center gap-2">
                       <div
-                        className={`w-2 h-2 rounded-full ${member.status === "online" ? "bg-blooming" : "bg-muted-foreground"}`}
+                        className={`w-2 h-2 rounded-full ${member.status === "online" ? "bg-emerald-400" : "bg-muted-foreground"}`}
                       />
-                      <span className="text-xs text-muted-foreground">{member.status}</span>
+                      <span className="text-xs text-violet-300/70">{member.status}</span>
                     </div>
                   </button>
                 ))}
@@ -278,14 +281,14 @@ export default function FamilyPage() {
 
               {/* Family Garden */}
               {selectedMember && (
-                <div className="flex-1 p-4 border-t border-border bg-white/70">
+                <div className="flex-1 p-4 border-t border-violet-500/10 bg-white/[0.04]">
                   <div className="flex items-center justify-between mb-4">
-                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                    <p className="text-xs font-medium text-violet-300/70 uppercase tracking-wider">
                       family garden
                     </p>
                     <button
                       onClick={() => setSelectedMember(null)}
-                      className="text-sm text-muted-foreground hover:text-blossom-pink transition-colors"
+                      className="text-sm text-violet-300/70 hover:text-violet-300 transition-colors"
                     >
                       Close
                     </button>
@@ -300,18 +303,18 @@ export default function FamilyPage() {
                         {/* Screen Time Card */}
                         <div className="glass-card rounded-2xl p-6">
                           <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-lg font-semibold text-foreground">Screen Time Today</h3>
-                            <span className="text-xs px-2 py-1 rounded-full bg-blossom-pink/10 text-blossom-pink">
+                            <h3 className="text-lg font-semibold text-violet-50">Screen Time Today</h3>
+                            <span className="text-xs px-2 py-1 rounded-full bg-violet-500/10 text-violet-300">
                               {member.screenTimeToday ?? 0} min
                             </span>
                           </div>
-                          <div className="h-3 bg-surface-secondary rounded-full overflow-hidden">
+                          <div className="h-3 bg-white/5 rounded-full overflow-hidden">
                             <div
                               className="h-full bg-gradient-to-r from-blooming to-emerald-400"
                               style={{ width: `${((member.screenTimeToday ?? 0) / (member.dailyLimit ?? 1)) * 100}%` }}
                             />
                           </div>
-                          <div className="flex items-center justify-between mt-2 text-sm text-muted-foreground">
+                          <div className="flex items-center justify-between mt-2 text-sm text-violet-300/70">
                             <span>{(member.dailyLimit ?? 0) - (member.screenTimeToday ?? 0)} min remaining</span>
                             <span>Limit: {Math.floor((member.dailyLimit ?? 0) / 60)}h</span>
                           </div>
@@ -325,7 +328,7 @@ export default function FamilyPage() {
                             )} mx-auto mb-2 flex items-center justify-center`}>
                               <span className="text-white text-2xl">🌸</span>
                             </div>
-                            <div className="text-sm font-medium text-foreground">Healthy</div>
+                            <div className="text-sm font-medium text-violet-50">Healthy</div>
                           </div>
                           <div className="glass-card rounded-xl p-4 text-center">
                             <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${getFlowerColor(
@@ -333,7 +336,7 @@ export default function FamilyPage() {
                             )} mx-auto mb-2 flex items-center justify-center`}>
                               <span className="text-white text-2xl">🌸</span>
                             </div>
-                            <div className="text-sm font-medium text-foreground">Attention</div>
+                            <div className="text-sm font-medium text-violet-50">Attention</div>
                           </div>
                           <div className="glass-card rounded-xl p-4 text-center">
                             <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${getFlowerColor(
@@ -341,13 +344,13 @@ export default function FamilyPage() {
                             )} mx-auto mb-2 flex items-center justify-center`}>
                               <span className="text-white text-2xl">🌸</span>
                             </div>
-                            <div className="text-sm font-medium text-foreground">Exceeded</div>
+                            <div className="text-sm font-medium text-violet-50">Exceeded</div>
                           </div>
                         </div>
 
                         {/* Weekly Chart (Simplified) */}
                         <div className="glass-card rounded-2xl p-6">
-                          <h3 className="text-lg font-semibold text-foreground mb-4">Weekly Progress</h3>
+                          <h3 className="text-lg font-semibold text-violet-50 mb-4">Weekly Progress</h3>
                           <div className="flex items-end justify-between h-24 gap-1">
                             {[60, 120, 90, 150, 140, 110, 80].map((height, i) => (
                               <div
@@ -357,7 +360,7 @@ export default function FamilyPage() {
                               />
                             ))}
                           </div>
-                          <div className="flex items-center justify-between mt-2 text-xs text-muted-foreground">
+                          <div className="flex items-center justify-between mt-2 text-xs text-violet-300/70">
                             <span>Mon</span>
                             <span>Tue</span>
                             <span>Wed</span>
@@ -375,12 +378,12 @@ export default function FamilyPage() {
 
               {/* Scroll Arrows */}
               {!selectedMember && (
-                <div className="p-4 flex items-center justify-between text-xs text-muted-foreground">
+                <div className="p-4 flex items-center justify-between text-xs text-violet-300/70">
                   <span>lower</span>
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-0.5 bg-surface-secondary/50 rounded" />
-                    <div className="w-4 h-0.5 bg-surface-secondary/50 rounded" />
-                    <div className="w-4 h-0.5 bg-surface-secondary/50 rounded" />
+                    <div className="w-4 h-0.5 bg-white/5/50 rounded" />
+                    <div className="w-4 h-0.5 bg-white/5/50 rounded" />
+                    <div className="w-4 h-0.5 bg-white/5/50 rounded" />
                   </div>
                   <span>higher →</span>
                 </div>
@@ -393,10 +396,10 @@ export default function FamilyPage() {
         {activeTab === "chats" && (
           <div className="h-full p-6">
             <div className="mb-6">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">
+              <p className="text-xs font-medium text-violet-300/70 uppercase tracking-wider mb-2">
                 chats
               </p>
-              <h2 className="text-2xl font-bold text-foreground">Family Garden</h2>
+              <h2 className="text-2xl font-bold text-violet-50">Family Garden</h2>
             </div>
 
             {/* Chats List */}
@@ -405,7 +408,7 @@ export default function FamilyPage() {
                 <div
                   key={thread.id}
                   className={`glass-card rounded-2xl p-6 cursor-pointer transition-all hover:scale-105 ${
-                    thread.unread ? "border-l-2 border-blossom-pink" : "border border-border"
+                    thread.unread ? "border-l-2 border-violet-400" : "border border-violet-500/10"
                   }`}
                 >
                   {/* Header */}
@@ -417,11 +420,11 @@ export default function FamilyPage() {
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
-                        <span className="font-semibold text-lg text-foreground">{thread.from}</span>
-                        <span className="text-sm text-muted-foreground">{thread.timestamp}</span>
+                        <span className="font-semibold text-lg text-violet-50">{thread.from}</span>
+                        <span className="text-sm text-violet-300/70">{thread.timestamp}</span>
                       </div>
                       {thread.unread && (
-                        <div className="w-8 h-8 rounded-full bg-blossom-pink flex items-center justify-center text-white font-bold">
+                        <div className="w-8 h-8 rounded-full bg-violet-500 flex items-center justify-center text-white font-bold">
                           {thread.unread}
                         </div>
                       )}
@@ -429,11 +432,11 @@ export default function FamilyPage() {
                   </div>
 
                   {/* Message */}
-                  <p className="text-muted-foreground leading-relaxed">{thread.lastMessage}</p>
+                  <p className="text-violet-300/70 leading-relaxed">{thread.lastMessage}</p>
 
                   {/* Family Context Badge */}
                   {thread.familyContext && (
-                    <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blooming/10 text-blooming text-sm">
+                    <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-400/10 text-emerald-300 text-sm">
                       <span>👨‍👩‍👧‍👦</span>
                       <span>Family Garden</span>
                     </div>
@@ -448,10 +451,10 @@ export default function FamilyPage() {
         {activeTab === "direct" && (
           <div className="h-full p-6">
             <div className="mb-6">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">
+              <p className="text-xs font-medium text-violet-300/70 uppercase tracking-wider mb-2">
                 direct
               </p>
-              <h2 className="text-2xl font-bold text-foreground">Direct Messages</h2>
+              <h2 className="text-2xl font-bold text-violet-50">Direct Messages</h2>
             </div>
 
             {/* Direct Messages */}
@@ -460,7 +463,7 @@ export default function FamilyPage() {
                 <div
                   key={msg.id}
                   className={`glass-card rounded-2xl p-6 transition-all hover:scale-105 ${
-                    msg.unread ? "border-l-2 border-blossom-pink" : "border border-border"
+                    msg.unread ? "border-l-2 border-violet-400" : "border border-violet-500/10"
                   }`}
                 >
                   <div className="flex items-start gap-4">
@@ -475,14 +478,14 @@ export default function FamilyPage() {
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-2">
                         <div>
-                          <span className="font-semibold text-lg text-foreground">{msg.from}</span>
-                          <span className="text-sm text-muted-foreground ml-2">{msg.timestamp}</span>
+                          <span className="font-semibold text-lg text-violet-50">{msg.from}</span>
+                          <span className="text-sm text-violet-300/70 ml-2">{msg.timestamp}</span>
                         </div>
                         {msg.unread && (
-                          <div className="w-3 h-3 rounded-full bg-blossom-pink" />
+                          <div className="w-3 h-3 rounded-full bg-violet-500" />
                         )}
                       </div>
-                      <p className="text-muted-foreground leading-relaxed">{msg.message}</p>
+                      <p className="text-violet-300/70 leading-relaxed">{msg.message}</p>
                     </div>
                   </div>
                 </div>

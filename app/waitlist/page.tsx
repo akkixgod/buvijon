@@ -1,29 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
-// Uzbekistan cities data
 const UZBEK_CITIES = [
-  "Toshkent",
-  "Samarqand",
-  "Namangan",
-  "Andijon",
-  "Farg'ona",
-  "Jizzax",
-  "Sirdaryo",
-  "Qashqadaryo",
-  "Navoiy",
-  "Buxoro",
-  "Xiva",
-  "Guliston",
-  "Termiz",
-  "Jizzax",
-  "Qo'qon",
-  "Qorqonpori",
-  "Nukus",
-  "Samarqand",
+  "Toshkent", "Samarqand", "Namangan", "Andijon", "Farg'ona", "Jizzax",
+  "Sirdaryo", "Qashqadaryo", "Navoiy", "Buxoro", "Xiva", "Guliston",
+  "Termiz", "Qo'qon", "Nukus",
 ];
+
+type WaitlistEntry = {
+  id: number;
+  fullName: string;
+  telegramUsername: string;
+  gmail: string;
+  city: string;
+  submittedAt: string;
+};
 
 export default function WaitlistPage() {
   const [formData, setFormData] = useState({
@@ -33,32 +26,24 @@ export default function WaitlistPage() {
     city: "",
     agreed: false,
   });
-
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [success, setSuccess] = useState(false);
 
-  // Save to localStorage
-  const saveToLocalStorage = () => {
-    const existingWaitlist = JSON.parse(localStorage.getItem('buvijon_waitlist') || '[]');
-    existingWaitlist.push({
-      ...formData,
-      id: Date.now(),
-      submittedAt: new Date().toISOString(),
-    });
-    localStorage.setItem('buvijon_waitlist', JSON.stringify(existingWaitlist));
-  };
-
-  // Check if already registered
-  const checkAlreadyRegistered = () => {
-    const existing = JSON.parse(localStorage.getItem('buvijon_waitlist') || '[]');
-    return existing.some((item: any) =>
-      item.gmail === formData.gmail || item.telegramUsername === formData.telegramUsername
-    );
-  };
+  // Cursor glow
+  useEffect(() => {
+    const glow = document.getElementById("cursor-glow");
+    const handleMove = (e: MouseEvent) => {
+      if (glow) {
+        glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+        glow.style.opacity = "1";
+      }
+    };
+    window.addEventListener("mousemove", handleMove);
+    return () => window.removeEventListener("mousemove", handleMove);
+  }, []);
 
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // Validation
     const newErrors: Record<string, string> = {};
 
     if (!formData.fullName.trim()) newErrors.fullName = "Full name is required";
@@ -73,201 +58,183 @@ export default function WaitlistPage() {
       return;
     }
 
-    // Check if already registered
-    if (checkAlreadyRegistered()) {
-      newErrors.gmail = "This email or Telegram username is already registered";
-      setErrors(newErrors);
+    const existing: WaitlistEntry[] = JSON.parse(localStorage.getItem("buvijon_waitlist") || "[]");
+    if (existing.some((item) => item.gmail === formData.gmail || item.telegramUsername === formData.telegramUsername)) {
+      setErrors({ gmail: "This email or Telegram username is already registered" });
       return;
     }
 
-    // Save to localStorage
-    saveToLocalStorage();
+    existing.push({
+      id: Date.now(),
+      fullName: formData.fullName,
+      telegramUsername: formData.telegramUsername,
+      gmail: formData.gmail,
+      city: formData.city,
+      submittedAt: new Date().toISOString(),
+    });
+    localStorage.setItem("buvijon_waitlist", JSON.stringify(existing));
 
-    // Reset form
     setFormData({ fullName: "", telegramUsername: "", gmail: "", city: "", agreed: false });
     setErrors({});
+    setSuccess(true);
+    setTimeout(() => setSuccess(false), 5000);
   };
 
+  const inputClass = (hasError: boolean) =>
+    `w-full px-4 py-3 rounded-xl outline-none transition-all bg-white/5 backdrop-blur border ${
+      hasError
+        ? "border-rose-400/60 focus:border-rose-400"
+        : "border-violet-500/20 focus:border-violet-400/70 focus:bg-white/[0.07]"
+    } text-violet-50 placeholder:text-violet-300/40`;
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col relative">
+      {/* Ambient orbs */}
+      <div className="orb" style={{ width: 420, height: 420, top: -120, left: -100, background: "radial-gradient(circle, rgba(139,92,246,0.55), transparent 65%)" }} />
+      <div className="orb" style={{ width: 460, height: 460, bottom: -140, right: -120, background: "radial-gradient(circle, rgba(236,72,153,0.35), transparent 65%)", animationDelay: "2s" }} />
+
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 px-6 py-4 bg-white/80 backdrop-blur-lg border-b border-border">
+      <nav className="sticky top-0 px-4 md:px-6 py-4 backdrop-blur-xl bg-background/60 border-b border-violet-500/10" style={{ zIndex: 50 }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blossom-pink to-pink-400 flex items-center justify-center">
-              <span className="text-white font-bold text-lg">B</span>
+          <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 via-violet-600 to-pink-500 flex items-center justify-center shadow-[0_0_20px_rgba(139,92,246,0.7)]">
+              <span className="text-white font-bold">B</span>
             </div>
-            <span className="font-bold text-xl text-foreground">Buvijon</span>
+            <span className="font-bold text-lg">Buvijon</span>
           </Link>
-          <Link
-            href="/family"
-            className="bg-blossom-pink text-white px-6 py-2.5 rounded-full font-medium hover:bg-blossom-pink-light transition-colors"
-          >
+          <Link href="/family" className="premium-button btn-ghost rounded-full px-5 py-2.5 text-sm font-medium">
             Family Dashboard
           </Link>
         </div>
       </nav>
 
-      {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center px-6 py-12 bg-gradient-to-b from-blossom-pink-pale/30 via-transparent to-blossom-pink-pale/50">
-        {/* Animated Background Elements */}
-        <div className="fixed inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-blossom-pink/5 rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-20 right-10 w-24 h-24 bg-blooming/5 rounded-full blur-3xl animate-float-reverse" />
-          <div className="absolute top-1/3 right-1/4 w-16 h-16 bg-warning/5 rounded-full blur-3xl animate-float-slow" />
-        </div>
-
-        <div className="relative z-10 w-full max-w-2xl mx-auto">
+      {/* Main */}
+      <main className="flex-1 flex items-center justify-center px-6 py-12 relative">
+        <div className="relative w-full max-w-2xl mx-auto" style={{ zIndex: 3 }}>
           {/* Header */}
           <div className="text-center mb-10">
-            <div className="inline-block mb-4 px-4 py-2 rounded-full bg-blossom-pink/10 border border-blossom-pink/20">
-              <span className="text-sm font-medium text-blossom-pink">🌸 Join the Waitlist</span>
+            <div className="fade-in-up inline-block mb-5 ring-glow rounded-full">
+              <div className="px-4 py-2 rounded-full bg-background/70 backdrop-blur border border-violet-500/30 text-sm text-violet-200 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
+                Join the Waitlist
+              </div>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
-              Be the First to Grow Together
+            <h1 className="fade-in-up delay-100 text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+              Be the First to <span className="gradient-text">Grow Together</span>
             </h1>
-            <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-              Join our waitlist for early access to Buvijon. App launches on{" "}
-              <span className="font-semibold text-blossom-pink">May 15th at 12:00 PM</span>
+            <p className="fade-in-up delay-200 text-lg text-[color:var(--text-muted)] max-w-xl mx-auto">
+              Join our waitlist for early access. App launches on{" "}
+              <span className="font-semibold text-violet-300">May 15th at 12:00 PM</span>
             </p>
           </div>
 
-          {/* Registration Form */}
-          <div className="glass-card rounded-3xl p-8 md:p-10 shadow-2xl">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Full Name */}
+          {/* Form card */}
+          <div className="fade-in-up delay-300 glass-card rounded-3xl p-8 md:p-10 relative overflow-hidden">
+            {success && (
+              <div className="mb-6 p-4 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-300 text-xl">✓</div>
+                <div>
+                  <div className="font-semibold text-emerald-200">You&apos;re on the list!</div>
+                  <div className="text-sm text-emerald-300/70">We&apos;ll reach out when Buvijon launches.</div>
+                </div>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label htmlFor="fullName" className="block text-sm font-medium mb-2 text-foreground">
-                  Full Name
-                </label>
+                <label htmlFor="fullName" className="block text-sm font-medium mb-2 text-violet-100">Full Name</label>
                 <input
                   type="text"
                   id="fullName"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                   placeholder="Enter your full name"
-                  className={`w-full px-4 py-3 rounded-xl border-2 outline-none transition-all ${
-                    errors.fullName
-                      ? "border-wilting focus:border-wilting"
-                      : "border-border focus:border-blossom-pink"
-                  } bg-surface`}
+                  className={inputClass(!!errors.fullName)}
                 />
-                {errors.fullName && (
-                  <p className="mt-1 text-sm text-wilting">{errors.fullName}</p>
-                )}
+                {errors.fullName && <p className="mt-1 text-sm text-rose-300">{errors.fullName}</p>}
               </div>
 
-              {/* Telegram Username */}
               <div>
-                <label htmlFor="telegramUsername" className="block text-sm font-medium mb-2 text-foreground">
-                  Telegram Username
-                </label>
+                <label htmlFor="telegramUsername" className="block text-sm font-medium mb-2 text-violet-100">Telegram Username</label>
                 <div className="relative">
-                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
-                    @
-                  </div>
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-violet-300/70">@</div>
                   <input
                     type="text"
                     id="telegramUsername"
                     value={formData.telegramUsername}
                     onChange={(e) => setFormData({ ...formData, telegramUsername: e.target.value })}
                     placeholder="username"
-                    className={`w-full pl-10 pr-4 py-3 rounded-xl border-2 outline-none transition-all ${
-                      errors.telegramUsername
-                        ? "border-wilting focus:border-wilting"
-                        : "border-border focus:border-blossom-pink"
-                    } bg-surface`}
+                    className={`${inputClass(!!errors.telegramUsername)} pl-10`}
                   />
                 </div>
-                {errors.telegramUsername && (
-                  <p className="mt-1 text-sm text-wilting">{errors.telegramUsername}</p>
-                )}
+                {errors.telegramUsername && <p className="mt-1 text-sm text-rose-300">{errors.telegramUsername}</p>}
               </div>
 
-              {/* Gmail */}
               <div>
-                <label htmlFor="gmail" className="block text-sm font-medium mb-2 text-foreground">
-                  Gmail Address
-                </label>
+                <label htmlFor="gmail" className="block text-sm font-medium mb-2 text-violet-100">Gmail Address</label>
                 <input
                   type="email"
                   id="gmail"
                   value={formData.gmail}
                   onChange={(e) => setFormData({ ...formData, gmail: e.target.value })}
                   placeholder="yourname@gmail.com"
-                  className={`w-full px-4 py-3 rounded-xl border-2 outline-none transition-all ${
-                    errors.gmail
-                      ? "border-wilting focus:border-wilting"
-                      : "border-border focus:border-blossom-pink"
-                  } bg-surface`}
+                  className={inputClass(!!errors.gmail)}
                 />
-                {errors.gmail && <p className="mt-1 text-sm text-wilting">{errors.gmail}</p>}
+                {errors.gmail && <p className="mt-1 text-sm text-rose-300">{errors.gmail}</p>}
               </div>
 
-              {/* City Selection - Uzbekistan */}
               <div>
-                <label htmlFor="city" className="block text-sm font-medium mb-2 text-foreground">
-                  City (Uzbekistan)
-                </label>
+                <label htmlFor="city" className="block text-sm font-medium mb-2 text-violet-100">City (Uzbekistan)</label>
                 <select
                   id="city"
                   value={formData.city}
                   onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                  className={`w-full px-4 py-3 rounded-xl border-2 outline-none transition-all bg-surface cursor-pointer ${
-                    errors.city
-                      ? "border-wilting focus:border-wilting"
-                      : "border-border focus:border-blossom-pink"
-                  }`}
+                  className={`${inputClass(!!errors.city)} cursor-pointer`}
+                  style={{ colorScheme: "dark" }}
                 >
                   <option value="">Select your city</option>
                   {UZBEK_CITIES.map((city) => (
-                    <option key={city} value={city}>
-                      {city}
-                    </option>
+                    <option key={city} value={city}>{city}</option>
                   ))}
                 </select>
-                {errors.city && <p className="mt-1 text-sm text-wilting">{errors.city}</p>}
+                {errors.city && <p className="mt-1 text-sm text-rose-300">{errors.city}</p>}
               </div>
 
-              {/* Agreement Checkbox */}
-              <div className="flex items-start gap-3">
+              <label htmlFor="agreed" className="flex items-start gap-3 cursor-pointer group">
                 <input
                   type="checkbox"
                   id="agreed"
                   checked={formData.agreed}
                   onChange={(e) => setFormData({ ...formData, agreed: e.target.checked })}
-                  className="mt-1 w-5 h-5 rounded border-border accent-blossom-pink cursor-pointer"
+                  className="mt-1 w-5 h-5 rounded accent-violet-500 cursor-pointer"
                 />
-                <label htmlFor="agreed" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
-                  I agree to receive updates about Buvijon's launch and can change my mind anytime.
-                </label>
-              </div>
+                <span className="text-sm text-[color:var(--text-muted)] leading-relaxed group-hover:text-violet-200 transition-colors">
+                  I agree to receive updates about Buvijon&apos;s launch and can change my mind anytime.
+                </span>
+              </label>
 
-              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={!formData.agreed}
-                className="premium-button w-full bg-blossom-pink text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                className="premium-button btn-primary w-full py-4 rounded-xl font-semibold text-lg disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:transform-none"
               >
-                {formData.agreed ? "Join Waitlist 🌸" : "Please agree to continue"}
+                {formData.agreed ? "Join Waitlist" : "Please agree to continue"}
               </button>
             </form>
 
-            {/* Back to Home */}
             <div className="text-center mt-6">
-              <Link href="/" className="text-sm text-muted-foreground hover:text-blossom-pink transition-colors">
+              <Link href="/" className="text-sm text-[color:var(--text-muted)] hover:text-violet-200 transition-colors">
                 ← Back to Home
               </Link>
             </div>
           </div>
         </div>
-
-        {/* Footer */}
-        <footer className="py-8 text-center text-sm text-muted-foreground">
-          <p>© 2026 Buvijon. All rights reserved.</p>
-          <p className="mt-2">Made with ❤️ for families in Uzbekistan</p>
-        </footer>
       </main>
+
+      <footer className="py-8 text-center text-sm text-[color:var(--text-muted)] relative" style={{ zIndex: 3 }}>
+        <p>© 2026 Buvijon. All rights reserved.</p>
+        <p className="mt-2">Made with love for families in Uzbekistan</p>
+      </footer>
     </div>
   );
 }

@@ -13,17 +13,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Buvijon - Grow Together, Flourish Together | Parental Control with Love",
-  description: "Beautiful screen time management for families. Watch your child's digital wellness bloom with our flower-based tracking system. Set limits, monitor progress, and nurture healthy digital habits.",
+  title: "Buvijon — Grow Together, Flourish Together",
+  description: "Beautiful screen time management for families. Watch your child's digital wellness bloom with our flower-based tracking system.",
   keywords: ["parental control", "screen time", "digital wellness", "family app", "child safety"],
   openGraph: {
-    title: "Buvijon - Grow Together, Flourish Together",
+    title: "Buvijon — Grow Together, Flourish Together",
     description: "Beautiful screen time management for families using the power of flower metaphors.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Buvijon - Grow Together, Flourish Together",
+    title: "Buvijon — Grow Together, Flourish Together",
   },
 };
 
@@ -38,7 +38,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <div id="particle-container" className="fixed inset-0 pointer-events-none overflow-hidden" />
+        <div id="scroll-progress" className="scroll-progress" style={{ width: "0%" }} />
+        <div id="cursor-glow" className="cursor-glow" style={{ opacity: 0 }} />
+        <div id="particle-container" className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 2 }} />
         {children}
       </body>
     </html>
