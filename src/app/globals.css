@@ -335,6 +335,10 @@ p {
    .bg-decor's position: fixed. Use z-index on stacking-context elements only. */
 main, nav, footer { position: relative; z-index: 1; }
 
+/* Sections need relative positioning so z-indexed children (like the
+   container wrapping stage-3 text) can sit above the fixed flower canvas. */
+section { position: relative; }
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
