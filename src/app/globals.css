@@ -285,19 +285,7 @@ p {
   0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
   50%      { transform: translate3d(30px, 40px, 0) scale(0.95); }
 }
-@keyframes page-in {
-  from { filter: blur(8px) saturate(1.2); }
-  to   { filter: blur(0) saturate(1); }
-}
-
 .float-slow { animation: float-slow 6s ease-in-out infinite; }
-
-/* Page transition — animates filter only.
-   No transform / no opacity, so it does NOT create a containing block
-   (which would break GSAP pin and position: fixed descendants). */
-.page-fade {
-  animation: page-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
 
 /* Background decor layer */
 .bg-decor {
