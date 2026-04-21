@@ -1,0 +1,26 @@
+{
+  "branding": {
+    "name": "Buvijon",
+    "tagline": "Grow Together, Flourish Together",
+    "colors": {
+      "primary": "#7C3AED",
+      "accent": "#EC4899",
+      "background": "#FFFFFF",
+      "textPrimary": "#1D1D1F",
+      "textSecondary": "#6E6E73"
+    },
+    "colorScheme": "light",
+    "fonts": [
+      { "role": "heading", "family": "Geist", "url": "https://fonts.googleapis.com/css2?family=Geist" },
+      { "role": "body", "family": "Geist", "url": "https://fonts.googleapis.com/css2?family=Geist" }
+    ],
+    "components": {
+      "buttonPrimary": { "bg": "#1D1D1F", "text": "#FFFFFF", "borderRadius": "9999px" },
+      "buttonSecondary": { "bg": "transparent", "text": "#7C3AED", "borderRadius": "9999px" }
+    },
+    "spacing": { "borderRadius": "16px" }
+  },
+  "personality": {
+    "tone": "calm, thoughtful, family-first, gently optimistic"
+  }
+}
