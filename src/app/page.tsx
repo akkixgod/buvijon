@@ -6,16 +6,96 @@ import { FlowerScene } from "@/components/FlowerScene";
 import { PhoneMockup } from "@/components/PhoneMockup";
 
 const FEATURES = [
-  { title: "Gentle limits",   desc: "Daily time budgets that fit your family, not a spreadsheet." },
-  { title: "Clear analytics", desc: "See what really pulls attention — without pages of charts." },
-  { title: "Quiet alerts",    desc: "One nudge when it matters. Silence when it doesn't." },
-  { title: "Every language",  desc: "Uzbek (Latin & Cyrillic), Russian, English. More on the way." },
+  {
+    title: "Gentle limits",
+    desc: "Daily time budgets that fit your family, not a spreadsheet.",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v5l3 2" />
+      </svg>
+    ),
+  },
+  {
+    title: "Clear analytics",
+    desc: "See what really pulls attention — without pages of charts.",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 19V5" />
+        <path d="M4 19h16" />
+        <path d="M8 15v-4" />
+        <path d="M13 15V8" />
+        <path d="M18 15v-2" />
+      </svg>
+    ),
+  },
+  {
+    title: "Quiet alerts",
+    desc: "One nudge when it matters. Silence when it doesn't.",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 19a3 3 0 0 0 6 0" />
+        <path d="M18 16H6l1.5-2V10a4.5 4.5 0 1 1 9 0v4Z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Every language",
+    desc: "Uzbek (Latin & Cyrillic), Russian, English. More on the way.",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M3 12h18" />
+        <path d="M12 3a14 14 0 0 1 0 18" />
+        <path d="M12 3a14 14 0 0 0 0 18" />
+      </svg>
+    ),
+  },
 ];
 
 const STEPS = [
-  { n: "01", t: "Plant", d: "Add each child. Pick their flower." },
-  { n: "02", t: "Grow",  d: "Set healthy budgets. Forget the rest." },
-  { n: "03", t: "Bloom", d: "Watch the garden. Celebrate together." },
+  {
+    n: "01",
+    t: "Plant",
+    d: "Add each child. Pick their flower.",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 21V11" />
+        <path d="M12 11c0-3 2-5 5-5-1 3-3 5-5 5Z" />
+        <path d="M12 11c0-3-2-5-5-5 1 3 3 5 5 5Z" />
+        <path d="M5 21h14" />
+      </svg>
+    ),
+  },
+  {
+    n: "02",
+    t: "Grow",
+    d: "Set healthy budgets. Forget the rest.",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 21V8" />
+        <path d="M12 8c-2-3-6-3-8-1 1 3 5 4 8 1Z" />
+        <path d="M12 12c2-2 6-2 8 0-2 3-6 2-8 0Z" />
+        <path d="M5 21h14" />
+      </svg>
+    ),
+  },
+  {
+    n: "03",
+    t: "Bloom",
+    d: "Watch the garden. Celebrate together.",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="8" r="2.5" />
+        <path d="M12 5.5c.5-2 2-3 3.5-2.5-.3 1.8-1.6 2.8-3.5 2.5Z" />
+        <path d="M12 5.5c-.5-2-2-3-3.5-2.5.3 1.8 1.6 2.8 3.5 2.5Z" />
+        <path d="M14.5 8c2-.5 3.5.5 4 2-1.7.7-3.3 0-4-2Z" />
+        <path d="M9.5 8c-2-.5-3.5.5-4 2 1.7.7 3.3 0 4-2Z" />
+        <path d="M12 10.5V21" />
+        <path d="M5 21h14" />
+      </svg>
+    ),
+  },
 ];
 
 export default function Home() {
@@ -65,10 +145,10 @@ export default function Home() {
       </section>
 
       {/* Scene spacer — marks where the flower animation begins */}
-      <div id="scene-start" className="h-[40vh]" aria-hidden />
+      <div id="scene-start" className="h-[60vh]" aria-hidden />
 
       {/* Stage 1 — The idea (text RIGHT, flower LEFT) */}
-      <section id="story" className="section min-h-screen bg-white">
+      <section id="story" className="section min-h-screen">
         <div className="container-1100">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="hidden lg:block" aria-hidden />
@@ -92,7 +172,7 @@ export default function Home() {
       </section>
 
       {/* Stage 2 — Features (text LEFT, flower RIGHT) */}
-      <section id="features" className="section min-h-screen bg-white">
+      <section id="features" className="section min-h-screen">
         <div className="container-1100">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -100,12 +180,13 @@ export default function Home() {
               <Reveal delay={0.06}>
                 <h2 className="mb-10">Simple. Thoughtful. Quiet.</h2>
               </Reveal>
-              <div className="grid gap-6">
+              <div className="grid sm:grid-cols-2 gap-5">
                 {FEATURES.map((f, i) => (
-                  <Reveal key={f.title} delay={i * 0.05}>
-                    <div className="card card-hover">
+                  <Reveal key={f.title} delay={i * 0.06}>
+                    <div className="feature-card h-full">
+                      <span className="feature-icon">{f.icon}</span>
                       <h3 className="mb-2">{f.title}</h3>
-                      <p className="text-[17px] leading-[1.5]">{f.desc}</p>
+                      <p className="text-[16px] leading-[1.55]">{f.desc}</p>
                     </div>
                   </Reveal>
                 ))}
@@ -117,7 +198,7 @@ export default function Home() {
       </section>
 
       {/* Stage 3 — How it works (canvas in background, content centered) */}
-      <section id="how" className="section min-h-screen relative bg-white">
+      <section id="how" className="section min-h-screen relative">
         <div className="container-1100 relative z-10">
           <div className="text-center mb-20">
             <Reveal as="p" className="eyebrow mb-6">How it works</Reveal>
@@ -125,13 +206,14 @@ export default function Home() {
               <h2>Three steps. No manual.</h2>
             </Reveal>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6">
             {STEPS.map((s, i) => (
-              <Reveal key={s.n} delay={i * 0.08}>
-                <div className="card-violet p-10 h-full backdrop-blur-sm">
-                  <p className="text-[12px] tracking-[0.25em] text-[var(--brand-primary)] font-medium mb-6">{s.n}</p>
+              <Reveal key={s.n} delay={i * 0.1}>
+                <div className="step-card">
+                  <span className="step-icon">{s.icon}</span>
+                  <span className="step-number">{s.n}</span>
                   <h3 className="mb-3">{s.t}</h3>
-                  <p className="text-[17px] leading-[1.5]">{s.d}</p>
+                  <p className="text-[16px] leading-[1.55]">{s.d}</p>
                 </div>
               </Reveal>
             ))}

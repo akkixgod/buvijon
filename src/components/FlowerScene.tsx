@@ -50,7 +50,6 @@ export function FlowerScene({
     let cancelled = false;
     const triggers: ScrollTrigger[] = [];
     const tweens: gsap.core.Tween[] = [];
-    const timelines: gsap.core.Timeline[] = [];
 
     const urls = Array.from(
       { length: count },
@@ -76,8 +75,7 @@ export function FlowerScene({
     const initAnimation = () => {
       if (cancelled) return;
 
-      // 1. Frame playback — scrub across whole scene (scene-start → scene-end).
-      //    Independent of the position timeline so scrub rates can differ.
+      // Frame playback covers the entire scroll story (one shared scrub).
       const playback = gsap.to(playhead, {
         frame: count - 1,
         ease: "none",
@@ -87,51 +85,97 @@ export function FlowerScene({
           endTrigger: endSelector,
           start: "top top",
           end: "top bottom",
-          scrub: 2,
+          scrub: 0.25,
         },
       });
       tweens.push(playback);
       if (playback.scrollTrigger) triggers.push(playback.scrollTrigger);
 
-      // 2. Position timeline — single ScrollTrigger, sequential keyframes.
-      //    Positions in the timeline are absolute seconds; scrub maps whole
-      //    scene progress onto the total duration.
-      const tl = gsap.timeline({
-        defaults: { ease: "none" },
-        scrollTrigger: {
-          trigger: startSelector,
-          endTrigger: endSelector,
-          start: "top top",
-          end: "top bottom",
-          scrub: 1.5,
-        },
-      });
-
       const stage1Vars = isMobile
         ? { x: 0, y: 0, scale: 0.5, opacity: 0.22 }
-        : { x: "-22vw", y: 0, scale: 0.7, opacity: 1 };
+        : { x: "-26vw", y: 0, scale: 0.7, opacity: 1 };
       const stage2Vars = isMobile
         ? { x: 0, y: 0, scale: 0.5, opacity: 0.22 }
-        : { x: "22vw", y: 0, scale: 0.7, opacity: 1 };
-      const stage3Vars = { x: 0, y: 0, scale: 1.35, opacity: 0.14 };
-      const stage4Vars = { x: 0, y: "30vh", scale: 0.4, opacity: 0 };
+        : { x: "26vw", y: 0, scale: 0.7, opacity: 1 };
+      const stage3Vars = { x: 0, y: 0, scale: 1.35, opacity: 0.22 };
 
-      // Timeline segments (durations are relative — GSAP scales them to scrub).
-      // Approximate mapping to scene scroll progress:
-      //   0.00 - 0.08 : fade in
-      //   0.08 - 0.30 : stage 1 (LEFT)
-      //   0.30 - 0.55 : stage 2 (RIGHT)
-      //   0.55 - 0.80 : stage 3 (BG CENTER)
-      //   0.80 - 1.00 : stage 4 (fade out)
-      tl
-        .to(wrapper, { opacity: 1, duration: 0.08 }, 0)
-        .to(wrapper, stage1Vars, 0.08)
-        .to(wrapper, stage2Vars, 0.30)
-        .to(wrapper, stage3Vars, 0.55)
-        .to(wrapper, stage4Vars, 0.80);
+      // Initial state — hidden, slightly under-scaled, centered.
+      gsap.set(wrapper, { x: 0, y: 0, scale: 0.6, opacity: 0 });
 
-      timelines.push(tl);
-      if (tl.scrollTrigger) triggers.push(tl.scrollTrigger);
+      // Each stage is its OWN ScrollTrigger so the flower SETTLES at its target
+      // when its section is in view, then HOLDS while the user reads. Movement
+      // happens only between sections. A single scrubbed timeline interpolated
+      // continuously across all sections — leaving the flower mid-flight every
+      // time a section was in view (which read as "late").
+
+      // Stage 1: fade in + glide LEFT.
+      // Tied to #story (not #scene-start) so fade-in only begins after hero,
+      // even on short laptop viewports where #scene-start sits near viewport
+      // bottom at scroll=0.
+      const t1 = gsap.to(wrapper, {
+        ...stage1Vars,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: "#story",
+          start: "top bottom",
+          end: "top 60%",
+          scrub: 0.4,
+        },
+      });
+      tweens.push(t1);
+      if (t1.scrollTrigger) triggers.push(t1.scrollTrigger);
+
+      // Stages 2–4 use fromTo with explicit `from = previous stage's vars` so
+      // scrub interpolates from the wrapper's actual settled position rather
+      // than the captured initial state (which would cause a jump back to
+      // center on entry). immediateRender:false prevents GSAP from snapping
+      // the wrapper to `from` at creation time.
+
+      // Stage 2: LEFT → RIGHT during #story → #features handoff.
+      const t2 = gsap.fromTo(wrapper, stage1Vars, {
+        ...stage2Vars,
+        ease: "power2.inOut",
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: "#features",
+          start: "top 90%",
+          end: "top 40%",
+          scrub: 0.4,
+        },
+      });
+      tweens.push(t2);
+      if (t2.scrollTrigger) triggers.push(t2.scrollTrigger);
+
+      // Stage 3: RIGHT → CENTER BACKGROUND during #features → #how handoff.
+      const t3 = gsap.fromTo(wrapper, stage2Vars, {
+        ...stage3Vars,
+        ease: "power2.inOut",
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: "#how",
+          start: "top 90%",
+          end: "top 40%",
+          scrub: 0.4,
+        },
+      });
+      tweens.push(t3);
+      if (t3.scrollTrigger) triggers.push(t3.scrollTrigger);
+
+      // Stage 4: slow opacity-only fade as scene-end approaches.
+      // start moved to "top 60%" so it doesn't overlap with Stage 3's range.
+      const t4 = gsap.fromTo(wrapper, stage3Vars, {
+        opacity: 0,
+        ease: "power2.in",
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: endSelector,
+          start: "top 60%",
+          end: "top top",
+          scrub: 1,
+        },
+      });
+      tweens.push(t4);
+      if (t4.scrollTrigger) triggers.push(t4.scrollTrigger);
 
       ScrollTrigger.refresh();
     };
@@ -162,7 +206,6 @@ export function FlowerScene({
     return () => {
       cancelled = true;
       tweens.forEach((t) => t.kill());
-      timelines.forEach((t) => t.kill());
       triggers.forEach((t) => t.kill());
       bitmaps.forEach((b) => b?.close());
     };
@@ -180,8 +223,7 @@ export function FlowerScene({
           src={`${frameDir}/frame-001.webp`}
           alt=""
           className="absolute max-w-[70vmin] max-h-[70vmin]"
-          // @ts-expect-error fetchpriority is valid HTML
-          fetchpriority="high"
+          fetchPriority="high"
         />
       )}
       <canvas
