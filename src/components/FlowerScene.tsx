@@ -232,8 +232,6 @@ export function FlowerScene({
         style={{
           width: "auto",
           height: "auto",
-          filter: "brightness(1.04)",
-          mixBlendMode: "multiply",
           opacity: firstFrameReady ? 1 : 0,
           transition: "opacity 0.3s ease",
         }}

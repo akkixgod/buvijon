@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
-import { BackgroundDecor } from "@/components/BackgroundDecor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,14 +14,28 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Buvijon — Screen time. Reimagined.",
+  metadataBase: new URL("https://buvijon.com"),
+  title: {
+    default: "Buvijon — Screen time. Reimagined.",
+    template: "%s — Buvijon",
+  },
   description: "A garden where your child's digital balance blooms. Beautiful screen time management for families.",
   keywords: ["parental control", "screen time", "digital wellness", "family app", "child safety"],
   openGraph: {
     title: "Buvijon — Screen time. Reimagined.",
     description: "A garden where your child's digital balance blooms.",
     type: "website",
+    url: "/",
+    siteName: "Buvijon",
+    images: [{ url: "/first-frame.webp", width: 1280, height: 1280, alt: "Buvijon" }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Buvijon — Screen time. Reimagined.",
+    description: "A garden where your child's digital balance blooms.",
+    images: ["/first-frame.webp"],
+  },
+  icons: { icon: "/favicon.ico" },
 };
 
 export default function RootLayout({
@@ -31,7 +44,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <BackgroundDecor />
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>
     </html>
