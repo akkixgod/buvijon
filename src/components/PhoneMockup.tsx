@@ -1,17 +1,18 @@
+"use client";
+
 import { Flower } from "./Flower";
+import { useT } from "./I18nProvider";
 
-const APPS = [
-  { label: "YouTube", time: "45m", grad: "from-rose-400 to-pink-500", icon: "▶" },
-  { label: "Games", time: "30m", grad: "from-violet-400 to-indigo-500", icon: "◆" },
-  { label: "School", time: "1h", grad: "from-emerald-400 to-cyan-500", icon: "✎" },
-];
-
-const INSIGHTS = [
-  { tone: "emerald", text: "On track — 15m under today's budget" },
-  { tone: "violet", text: "School apps up 22% this week" },
-];
+const APP_KEYS = ["youtube", "games", "school"] as const;
+const APP_META = {
+  youtube: { time: "45m", grad: "from-rose-400 to-pink-500", icon: "▶" },
+  games:   { time: "30m", grad: "from-violet-400 to-indigo-500", icon: "◆" },
+  school:  { time: "1h",  grad: "from-emerald-400 to-cyan-500", icon: "✎" },
+};
+const INSIGHT_TONES = ["emerald", "violet"] as const;
 
 export function PhoneMockup() {
+  const t = useT();
   return (
     <div className="relative mx-auto w-full max-w-[340px] md:max-w-[380px]">
       <div className="absolute -inset-6 -z-10 rounded-[3rem] opacity-60 blur-3xl"
@@ -33,9 +34,9 @@ export function PhoneMockup() {
             <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-20 h-[5px] rounded-full bg-[#1D1D1F]" />
 
             <div className="mt-2 text-center">
-              <div className="text-[10px] tracking-[0.22em] uppercase text-[#86868B]">Today</div>
+              <div className="text-[10px] tracking-[0.22em] uppercase text-[#86868B]">{t.phone.today}</div>
               <div className="text-[18px] font-semibold text-[#1D1D1F] mt-0.5 tracking-tight">
-                Nilufar&apos;s Garden
+                {t.phone.childGarden}
               </div>
             </div>
 
@@ -47,13 +48,13 @@ export function PhoneMockup() {
             </div>
 
             <div className="text-center mt-1 mb-3">
-              <div className="text-[14px] font-semibold text-[#1D1D1F]">Blooming</div>
-              <div className="text-[11px] text-[#86868B] mt-0.5">A gentle, balanced day</div>
+              <div className="text-[14px] font-semibold text-[#1D1D1F]">{t.phone.blooming}</div>
+              <div className="text-[11px] text-[#86868B] mt-0.5">{t.phone.bloomSubtitle}</div>
             </div>
 
             <div>
               <div className="flex justify-between items-center mb-1.5 text-[11px] text-[#6E6E73]">
-                <span>Screen time</span>
+                <span>{t.phone.screenTime}</span>
                 <span className="font-medium text-[#1D1D1F] tabular-nums">2h 15m / 3h</span>
               </div>
               <div className="h-[7px] bg-violet-100 rounded-full overflow-hidden">
@@ -68,46 +69,49 @@ export function PhoneMockup() {
             </div>
 
             <div className="mt-4 grid grid-cols-3 gap-2">
-              {APPS.map((app) => (
-                <div
-                  key={app.label}
-                  className="rounded-xl border border-violet-100 bg-violet-50/60 p-2.5 text-center"
-                >
+              {APP_KEYS.map((key) => {
+                const meta = APP_META[key];
+                return (
                   <div
-                    className={`w-7 h-7 mx-auto mb-1.5 rounded-lg bg-gradient-to-br ${app.grad} flex items-center justify-center text-white text-[11px] shadow-sm`}
+                    key={key}
+                    className="rounded-xl border border-violet-100 bg-violet-50/60 p-2.5 text-center"
                   >
-                    {app.icon}
+                    <div
+                      className={`w-7 h-7 mx-auto mb-1.5 rounded-lg bg-gradient-to-br ${meta.grad} flex items-center justify-center text-white text-[11px] shadow-sm`}
+                    >
+                      {meta.icon}
+                    </div>
+                    <div className="text-[10px] font-medium text-[#1D1D1F] leading-none">
+                      {t.phone.apps[key]}
+                    </div>
+                    <div className="text-[10px] text-[#86868B] mt-0.5">{meta.time}</div>
                   </div>
-                  <div className="text-[10px] font-medium text-[#1D1D1F] leading-none">
-                    {app.label}
-                  </div>
-                  <div className="text-[10px] text-[#86868B] mt-0.5">{app.time}</div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <div className="mt-3 space-y-1.5">
-              {INSIGHTS.map((i) => (
-                <div
-                  key={i.text}
-                  className="flex items-start gap-2 rounded-lg px-2.5 py-1.5"
-                  style={{
-                    background:
-                      i.tone === "emerald"
-                        ? "rgba(16,185,129,0.08)"
-                        : "rgba(124,58,237,0.06)",
-                  }}
-                >
-                  <span
-                    className="mt-[3px] w-1.5 h-1.5 rounded-full flex-shrink-0"
+              {t.phone.insights.map((text, i) => {
+                const tone = INSIGHT_TONES[i] ?? "violet";
+                return (
+                  <div
+                    key={i}
+                    className="flex items-start gap-2 rounded-lg px-2.5 py-1.5"
                     style={{
                       background:
-                        i.tone === "emerald" ? "#10B981" : "#7C3AED",
+                        tone === "emerald"
+                          ? "rgba(16,185,129,0.08)"
+                          : "rgba(124,58,237,0.06)",
                     }}
-                  />
-                  <span className="text-[10px] text-[#3A3A3C] leading-[1.35]">{i.text}</span>
-                </div>
-              ))}
+                  >
+                    <span
+                      className="mt-[3px] w-1.5 h-1.5 rounded-full flex-shrink-0"
+                      style={{ background: tone === "emerald" ? "#10B981" : "#7C3AED" }}
+                    />
+                    <span className="text-[10px] text-[#3A3A3C] leading-[1.35]">{text}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

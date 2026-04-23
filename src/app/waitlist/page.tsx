@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { addEntry, isDuplicate, UZBEK_CITIES } from "@/lib/waitlistStorage";
+import { useT } from "@/components/I18nProvider";
 
 type FormState = {
   fullName: string;
@@ -23,6 +24,7 @@ const EMPTY: FormState = {
 };
 
 export default function WaitlistPage() {
+  const t = useT();
   const [form, setForm] = useState<FormState>(EMPTY);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [success, setSuccess] = useState(false);
@@ -33,16 +35,16 @@ export default function WaitlistPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const next: Record<string, string> = {};
-    if (!form.fullName.trim()) next.fullName = "Full name is required";
-    if (!form.telegramUsername.trim()) next.telegramUsername = "Telegram username is required";
-    if (!form.gmail.trim() || !form.gmail.includes("@gmail.com")) next.gmail = "Please enter a valid Gmail address";
-    if (!form.city) next.city = "Please select your city";
+    if (!form.fullName.trim()) next.fullName = t.waitlist.fullNameError;
+    if (!form.telegramUsername.trim()) next.telegramUsername = t.waitlist.telegramError;
+    if (!form.gmail.trim() || !form.gmail.includes("@gmail.com")) next.gmail = t.waitlist.gmailError;
+    if (!form.city) next.city = t.waitlist.cityError;
     if (Object.keys(next).length) {
       setErrors(next);
       return;
     }
     if (isDuplicate(form.gmail, form.telegramUsername)) {
-      setErrors({ gmail: "This email or Telegram username is already registered" });
+      setErrors({ gmail: t.waitlist.duplicate });
       return;
     }
     addEntry({
@@ -61,15 +63,19 @@ export default function WaitlistPage() {
     <>
       <Nav cta={false} />
 
-      <main className="section-hero pt-[120px] min-h-screen">
+      <main className="section-hero pt-[130px] min-h-screen">
         <div className="container-1100 max-w-[640px]">
           <div className="text-center mb-12">
-            <p className="eyebrow mb-5">Join the waitlist</p>
+            <p className="eyebrow mb-5">{t.waitlist.eyebrow}</p>
             <h1 className="mb-6">
-              Be the first to <span className="gradient-text">grow together</span>.
+              {t.waitlist.title1}{" "}
+              <span className="gradient-text">{t.waitlist.titleHighlight}</span>
+              {t.waitlist.titleEnd}
             </h1>
             <p className="lead mx-auto">
-              Early access opens on <span className="text-[var(--text-primary)] font-medium">May 15</span>. We&apos;ll reach out the moment Buvijon launches.
+              {t.waitlist.leadPart1}{" "}
+              <span className="text-[var(--text-primary)] font-medium">{t.waitlist.leadDate}</span>
+              {t.waitlist.leadPart2}
             </p>
           </div>
 
@@ -78,53 +84,53 @@ export default function WaitlistPage() {
               <div className="mb-8 p-5 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-start gap-4">
                 <div className="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white text-lg flex-shrink-0">✓</div>
                 <div>
-                  <div className="font-semibold text-emerald-800 mb-0.5">You&apos;re on the list.</div>
-                  <div className="text-sm text-emerald-700">We&apos;ll write to you when Buvijon opens for early access.</div>
+                  <div className="font-semibold text-emerald-800 mb-0.5">{t.waitlist.successTitle}</div>
+                  <div className="text-sm text-emerald-700">{t.waitlist.successBody}</div>
                 </div>
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-5">
-              <Field label="Full name" error={errors.fullName}>
+              <Field label={t.waitlist.fullName} error={errors.fullName}>
                 <input
                   type="text"
                   value={form.fullName}
                   onChange={(e) => update("fullName", e.target.value)}
-                  placeholder="Your name"
+                  placeholder={t.waitlist.fullNamePlaceholder}
                   className={`input ${errors.fullName ? "error" : ""}`}
                 />
               </Field>
 
-              <Field label="Telegram username" error={errors.telegramUsername}>
+              <Field label={t.waitlist.telegram} error={errors.telegramUsername}>
                 <div className="relative">
                   <span className="absolute left-5 top-1/2 -translate-y-1/2 text-[var(--text-muted)] text-base pointer-events-none">@</span>
                   <input
                     type="text"
                     value={form.telegramUsername}
                     onChange={(e) => update("telegramUsername", e.target.value.replace(/^@+/, ""))}
-                    placeholder="username"
+                    placeholder={t.waitlist.telegramPlaceholder}
                     className={`input pl-9 ${errors.telegramUsername ? "error" : ""}`}
                   />
                 </div>
               </Field>
 
-              <Field label="Gmail address" error={errors.gmail}>
+              <Field label={t.waitlist.gmail} error={errors.gmail}>
                 <input
                   type="email"
                   value={form.gmail}
                   onChange={(e) => update("gmail", e.target.value)}
-                  placeholder="you@gmail.com"
+                  placeholder={t.waitlist.gmailPlaceholder}
                   className={`input ${errors.gmail ? "error" : ""}`}
                 />
               </Field>
 
-              <Field label="City (Uzbekistan)" error={errors.city}>
+              <Field label={t.waitlist.city} error={errors.city}>
                 <select
                   value={form.city}
                   onChange={(e) => update("city", e.target.value)}
                   className={`input ${errors.city ? "error" : ""}`}
                 >
-                  <option value="">Select your city</option>
+                  <option value="">{t.waitlist.citySelect}</option>
                   {UZBEK_CITIES.map((c) => (
                     <option key={c} value={c}>{c}</option>
                   ))}
@@ -139,7 +145,7 @@ export default function WaitlistPage() {
                   className="mt-1 w-5 h-5 rounded accent-[var(--brand-primary)] cursor-pointer"
                 />
                 <span className="text-[14px] leading-[1.5] text-[var(--text-secondary)]">
-                  I agree to receive updates about Buvijon&apos;s launch. I can unsubscribe anytime.
+                  {t.waitlist.agree}
                 </span>
               </label>
 
@@ -149,13 +155,13 @@ export default function WaitlistPage() {
                 className="btn-primary w-full mt-2 disabled:opacity-40 disabled:cursor-not-allowed"
                 style={{ height: 56 }}
               >
-                {form.agreed ? "Join waitlist" : "Please agree to continue"}
+                {form.agreed ? t.waitlist.submit : t.waitlist.submitDisabled}
               </button>
             </form>
 
             <div className="text-center mt-8">
               <Link href="/" className="text-[14px] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors">
-                ← Back to home
+                {t.waitlist.backHome}
               </Link>
             </div>
           </div>

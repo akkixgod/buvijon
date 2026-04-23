@@ -4,28 +4,21 @@ import { useState } from "react";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
+import { useT } from "@/components/I18nProvider";
 
 type Period = "today" | "week" | "month";
 
-const STATS = [
-  { value: "2h 15m", label: "Total today", tone: "violet" },
-  { value: "75%", label: "Daily goal", tone: "emerald" },
-  { value: "12", label: "Apps used", tone: "amber" },
-  { value: "−15m", label: "vs yesterday", tone: "rose" },
-];
-
+const STAT_TONES = ["violet", "emerald", "amber", "rose"] as const;
 const DAYS = [
-  { d: "Mon", h: 65, today: true },
-  { d: "Tue", h: 80 },
-  { d: "Wed", h: 45 },
-  { d: "Thu", h: 90 },
-  { d: "Fri", h: 75 },
-  { d: "Sat", h: 60 },
-  { d: "Sun", h: 85 },
+  { i: 0, h: 65, today: true },
+  { i: 1, h: 80 },
+  { i: 2, h: 45 },
+  { i: 3, h: 90 },
+  { i: 4, h: 75 },
+  { i: 5, h: 60 },
+  { i: 6, h: 85 },
 ];
-
 const TREND = [45, 70, 60, 80, 75, 65, 85, 50, 90, 72, 55, 78];
-
 const APPS = [
   { app: "Instagram", time: "45m", pct: 35 },
   { app: "TikTok", time: "30m", pct: 24 },
@@ -34,50 +27,38 @@ const APPS = [
   { app: "WhatsApp", time: "10m", pct: 8 },
 ];
 
-const POSITIVES = [
-  "Social media usage decreased by 20% this week.",
-  "Educational apps time is up — a good sign of balance.",
-  "Daily limit consistently met (75% of goal).",
-];
-
-const WATCH = [
-  "Gaming spikes on weekend days (3+ hours).",
-  "Late-night usage after 10 PM.",
-];
-
 function toneColor(tone: string) {
   switch (tone) {
-    case "emerald":
-      return "var(--blooming)";
-    case "amber":
-      return "var(--warning)";
-    case "rose":
-      return "var(--wilting)";
-    default:
-      return "var(--brand-primary)";
+    case "emerald": return "var(--blooming)";
+    case "amber":   return "var(--warning)";
+    case "rose":    return "var(--wilting)";
+    default:        return "var(--brand-primary)";
   }
 }
 
 export default function AnalysisPage() {
+  const t = useT();
   const [period, setPeriod] = useState<Period>("today");
+  const dayLabels = [t.days.mon, t.days.tue, t.days.wed, t.days.thu, t.days.fri, t.days.sat, t.days.sun];
+  const trendLabels = [...dayLabels, t.days.sun, t.days.mon, t.days.tue, t.days.wed, t.days.thu];
 
   return (
     <>
       <Nav />
 
-      <main className="section-hero pt-[120px]">
+      <main className="section-hero pt-[130px]">
         <div className="container-1100">
           <div className="mb-12 max-w-[720px]">
-            <Reveal as="p" className="eyebrow mb-5">Screen time analysis</Reveal>
+            <Reveal as="p" className="eyebrow mb-5">{t.analysis.eyebrow}</Reveal>
             <Reveal delay={0.05}>
               <h1 className="mb-6">
-                Understand the <span className="gradient-text">patterns</span>.
+                {t.analysis.title1}{" "}
+                <span className="gradient-text">{t.analysis.titleHighlight}</span>
+                {t.analysis.titleEnd}
               </h1>
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="lead">
-                A quiet, honest look at your family&apos;s digital rhythm — no charts for the sake of charts, just what&apos;s worth seeing.
-              </p>
+              <p className="lead">{t.analysis.lead}</p>
             </Reveal>
           </div>
 
@@ -96,19 +77,19 @@ export default function AnalysisPage() {
                     color: period === p ? "#FFFFFF" : "var(--text-secondary)",
                   }}
                 >
-                  {p === "today" ? "Today" : p === "week" ? "This week" : "This month"}
+                  {t.analysis.periods[p]}
                 </button>
               ))}
             </div>
           </Reveal>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-            {STATS.map((s, i) => (
+            {t.analysis.stats.map((s, i) => (
               <Reveal key={s.label} delay={i * 0.05}>
                 <div className="card h-full" style={{ padding: 28 }}>
                   <div
                     className="text-[40px] font-semibold mb-2 tracking-tight"
-                    style={{ color: toneColor(s.tone), letterSpacing: "-0.025em" }}
+                    style={{ color: toneColor(STAT_TONES[i]), letterSpacing: "-0.025em" }}
                   >
                     {s.value}
                   </div>
@@ -121,11 +102,11 @@ export default function AnalysisPage() {
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             <Reveal>
               <div className="card h-full">
-                <h3 className="mb-8">Daily progress</h3>
+                <h3 className="mb-8">{t.analysis.dailyProgress}</h3>
                 <div className="space-y-4">
                   {DAYS.map((day) => (
-                    <div key={day.d} className="flex items-center gap-4">
-                      <span className="w-10 text-[13px] text-[var(--text-muted)]">{day.d}</span>
+                    <div key={day.i} className="flex items-center gap-4">
+                      <span className="w-10 text-[13px] text-[var(--text-muted)]">{dayLabels[day.i]}</span>
                       <div
                         className="flex-1 h-10 rounded-xl overflow-hidden"
                         style={{ background: "var(--violet-50)" }}
@@ -151,7 +132,7 @@ export default function AnalysisPage() {
 
             <Reveal delay={0.08}>
               <div className="card h-full">
-                <h3 className="mb-8">Weekly trend</h3>
+                <h3 className="mb-8">{t.analysis.weeklyTrend}</h3>
                 <div className="h-56 flex items-end justify-between gap-2">
                   {TREND.map((h, i) => (
                     <div key={i} className="flex-1 flex flex-col items-center h-full justify-end gap-2">
@@ -160,24 +141,20 @@ export default function AnalysisPage() {
                         style={{
                           height: `${h}%`,
                           background:
-                            h > 80
-                              ? "var(--wilting)"
-                              : h > 65
-                              ? "var(--warning)"
-                              : "var(--brand-primary)",
+                            h > 80 ? "var(--wilting)" :
+                            h > 65 ? "var(--warning)" :
+                                     "var(--brand-primary)",
                           opacity: h > 80 ? 0.9 : h > 65 ? 0.85 : 0.8,
                         }}
                       />
-                      <span className="text-[11px] text-[var(--text-muted)]">
-                        {["M", "T", "W", "T", "F", "S", "S", "S", "M", "T", "W", "T"][i]}
-                      </span>
+                      <span className="text-[11px] text-[var(--text-muted)]">{trendLabels[i]}</span>
                     </div>
                   ))}
                 </div>
                 <div className="flex items-center gap-6 mt-6 pt-6 border-t border-[var(--border-subtle)]">
-                  <LegendDot color="var(--brand-primary)" label="Healthy" />
-                  <LegendDot color="var(--warning)" label="Borderline" />
-                  <LegendDot color="var(--wilting)" label="Over limit" />
+                  <LegendDot color="var(--brand-primary)" label={t.analysis.legend.healthy} />
+                  <LegendDot color="var(--warning)" label={t.analysis.legend.borderline} />
+                  <LegendDot color="var(--wilting)" label={t.analysis.legend.overLimit} />
                 </div>
               </div>
             </Reveal>
@@ -185,7 +162,7 @@ export default function AnalysisPage() {
 
           <Reveal className="mb-12">
             <div className="card">
-              <h3 className="mb-8">App usage breakdown</h3>
+              <h3 className="mb-8">{t.analysis.appBreakdown}</h3>
               <div className="space-y-5">
                 {APPS.map((item) => (
                   <div key={item.app} className="flex items-center gap-5">
@@ -196,10 +173,7 @@ export default function AnalysisPage() {
                           {item.time} · {item.pct}%
                         </span>
                       </div>
-                      <div
-                        className="h-2 rounded-full overflow-hidden"
-                        style={{ background: "var(--violet-50)" }}
-                      >
+                      <div className="h-2 rounded-full overflow-hidden" style={{ background: "var(--violet-50)" }}>
                         <div
                           className="h-full rounded-full"
                           style={{
@@ -222,10 +196,10 @@ export default function AnalysisPage() {
                   className="text-[12px] tracking-[0.22em] uppercase font-medium mb-5"
                   style={{ color: "var(--blooming)" }}
                 >
-                  Positive insights
+                  {t.analysis.positiveTitle}
                 </p>
                 <ul className="space-y-4">
-                  {POSITIVES.map((line) => (
+                  {t.analysis.positiveItems.map((line) => (
                     <li key={line} className="flex items-start gap-3">
                       <span
                         className="mt-1 w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[11px]"
@@ -233,9 +207,7 @@ export default function AnalysisPage() {
                       >
                         ✓
                       </span>
-                      <span className="text-[16px] text-[var(--text-secondary)] leading-[1.55]">
-                        {line}
-                      </span>
+                      <span className="text-[16px] text-[var(--text-secondary)] leading-[1.55]">{line}</span>
                     </li>
                   ))}
                 </ul>
@@ -248,10 +220,10 @@ export default function AnalysisPage() {
                   className="text-[12px] tracking-[0.22em] uppercase font-medium mb-5"
                   style={{ color: "var(--warning)" }}
                 >
-                  Areas to watch
+                  {t.analysis.watchTitle}
                 </p>
                 <ul className="space-y-4">
-                  {WATCH.map((line) => (
+                  {t.analysis.watchItems.map((line) => (
                     <li key={line} className="flex items-start gap-3">
                       <span
                         className="mt-1 w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[11px]"
@@ -259,9 +231,7 @@ export default function AnalysisPage() {
                       >
                         !
                       </span>
-                      <span className="text-[16px] text-[var(--text-secondary)] leading-[1.55]">
-                        {line}
-                      </span>
+                      <span className="text-[16px] text-[var(--text-secondary)] leading-[1.55]">{line}</span>
                     </li>
                   ))}
                 </ul>

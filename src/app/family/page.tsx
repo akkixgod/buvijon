@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Flower } from "@/components/Flower";
+import { useT } from "@/components/I18nProvider";
 
 type FlowerVariant = "violet" | "pink" | "indigo" | "emerald" | "rose" | "amber";
 
@@ -24,46 +25,23 @@ const FAMILY: FamilyMember[] = [
   { id: 3, name: "Amir",    role: "child",  initials: "AM", variant: "rose",    status: "away",   screenTimeToday: 150, dailyLimit: 180 },
 ];
 
-const CHATS = [
-  {
-    id: 1,
-    from: "Buvijon",
-    initials: "B",
-    timestamp: "now",
-    unread: 3,
-    message: "Amir's screen time has been rising for 3 days. A gentle reminder might help.",
-    isSystem: true,
-  },
-  {
-    id: 2,
-    from: "Zara",
-    initials: "ZA",
-    timestamp: "2m ago",
-    unread: 1,
-    message: "Did Amira finish her homework today?",
-    isSystem: false,
-  },
-  {
-    id: 3,
-    from: "Kamil",
-    initials: "KM",
-    timestamp: "12m ago",
-    unread: 0,
-    message: "I finished all my tasks, can I play now?",
-    isSystem: false,
-  },
-];
-
-const DIRECT = [
-  { id: 1, from: "Nilufar", initials: "NL", timestamp: "12m ago", unread: true,  message: "Can I have 30 more minutes tonight, please?" },
-  { id: 2, from: "Amir",    initials: "AM", timestamp: "1h ago",  unread: false, message: "I finished all my tasks, can I play now?" },
-];
-
 type Tab = "family" | "chats" | "direct";
 
 export default function FamilyPage() {
+  const t = useT();
   const [tab, setTab] = useState<Tab>("family");
   const [selected, setSelected] = useState<number | null>(null);
+
+  const CHATS = [
+    { id: 1, from: "Buvijon", initials: "B",  timestamp: "now",    unread: 3, isSystem: true,  message: t.family.standingHint },
+    { id: 2, from: "Zara",    initials: "ZA", timestamp: "2m",     unread: 1, isSystem: false, message: "Did Amira finish her homework today?" },
+    { id: 3, from: "Kamil",   initials: "KM", timestamp: "12m",    unread: 0, isSystem: false, message: "I finished all my tasks, can I play now?" },
+  ];
+
+  const DIRECT = [
+    { id: 1, from: "Nilufar", initials: "NL", timestamp: "12m", unread: true,  message: "Can I have 30 more minutes tonight, please?" },
+    { id: 2, from: "Amir",    initials: "AM", timestamp: "1h",  unread: false, message: "I finished all my tasks, can I play now?" },
+  ];
 
   const flowerVariantFor = (m: FamilyMember): FlowerVariant => {
     if (!m.screenTimeToday || !m.dailyLimit) return m.variant;
@@ -77,27 +55,26 @@ export default function FamilyPage() {
     <>
       <Nav cta={false} />
 
-      <main className="pt-[88px] min-h-screen bg-[var(--bg-section)]">
+      <main className="pt-[100px] min-h-screen bg-[var(--bg-section)]">
         <div className="container-1100 py-10">
-          {/* Header + tabs */}
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10">
             <div>
-              <p className="eyebrow mb-3">Dashboard</p>
-              <h1 className="!text-[clamp(2rem,4.5vw,3.5rem)]">Family garden.</h1>
+              <p className="eyebrow mb-3">{t.family.eyebrow}</p>
+              <h1 className="!text-[clamp(2rem,4.5vw,3.5rem)]">{t.family.title}</h1>
             </div>
 
             <div className="inline-flex p-1 bg-white border border-[var(--border-subtle)] rounded-full">
-              {(["family", "chats", "direct"] as Tab[]).map((t) => (
+              {(["family", "chats", "direct"] as Tab[]).map((tk) => (
                 <button
-                  key={t}
-                  onClick={() => setTab(t)}
-                  className={`px-5 h-10 rounded-full text-[13px] font-medium capitalize transition-colors ${
-                    tab === t
+                  key={tk}
+                  onClick={() => setTab(tk)}
+                  className={`px-5 h-10 rounded-full text-[13px] font-medium transition-colors ${
+                    tab === tk
                       ? "bg-[var(--text-primary)] text-white"
                       : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                   }`}
                 >
-                  {t}
+                  {t.family.tabs[tk]}
                 </button>
               ))}
             </div>
@@ -105,10 +82,9 @@ export default function FamilyPage() {
 
           {tab === "family" && (
             <div className="grid lg:grid-cols-[1fr_1.4fr] gap-8">
-              {/* Messages list */}
               <div className="card !p-6">
-                <p className="eyebrow mb-4">Family hub</p>
-                <h3 className="mb-6 !text-[18px]">Messages</h3>
+                <p className="eyebrow mb-4">{t.family.hub}</p>
+                <h3 className="mb-6 !text-[18px]">{t.family.messages}</h3>
                 <div className="space-y-3">
                   {CHATS.map((c) => (
                     <div
@@ -137,12 +113,11 @@ export default function FamilyPage() {
                 </div>
               </div>
 
-              {/* Family standing */}
               <div className="card !p-6">
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <p className="eyebrow mb-2">Family standing</p>
-                    <h3 className="!text-[18px]">Tap a member to explore</h3>
+                    <p className="eyebrow mb-2">{t.family.standing}</p>
+                    <h3 className="!text-[18px]">{t.family.standingHint}</h3>
                   </div>
                 </div>
 
@@ -159,7 +134,7 @@ export default function FamilyPage() {
                     >
                       <Avatar initials={m.initials} large />
                       <div className="mt-3 font-semibold text-[14px] text-[var(--text-primary)]">{m.name}</div>
-                      <div className="text-[12px] text-[var(--text-muted)]">{m.role === "parent" ? "Parent" : "Child"}</div>
+                      <div className="text-[12px] text-[var(--text-muted)]">{t.family.role[m.role]}</div>
                       {m.role === "child" && (
                         <div className="mt-3 flex justify-center">
                           <Flower variant={flowerVariantFor(m)} size={56} />
@@ -167,7 +142,7 @@ export default function FamilyPage() {
                       )}
                       <div className="mt-3 flex items-center justify-center gap-2">
                         <span className={`w-2 h-2 rounded-full ${m.status === "online" ? "bg-emerald-500" : "bg-[var(--text-muted)]"}`} />
-                        <span className="text-[11px] text-[var(--text-muted)] capitalize">{m.status}</span>
+                        <span className="text-[11px] text-[var(--text-muted)]">{t.family.status[m.status]}</span>
                       </div>
                     </button>
                   ))}
@@ -178,13 +153,13 @@ export default function FamilyPage() {
                   if (!m) return null;
                   return (
                     <div className="mt-8 pt-8 border-t border-[var(--border-subtle)]">
-                      <p className="eyebrow mb-4">{m.name}&apos;s garden</p>
+                      <p className="eyebrow mb-4">{m.name}{t.family.gardenSuffix}</p>
 
                       {m.role === "child" && m.screenTimeToday !== undefined && m.dailyLimit !== undefined ? (
                         <>
                           <div className="p-6 rounded-2xl bg-[var(--bg-section)] mb-5">
                             <div className="flex items-center justify-between mb-3">
-                              <span className="text-[14px] font-medium text-[var(--text-primary)]">Screen time today</span>
+                              <span className="text-[14px] font-medium text-[var(--text-primary)]">{t.family.screenTimeToday}</span>
                               <span className="text-[13px] text-[var(--text-secondary)] tabular-nums">
                                 {m.screenTimeToday} / {m.dailyLimit} min
                               </span>
@@ -202,16 +177,16 @@ export default function FamilyPage() {
                               />
                             </div>
                             <div className="mt-3 flex items-center justify-between text-[12px] text-[var(--text-muted)]">
-                              <span>{m.dailyLimit - m.screenTimeToday} min remaining</span>
-                              <span>Limit: {Math.floor(m.dailyLimit / 60)}h</span>
+                              <span>{m.dailyLimit - m.screenTimeToday} {t.family.minRemaining}</span>
+                              <span>{t.family.limit}: {Math.floor(m.dailyLimit / 60)}h</span>
                             </div>
                           </div>
 
                           <div className="grid grid-cols-3 gap-3 mb-5">
                             {([
-                              { v: "emerald" as const, label: "Healthy" },
-                              { v: "amber"   as const, label: "Attention" },
-                              { v: "rose"    as const, label: "Exceeded" },
+                              { v: "emerald" as const, label: t.family.states.healthy },
+                              { v: "amber"   as const, label: t.family.states.attention },
+                              { v: "rose"    as const, label: t.family.states.exceeded },
                             ]).map((s) => (
                               <div
                                 key={s.label}
@@ -228,7 +203,7 @@ export default function FamilyPage() {
                           </div>
 
                           <div className="p-6 rounded-2xl bg-[var(--bg-section)]">
-                            <h3 className="!text-[16px] mb-4">Weekly progress</h3>
+                            <h3 className="!text-[16px] mb-4">{t.family.weeklyProgress}</h3>
                             <div className="flex items-end justify-between gap-2 h-28">
                               {[60, 120, 90, 150, 140, 110, 80].map((v, i) => (
                                 <div key={i} className="flex-1 flex flex-col items-center gap-2">
@@ -243,7 +218,7 @@ export default function FamilyPage() {
                                     }}
                                   />
                                   <span className="text-[11px] text-[var(--text-muted)]">
-                                    {["M", "T", "W", "T", "F", "S", "S"][i]}
+                                    {[t.days.mon, t.days.tue, t.days.wed, t.days.thu, t.days.fri, t.days.sat, t.days.sun][i]}
                                   </span>
                                 </div>
                               ))}
@@ -253,7 +228,7 @@ export default function FamilyPage() {
                       ) : (
                         <div className="p-6 rounded-2xl bg-[var(--bg-section)] text-center">
                           <p className="text-[14px] text-[var(--text-secondary)]">
-                            {m.name} is the parent of this garden.
+                            {m.name} {t.family.parentNote}
                           </p>
                         </div>
                       )}
@@ -278,7 +253,7 @@ export default function FamilyPage() {
                       <p className="text-[14px] text-[var(--text-secondary)] leading-[1.5]">{c.message}</p>
                       {c.isSystem && (
                         <span className="inline-flex items-center gap-2 mt-3 px-3 py-1.5 rounded-full bg-[var(--violet-50)] text-[var(--brand-primary)] text-[12px] font-medium">
-                          Family Garden
+                          {t.family.familyGardenBadge}
                         </span>
                       )}
                     </div>

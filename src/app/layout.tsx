@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
+import { I18nProvider } from "@/components/I18nProvider";
+import { DEFAULT_LOCALE, LOCALE_COOKIE, isLocale } from "@/lib/i18n";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,13 +41,19 @@ export const metadata: Metadata = {
   icons: { icon: "/favicon.ico" },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const cookieStore = await cookies();
+  const stored = cookieStore.get(LOCALE_COOKIE)?.value;
+  const locale = isLocale(stored) ? stored : DEFAULT_LOCALE;
+
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <I18nProvider initialLocale={locale}>
+          <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        </I18nProvider>
       </body>
     </html>
   );

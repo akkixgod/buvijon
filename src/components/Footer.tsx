@@ -1,13 +1,59 @@
+"use client";
+
+import { Logo } from "./Logo";
+import { useT } from "./I18nProvider";
+
 export function Footer() {
+  const t = useT();
   return (
-    <footer className="bg-[var(--bg-section)] border-t border-[var(--border-subtle)] py-12">
-      <div className="container-1100 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-[13px] text-[var(--text-muted)]">
-        <p>© 2026 Buvijon. Made with care for families in Uzbekistan.</p>
-        <div className="flex gap-7">
-          <a href="mailto:hello@buvijon.com" className="hover:text-[var(--text-primary)] transition-colors">Contact</a>
-          <a href="https://t.me/buvijon" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--text-primary)] transition-colors">Telegram</a>
+    <footer className="bg-[var(--bg-section)] border-t border-[var(--border-subtle)] py-14">
+      <div className="container-1100 grid gap-10 md:grid-cols-[1fr_auto] md:items-end">
+        <div className="flex flex-col gap-4">
+          <Logo size={28} />
+          <p className="text-[13px] text-[var(--text-muted)] max-w-[420px]">
+            {t.footer.copyright}
+          </p>
+        </div>
+
+        <div className="flex flex-col items-start md:items-end gap-3 text-[13px]">
+          <span className="text-[11px] tracking-[0.22em] uppercase font-medium text-[var(--text-muted)]">
+            {t.footer.contact}
+          </span>
+          <a
+            href={`mailto:${t.footer.gmail}`}
+            className="group inline-flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--brand-primary)] transition-colors"
+          >
+            <MailIcon />
+            {t.footer.gmail}
+          </a>
+          <a
+            href={`https://t.me/${t.footer.telegram.replace(/^@/, "")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--brand-primary)] transition-colors"
+          >
+            <TelegramIcon />
+            {t.footer.telegram}
+          </a>
         </div>
       </div>
     </footer>
+  );
+}
+
+function MailIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="3" y="5" width="18" height="14" rx="2.5" />
+      <path d="m4 7 8 6 8-6" />
+    </svg>
+  );
+}
+
+function TelegramIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M9.78 16.61 9.6 13.7l8.05-7.27c.37-.33-.08-.49-.57-.19L7.13 12.7l-4.3-1.36c-.92-.27-.93-.92.21-1.37L19.6 3.5c.78-.36 1.51.18 1.21 1.36l-2.9 13.6c-.21.96-.79 1.2-1.6.74l-4.36-3.22-2.1 2.04c-.24.24-.45.45-.92.45z" />
+    </svg>
   );
 }
