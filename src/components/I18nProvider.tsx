@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   DEFAULT_LOCALE,
@@ -27,6 +27,12 @@ export function I18nProvider({
 }) {
   const router = useRouter();
   const [locale, setLocaleState] = useState<Locale>(initialLocale);
+
+  // Sync to server-provided locale when the cookie was set elsewhere
+  // (e.g., a fresh tab) and the layout RSC re-renders with a new value.
+  useEffect(() => {
+    setLocaleState(initialLocale);
+  }, [initialLocale]);
 
   const setLocale = useCallback(
     (next: Locale) => {

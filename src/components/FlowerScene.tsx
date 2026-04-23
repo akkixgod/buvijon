@@ -97,7 +97,7 @@ export function FlowerScene({
       const stage2Vars = isMobile
         ? { x: 0, y: 0, scale: 0.5, opacity: 0.22 }
         : { x: "26vw", y: 0, scale: 0.7, opacity: 1 };
-      const stage3Vars = { x: 0, y: 0, scale: 1.35, opacity: 0.22 };
+      const stage3Vars = { x: 0, y: 0, scale: 1.35, opacity: 1 };
 
       // Initial state — hidden, slightly under-scaled, centered.
       gsap.set(wrapper, { x: 0, y: 0, scale: 0.6, opacity: 0 });

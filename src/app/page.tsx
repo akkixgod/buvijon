@@ -7,6 +7,7 @@ import { Reveal } from "@/components/Reveal";
 import { FlowerScene } from "@/components/FlowerScene";
 import { PhoneMockup } from "@/components/PhoneMockup";
 import { ScrollDownCue } from "@/components/ScrollDownCue";
+import { Logo } from "@/components/Logo";
 import { useT } from "@/components/I18nProvider";
 
 const FEATURE_ICONS = [
@@ -102,6 +103,11 @@ export default function Home() {
         <div className="container-1100">
           <div className="grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-16 items-center">
             <div>
+              <Reveal>
+                <div className="mb-5">
+                  <Logo size={52} withWordmark={false} href={null} />
+                </div>
+              </Reveal>
               <Reveal as="p" className="eyebrow mb-6">{t.hero.eyebrow}</Reveal>
               <Reveal delay={0.05}>
                 <h1 className="mb-6">

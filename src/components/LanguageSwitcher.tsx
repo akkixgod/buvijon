@@ -14,8 +14,10 @@ export function LanguageSwitcher() {
     const handler = (e: MouseEvent) => {
       if (!wrapRef.current?.contains(e.target as Node)) setOpen(false);
     };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
+    // Listen on `click` (not `mousedown`) so an option's onClick fires
+    // before the outside-click logic re-renders the dropdown away.
+    document.addEventListener("click", handler);
+    return () => document.removeEventListener("click", handler);
   }, [open]);
 
   return (
@@ -40,7 +42,7 @@ export function LanguageSwitcher() {
       {open && (
         <ul
           role="listbox"
-          className="absolute right-0 top-[calc(100%+6px)] min-w-[140px] py-1.5 rounded-2xl bg-white border border-[var(--border-subtle)] shadow-[0_18px_40px_-12px_rgba(29,29,31,0.18)] z-50"
+          className="absolute right-0 top-[calc(100%+6px)] min-w-[140px] py-1.5 rounded-2xl bg-white border border-[var(--border-subtle)] shadow-[0_18px_40px_-12px_rgba(29,29,31,0.18)] z-[60]"
         >
           {LOCALES.map((l: Locale) => {
             const active = l === locale;

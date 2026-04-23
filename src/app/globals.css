@@ -389,6 +389,33 @@ p {
 }
 .animate-scroll-dot { animation: scroll-dot 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
 
+/* Analysis page — bar growth and stat fade-up animations.
+   Each bar reads its target dimension from a CSS var so the keyframe is
+   shared across horizontal/vertical bars and arbitrary percentages. */
+@keyframes bar-grow-h {
+  from { width: 0; }
+  to   { width: var(--bar-w); }
+}
+@keyframes bar-grow-v {
+  from { height: 0; }
+  to   { height: var(--bar-h); }
+}
+@keyframes anim-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim-bar-h {
+  width: var(--bar-w);
+  animation: bar-grow-h 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.anim-bar-v {
+  height: var(--bar-h);
+  animation: bar-grow-v 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.anim-fade-up {
+  animation: anim-fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 /* Shimmer for accent strips */
 @keyframes shimmer {
   0%   { background-position: -200% 0; }

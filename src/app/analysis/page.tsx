@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
@@ -9,23 +9,66 @@ import { useT } from "@/components/I18nProvider";
 type Period = "today" | "week" | "month";
 
 const STAT_TONES = ["violet", "emerald", "amber", "rose"] as const;
-const DAYS = [
-  { i: 0, h: 65, today: true },
-  { i: 1, h: 80 },
-  { i: 2, h: 45 },
-  { i: 3, h: 90 },
-  { i: 4, h: 75 },
-  { i: 5, h: 60 },
-  { i: 6, h: 85 },
-];
-const TREND = [45, 70, 60, 80, 75, 65, 85, 50, 90, 72, 55, 78];
-const APPS = [
-  { app: "Instagram", time: "45m", pct: 35 },
-  { app: "TikTok", time: "30m", pct: 24 },
-  { app: "YouTube", time: "25m", pct: 20 },
-  { app: "Roblox", time: "15m", pct: 12 },
-  { app: "WhatsApp", time: "10m", pct: 8 },
-];
+
+type Bar = { label: string; h: number; today?: boolean };
+type AppRow = { app: string; time: string; pct: number };
+
+const PERIOD_DATA: Record<Period, { bars: Bar[]; trend: number[]; apps: AppRow[] }> = {
+  today: {
+    bars: [
+      { label: "06", h: 8 },
+      { label: "09", h: 30 },
+      { label: "12", h: 55 },
+      { label: "15", h: 70, today: true },
+      { label: "18", h: 85 },
+      { label: "21", h: 60 },
+      { label: "24", h: 22 },
+    ],
+    trend: [10, 25, 40, 60, 80, 90, 70, 55, 40, 28, 18, 10],
+    apps: [
+      { app: "Instagram", time: "45m", pct: 35 },
+      { app: "TikTok",    time: "30m", pct: 24 },
+      { app: "YouTube",   time: "25m", pct: 20 },
+      { app: "Roblox",    time: "15m", pct: 12 },
+      { app: "WhatsApp",  time: "10m", pct: 8 },
+    ],
+  },
+  week: {
+    bars: [
+      { label: "M", h: 65 },
+      { label: "T", h: 80 },
+      { label: "W", h: 45 },
+      { label: "T", h: 90 },
+      { label: "F", h: 75, today: true },
+      { label: "S", h: 60 },
+      { label: "S", h: 85 },
+    ],
+    trend: [45, 70, 60, 80, 75, 65, 85, 50, 90, 72, 55, 78],
+    apps: [
+      { app: "Instagram", time: "3h 10m", pct: 28 },
+      { app: "TikTok",    time: "2h 45m", pct: 24 },
+      { app: "YouTube",   time: "2h 20m", pct: 21 },
+      { app: "Roblox",    time: "1h 50m", pct: 16 },
+      { app: "WhatsApp",  time: "1h 15m", pct: 11 },
+    ],
+  },
+  month: {
+    bars: [
+      { label: "1", h: 55 },
+      { label: "2", h: 72 },
+      { label: "3", h: 60 },
+      { label: "4", h: 84, today: true },
+    ],
+    trend: [40, 55, 65, 60, 78, 82, 70, 88, 76, 72, 80, 84],
+    apps: [
+      { app: "Instagram", time: "12h 40m", pct: 26 },
+      { app: "TikTok",    time: "11h 05m", pct: 22 },
+      { app: "YouTube",   time: "10h 20m", pct: 20 },
+      { app: "Roblox",    time: "8h 50m",  pct: 17 },
+      { app: "WhatsApp",  time: "7h 25m",  pct: 15 },
+    ],
+  },
+};
 
 function toneColor(tone: string) {
   switch (tone) {
@@ -39,8 +82,9 @@ function toneColor(tone: string) {
 export default function AnalysisPage() {
   const t = useT();
   const [period, setPeriod] = useState<Period>("today");
-  const dayLabels = [t.days.mon, t.days.tue, t.days.wed, t.days.thu, t.days.fri, t.days.sat, t.days.sun];
-  const trendLabels = [...dayLabels, t.days.sun, t.days.mon, t.days.tue, t.days.wed, t.days.thu];
+  const data = PERIOD_DATA[period];
+  const stats = t.analysis.stats[period];
+  const trendCount = data.trend.length;
 
   return (
     <>
@@ -71,10 +115,12 @@ export default function AnalysisPage() {
                 <button
                   key={p}
                   onClick={() => setPeriod(p)}
-                  className="px-6 py-2.5 rounded-full text-[14px] font-medium transition-colors"
+                  className="px-6 py-2.5 rounded-full text-[14px] font-medium transition-all duration-300"
                   style={{
                     background: period === p ? "var(--brand-primary)" : "transparent",
                     color: period === p ? "#FFFFFF" : "var(--text-secondary)",
+                    boxShadow: period === p ? "0 8px 22px -10px rgba(124,58,237,0.6)" : undefined,
+                    transform: period === p ? "translateY(-1px)" : undefined,
                   }}
                 >
                   {t.analysis.periods[p]}
@@ -83,46 +129,50 @@ export default function AnalysisPage() {
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-            {t.analysis.stats.map((s, i) => (
-              <Reveal key={s.label} delay={i * 0.05}>
-                <div className="card h-full" style={{ padding: 28 }}>
-                  <div
-                    className="text-[40px] font-semibold mb-2 tracking-tight"
-                    style={{ color: toneColor(STAT_TONES[i]), letterSpacing: "-0.025em" }}
-                  >
-                    {s.value}
-                  </div>
-                  <div className="text-[14px] text-[var(--text-secondary)]">{s.label}</div>
+          {/* Stats — re-mount on period change to retrigger animations */}
+          <div key={`stats-${period}`} className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+            {stats.map((s, i) => (
+              <div
+                key={s.label}
+                className="card card-hover h-full anim-fade-up"
+                style={{ padding: 28, animationDelay: `${i * 70}ms` } as CSSProperties}
+              >
+                <div
+                  className="text-[40px] font-semibold mb-2 tracking-tight"
+                  style={{ color: toneColor(STAT_TONES[i]), letterSpacing: "-0.025em" }}
+                >
+                  {s.value}
                 </div>
-              </Reveal>
+                <div className="text-[14px] text-[var(--text-secondary)]">{s.label}</div>
+              </div>
             ))}
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             <Reveal>
-              <div className="card h-full">
-                <h3 className="mb-8">{t.analysis.dailyProgress}</h3>
-                <div className="space-y-4">
-                  {DAYS.map((day) => (
-                    <div key={day.i} className="flex items-center gap-4">
-                      <span className="w-10 text-[13px] text-[var(--text-muted)]">{dayLabels[day.i]}</span>
+              <div className="card card-hover h-full">
+                <h3 className="mb-8">{t.analysis.activity}</h3>
+                <div key={`bars-${period}`} className="space-y-4">
+                  {data.bars.map((b, i) => (
+                    <div key={i} className="flex items-center gap-4">
+                      <span className="w-10 text-[13px] text-[var(--text-muted)]">{b.label}</span>
                       <div
                         className="flex-1 h-10 rounded-xl overflow-hidden"
                         style={{ background: "var(--violet-50)" }}
                       >
                         <div
-                          className="h-full rounded-xl transition-all"
+                          className="h-full rounded-xl anim-bar-h"
                           style={{
-                            width: `${day.h}%`,
-                            background: day.today
+                            ["--bar-w" as string]: `${b.h}%`,
+                            animationDelay: `${i * 60}ms`,
+                            background: b.today
                               ? "linear-gradient(90deg, var(--violet-600), var(--brand-accent))"
                               : "var(--violet-300)",
-                          }}
+                          } as CSSProperties}
                         />
                       </div>
-                      <span className="w-12 text-[13px] text-right text-[var(--text-secondary)]">
-                        {(day.h * 0.018).toFixed(1)}h
+                      <span className="w-12 text-[13px] text-right text-[var(--text-secondary)] tabular-nums">
+                        {(b.h * 0.018).toFixed(1)}h
                       </span>
                     </div>
                   ))}
@@ -131,23 +181,26 @@ export default function AnalysisPage() {
             </Reveal>
 
             <Reveal delay={0.08}>
-              <div className="card h-full">
-                <h3 className="mb-8">{t.analysis.weeklyTrend}</h3>
-                <div className="h-56 flex items-end justify-between gap-2">
-                  {TREND.map((h, i) => (
+              <div className="card card-hover h-full">
+                <h3 className="mb-8">{t.analysis.trend}</h3>
+                <div key={`trend-${period}`} className="h-56 flex items-end justify-between gap-2">
+                  {data.trend.map((h, i) => (
                     <div key={i} className="flex-1 flex flex-col items-center h-full justify-end gap-2">
                       <div
-                        className="w-full rounded-t-lg"
+                        className="w-full rounded-t-lg anim-bar-v"
                         style={{
-                          height: `${h}%`,
+                          ["--bar-h" as string]: `${h}%`,
+                          animationDelay: `${i * 35}ms`,
                           background:
                             h > 80 ? "var(--wilting)" :
                             h > 65 ? "var(--warning)" :
                                      "var(--brand-primary)",
                           opacity: h > 80 ? 0.9 : h > 65 ? 0.85 : 0.8,
-                        }}
+                        } as CSSProperties}
                       />
-                      <span className="text-[11px] text-[var(--text-muted)]">{trendLabels[i]}</span>
+                      <span className="text-[11px] text-[var(--text-muted)] tabular-nums">
+                        {trendLabel(period, i, trendCount)}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -161,25 +214,26 @@ export default function AnalysisPage() {
           </div>
 
           <Reveal className="mb-12">
-            <div className="card">
+            <div className="card card-hover">
               <h3 className="mb-8">{t.analysis.appBreakdown}</h3>
-              <div className="space-y-5">
-                {APPS.map((item) => (
+              <div key={`apps-${period}`} className="space-y-5">
+                {data.apps.map((item, i) => (
                   <div key={item.app} className="flex items-center gap-5">
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-medium text-[var(--text-primary)]">{item.app}</span>
-                        <span className="text-[13px] text-[var(--text-muted)]">
+                        <span className="text-[13px] text-[var(--text-muted)] tabular-nums">
                           {item.time} · {item.pct}%
                         </span>
                       </div>
                       <div className="h-2 rounded-full overflow-hidden" style={{ background: "var(--violet-50)" }}>
                         <div
-                          className="h-full rounded-full"
+                          className="h-full rounded-full anim-bar-h"
                           style={{
-                            width: `${item.pct}%`,
+                            ["--bar-w" as string]: `${item.pct}%`,
+                            animationDelay: `${i * 80}ms`,
                             background: "linear-gradient(90deg, var(--violet-600), var(--brand-accent))",
-                          }}
+                          } as CSSProperties}
                         />
                       </div>
                     </div>
@@ -191,7 +245,7 @@ export default function AnalysisPage() {
 
           <div className="grid md:grid-cols-2 gap-8">
             <Reveal>
-              <div className="card h-full">
+              <div className="card card-hover h-full">
                 <p
                   className="text-[12px] tracking-[0.22em] uppercase font-medium mb-5"
                   style={{ color: "var(--blooming)" }}
@@ -215,7 +269,7 @@ export default function AnalysisPage() {
             </Reveal>
 
             <Reveal delay={0.08}>
-              <div className="card h-full">
+              <div className="card card-hover h-full">
                 <p
                   className="text-[12px] tracking-[0.22em] uppercase font-medium mb-5"
                   style={{ color: "var(--warning)" }}
@@ -244,6 +298,12 @@ export default function AnalysisPage() {
       <Footer />
     </>
   );
+}
+
+function trendLabel(period: Period, i: number, count: number): string {
+  if (period === "today") return `${(i + 1) * 2}`;        // 2-hour blocks: "2","4",...
+  if (period === "week")  return `${count - i}d`;          // days back
+  return `${count - i}w`;                                  // weeks back
 }
 
 function LegendDot({ color, label }: { color: string; label: string }) {
