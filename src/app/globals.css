@@ -562,6 +562,16 @@ p {
    .bg-decor's position: fixed. Use z-index on stacking-context elements only. */
 main, nav, footer { position: relative; z-index: 1; }
 
+/* Page-enter fade so cross-route navigation never lands abruptly, even
+   when the previous page was scrolled to the top. Opacity-only — does
+   NOT create a containing block, so FlowerScene's fixed canvas keeps
+   pinning to the viewport on the home page. */
+@keyframes page-enter {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+main { animation: page-enter 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
 /* Sections need relative positioning so z-indexed children (like the
    container wrapping stage-3 text) can sit above the fixed flower canvas. */
 section { position: relative; }

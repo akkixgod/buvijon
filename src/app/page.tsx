@@ -98,6 +98,7 @@ export default function Home() {
         endSelector="#scene-end"
       />
 
+      <main>
       {/* Hero */}
       <section className="section-hero pt-[130px]">
         <div className="container-1100">
@@ -250,6 +251,7 @@ export default function Home() {
           </Reveal>
         </div>
       </section>
+      </main>
 
       <Footer />
     </>

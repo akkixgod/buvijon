@@ -94,21 +94,25 @@ export function Nav({ cta = true }: { cta?: boolean }) {
   // ── Liquid pill positioning ─────────────────────────────────────────────
   const linkContainerRef = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [pillStyle, setPillStyle] = useState<{ left: number; width: number; opacity: number }>({
     left: 0,
     width: 0,
     opacity: 0,
   });
 
+  // Hover takes precedence; otherwise rest at the section/route the user is on.
+  const focusedIndex = hoverIndex ?? activeIndex;
+
   useLayoutEffect(() => {
     const measure = () => {
       const container = linkContainerRef.current;
       if (!container) return;
-      if (activeIndex === null) {
+      if (focusedIndex === null) {
         setPillStyle((prev) => ({ ...prev, opacity: 0 }));
         return;
       }
-      const el = linkRefs.current[activeIndex];
+      const el = linkRefs.current[focusedIndex];
       if (!el) {
         setPillStyle((prev) => ({ ...prev, opacity: 0 }));
         return;
@@ -124,7 +128,7 @@ export function Nav({ cta = true }: { cta?: boolean }) {
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, [activeIndex, t]);
+  }, [focusedIndex, t]);
 
   return (
     <nav
@@ -142,6 +146,7 @@ export function Nav({ cta = true }: { cta?: boolean }) {
         <div
           ref={linkContainerRef}
           className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2"
+          onMouseLeave={() => setHoverIndex(null)}
         >
           {/* Liquid pill background */}
           <span
@@ -163,6 +168,7 @@ export function Nav({ cta = true }: { cta?: boolean }) {
           />
           {links.map((l, i) => {
             const active = activeIndex === i;
+            const focused = focusedIndex === i;
             return (
               <NavLink
                 key={l.href}
@@ -170,9 +176,11 @@ export function Nav({ cta = true }: { cta?: boolean }) {
                 ref={(node) => {
                   linkRefs.current[i] = node;
                 }}
+                onClick={() => setHoverIndex(null)}
+                onMouseEnter={() => setHoverIndex(i)}
                 className="relative px-3.5 py-2 text-[13px] transition-colors"
                 style={{
-                  color: active ? "var(--text-primary)" : "var(--text-secondary)",
+                  color: focused || active ? "var(--text-primary)" : "var(--text-secondary)",
                   fontWeight: active ? 600 : 400,
                 }}
               >

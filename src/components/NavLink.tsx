@@ -10,12 +10,14 @@ type Props = {
   style?: CSSProperties;
   children: ReactNode;
   onClick?: (e: MouseEvent<HTMLAnchorElement>) => void;
+  onMouseEnter?: (e: MouseEvent<HTMLAnchorElement>) => void;
+  onMouseLeave?: (e: MouseEvent<HTMLAnchorElement>) => void;
 };
 
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
 export const NavLink = forwardRef<HTMLAnchorElement, Props>(function NavLink(
-  { href, className, style, children, onClick },
+  { href, className, style, children, onClick, onMouseEnter, onMouseLeave },
   ref,
 ) {
   const router = useRouter();
