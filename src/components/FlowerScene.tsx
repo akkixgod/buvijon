@@ -28,7 +28,6 @@ export function FlowerScene({
 }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
   const [firstFrameReady, setFirstFrameReady] = useState(false);
 
   useEffect(() => {
@@ -178,37 +177,10 @@ export function FlowerScene({
       tweens.push(t4);
       if (t4.scrollTrigger) triggers.push(t4.scrollTrigger);
 
-      // Bloom halo — fades in only when the flower settles into stage 3
-      // (#how section), then co-fades with stage 4 toward scene-end.
-      const glow = glowRef.current;
-      if (glow) {
-        gsap.set(glow, { opacity: 0 });
-        const haloIn = gsap.to(glow, {
-          opacity: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: "#how",
-            start: "top 90%",
-            end: "top 40%",
-            scrub: 0.4,
-          },
-        });
-        tweens.push(haloIn);
-        if (haloIn.scrollTrigger) triggers.push(haloIn.scrollTrigger);
-
-        const haloOut = gsap.to(glow, {
-          opacity: 0,
-          ease: "power2.in",
-          scrollTrigger: {
-            trigger: endSelector,
-            start: "top 60%",
-            end: "top top",
-            scrub: 1,
-          },
-        });
-        tweens.push(haloOut);
-        if (haloOut.scrollTrigger) triggers.push(haloOut.scrollTrigger);
-      }
+      // Bloom halo — kept at opacity 1; visibility comes for free from the
+      // wrapper's stage opacity (child opacity multiplies with parent).
+      // So the halo fades in/out exactly with the flower at every stage,
+      // not just at bloom.
 
       ScrollTrigger.refresh();
     };
@@ -255,13 +227,11 @@ export function FlowerScene({
           mixBlendMode:multiply keeps it visible on white but neutral over
           white cards above (multiply with white = identity). */}
       <div
-        ref={glowRef}
         aria-hidden
         className="absolute rounded-full pointer-events-none"
         style={{
           width: "min(85vmin, 720px)",
           height: "min(85vmin, 720px)",
-          opacity: 0,
           background:
             "radial-gradient(circle, rgba(233,30,99,0.55) 0%, rgba(244,114,182,0.32) 35%, rgba(248,187,208,0.12) 60%, transparent 75%)",
           filter: "blur(28px)",
