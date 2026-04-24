@@ -514,6 +514,46 @@ p {
 }
 .float-slow { animation: float-slow 6s ease-in-out infinite; }
 
+/* Premium side ambience — deep pink glowing inward from the viewport
+   edges, fading to white before reaching the center column. Site-wide.
+   pointer-events:none + z-index:0 so all content (which sits at z-index:1
+   via main/nav/footer rules above) reads on pristine white in the middle. */
+.side-glows {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 55% 90% at 0% 50%,
+      rgba(233, 30, 99, 0.32) 0%,
+      rgba(236, 72, 153, 0.18) 22%,
+      transparent 55%),
+    radial-gradient(ellipse 55% 90% at 100% 50%,
+      rgba(233, 30, 99, 0.32) 0%,
+      rgba(236, 72, 153, 0.18) 22%,
+      transparent 55%);
+  animation: side-glow-breathe 11s ease-in-out infinite;
+  will-change: opacity;
+}
+@keyframes side-glow-breathe {
+  0%, 100% { opacity: 0.82; }
+  50%      { opacity: 1.00; }
+}
+/* On narrow viewports the two ellipses risk meeting in the middle and
+   tinting the central column. Tighten the falloff so the white island
+   in the center is preserved. */
+@media (max-width: 768px) {
+  .side-glows {
+    background:
+      radial-gradient(ellipse 45% 80% at 0% 50%,
+        rgba(233, 30, 99, 0.28) 0%,
+        transparent 50%),
+      radial-gradient(ellipse 45% 80% at 100% 50%,
+        rgba(233, 30, 99, 0.28) 0%,
+        transparent 50%);
+  }
+}
+
 /* Background decor layer */
 .bg-decor {
   position: fixed;

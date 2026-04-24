@@ -51,6 +51,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
+        <div className="side-glows" aria-hidden />
         <I18nProvider initialLocale={locale}>
           <SmoothScrollProvider>{children}</SmoothScrollProvider>
         </I18nProvider>
