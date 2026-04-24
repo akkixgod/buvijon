@@ -51,7 +51,12 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <div className="side-glows" aria-hidden />
+        <div className="bg-decor" aria-hidden>
+          <span className="blob blob-a" />
+          <span className="blob blob-b" />
+          <span className="blob blob-c" />
+          <span className="grain" />
+        </div>
         <I18nProvider initialLocale={locale}>
           <SmoothScrollProvider>{children}</SmoothScrollProvider>
         </I18nProvider>

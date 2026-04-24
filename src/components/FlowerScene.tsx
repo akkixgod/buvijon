@@ -223,19 +223,20 @@ export function FlowerScene({
       className="fixed inset-0 pointer-events-none flex items-center justify-center"
       style={{ opacity: 0, zIndex: 0 }}
     >
-      {/* Bloom halo — sits behind the canvas, opacity driven by GSAP.
-          mixBlendMode:multiply keeps it visible on white but neutral over
-          white cards above (multiply with white = identity). */}
+      {/* Bloom halo — sits behind the canvas. Plain alpha blending (no
+          mixBlendMode): multiply created a blend-isolation group when the
+          wrapper opacity animated 0→1, causing the halo to flicker or
+          render inconsistently on first reveal. Cards above sit on z-index:1
+          so they remain unaffected by this layer. */}
       <div
         aria-hidden
         className="absolute rounded-full pointer-events-none"
         style={{
-          width: "min(85vmin, 720px)",
-          height: "min(85vmin, 720px)",
+          width: "min(90vmin, 760px)",
+          height: "min(90vmin, 760px)",
           background:
-            "radial-gradient(circle, rgba(233,30,99,0.55) 0%, rgba(244,114,182,0.32) 35%, rgba(248,187,208,0.12) 60%, transparent 75%)",
-          filter: "blur(28px)",
-          mixBlendMode: "multiply",
+            "radial-gradient(circle, rgba(233,30,99,0.34) 0%, rgba(244,114,182,0.22) 32%, rgba(248,187,208,0.10) 58%, transparent 75%)",
+          filter: "blur(36px)",
         }}
       />
       {!firstFrameReady && (
