@@ -8,8 +8,6 @@ import { useT } from "@/components/I18nProvider";
 
 type Period = "today" | "week" | "month";
 
-const STAT_TONES = ["violet", "emerald", "amber", "rose"] as const;
-
 type Bar = { label: string; h: number; today?: boolean };
 type AppRow = { app: string; time: string; pct: number };
 
@@ -69,15 +67,6 @@ const PERIOD_DATA: Record<Period, { bars: Bar[]; trend: number[]; apps: AppRow[]
     ],
   },
 };
-
-function toneColor(tone: string) {
-  switch (tone) {
-    case "emerald": return "var(--blooming)";
-    case "amber":   return "var(--warning)";
-    case "rose":    return "var(--wilting)";
-    default:        return "var(--brand-primary)";
-  }
-}
 
 export default function AnalysisPage() {
   const t = useT();
@@ -139,7 +128,7 @@ export default function AnalysisPage() {
               >
                 <div
                   className="text-[40px] font-semibold mb-2 tracking-tight"
-                  style={{ color: toneColor(STAT_TONES[i]), letterSpacing: "-0.025em" }}
+                  style={{ color: "var(--text-primary)", letterSpacing: "-0.025em" }}
                 >
                   {s.value}
                 </div>
@@ -157,17 +146,15 @@ export default function AnalysisPage() {
                     <div key={i} className="flex items-center gap-4">
                       <span className="w-10 text-[13px] text-[var(--text-muted)]">{b.label}</span>
                       <div
-                        className="flex-1 h-10 rounded-xl overflow-hidden"
+                        className="flex-1 h-2 rounded-full overflow-hidden"
                         style={{ background: "var(--violet-50)" }}
                       >
                         <div
-                          className="h-full rounded-xl anim-bar-h"
+                          className="h-full rounded-full anim-bar-h"
                           style={{
                             ["--bar-w" as string]: `${b.h}%`,
                             animationDelay: `${i * 60}ms`,
-                            background: b.today
-                              ? "linear-gradient(90deg, var(--violet-600), var(--brand-accent))"
-                              : "var(--violet-300)",
+                            background: b.today ? "var(--brand-primary)" : "var(--violet-200)",
                           } as CSSProperties}
                         />
                       </div>
@@ -187,15 +174,14 @@ export default function AnalysisPage() {
                   {data.trend.map((h, i) => (
                     <div key={i} className="flex-1 flex flex-col items-center h-full justify-end gap-2">
                       <div
-                        className="w-full rounded-t-lg anim-bar-v"
+                        className="w-full rounded-md anim-bar-v"
                         style={{
                           ["--bar-h" as string]: `${h}%`,
                           animationDelay: `${i * 35}ms`,
                           background:
-                            h > 80 ? "var(--wilting)" :
-                            h > 65 ? "var(--warning)" :
-                                     "var(--brand-primary)",
-                          opacity: h > 80 ? 0.9 : h > 65 ? 0.85 : 0.8,
+                            h > 80 ? "var(--violet-600)" :
+                            h > 65 ? "var(--violet-400)" :
+                                     "var(--violet-200)",
                         } as CSSProperties}
                       />
                       <span className="text-[11px] text-[var(--text-muted)] tabular-nums">
@@ -205,9 +191,9 @@ export default function AnalysisPage() {
                   ))}
                 </div>
                 <div className="flex items-center gap-6 mt-6 pt-6 border-t border-[var(--border-subtle)]">
-                  <LegendDot color="var(--brand-primary)" label={t.analysis.legend.healthy} />
-                  <LegendDot color="var(--warning)" label={t.analysis.legend.borderline} />
-                  <LegendDot color="var(--wilting)" label={t.analysis.legend.overLimit} />
+                  <LegendDot color="var(--violet-200)" label={t.analysis.legend.healthy} />
+                  <LegendDot color="var(--violet-400)" label={t.analysis.legend.borderline} />
+                  <LegendDot color="var(--violet-600)" label={t.analysis.legend.overLimit} />
                 </div>
               </div>
             </Reveal>
@@ -232,7 +218,7 @@ export default function AnalysisPage() {
                           style={{
                             ["--bar-w" as string]: `${item.pct}%`,
                             animationDelay: `${i * 80}ms`,
-                            background: "linear-gradient(90deg, var(--violet-600), var(--brand-accent))",
+                            background: "var(--brand-primary)",
                           } as CSSProperties}
                         />
                       </div>
@@ -248,7 +234,7 @@ export default function AnalysisPage() {
               <div className="card card-hover h-full">
                 <p
                   className="text-[12px] tracking-[0.22em] uppercase font-medium mb-5"
-                  style={{ color: "var(--blooming)" }}
+                  style={{ color: "var(--text-muted)" }}
                 >
                   {t.analysis.positiveTitle}
                 </p>
@@ -256,8 +242,8 @@ export default function AnalysisPage() {
                   {t.analysis.positiveItems.map((line) => (
                     <li key={line} className="flex items-start gap-3">
                       <span
-                        className="mt-1 w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[11px]"
-                        style={{ background: "var(--blooming)" }}
+                        className="mt-1 w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-[11px]"
+                        style={{ background: "var(--violet-50)", color: "var(--brand-primary)" }}
                       >
                         ✓
                       </span>
@@ -272,7 +258,7 @@ export default function AnalysisPage() {
               <div className="card card-hover h-full">
                 <p
                   className="text-[12px] tracking-[0.22em] uppercase font-medium mb-5"
-                  style={{ color: "var(--warning)" }}
+                  style={{ color: "var(--text-muted)" }}
                 >
                   {t.analysis.watchTitle}
                 </p>
@@ -280,8 +266,8 @@ export default function AnalysisPage() {
                   {t.analysis.watchItems.map((line) => (
                     <li key={line} className="flex items-start gap-3">
                       <span
-                        className="mt-1 w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[11px]"
-                        style={{ background: "var(--warning)" }}
+                        className="mt-1 w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-[11px]"
+                        style={{ background: "var(--violet-50)", color: "var(--text-secondary)" }}
                       >
                         !
                       </span>
