@@ -180,12 +180,14 @@ export function FlowerScene({
       // Continuous slow rotation while #features is in view.
       // Composes with x/y/scale tweens (rotation is a separate transform component).
       // paused/play preserves angle on leave so the flower never snaps back to 0°.
-      const rotation = gsap.to(wrapper, {
+      // Rotate the canvas only — not the wrapper — so the halo stays put.
+      const rotation = gsap.to(canvas, {
         rotation: 360,
         duration: 30,
         ease: "none",
         repeat: -1,
         paused: true,
+        transformOrigin: "50% 50%",
       });
       tweens.push(rotation);
 
