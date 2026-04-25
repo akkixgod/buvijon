@@ -177,31 +177,6 @@ export function FlowerScene({
       tweens.push(t4);
       if (t4.scrollTrigger) triggers.push(t4.scrollTrigger);
 
-      // Continuous slow rotation while #features is in view.
-      // Composes with x/y/scale tweens (rotation is a separate transform component).
-      // paused/play preserves angle on leave so the flower never snaps back to 0°.
-      // Rotate the canvas only — not the wrapper — so the halo stays put.
-      const rotation = gsap.to(canvas, {
-        rotation: 360,
-        duration: 30,
-        ease: "none",
-        repeat: -1,
-        paused: true,
-        transformOrigin: "50% 50%",
-      });
-      tweens.push(rotation);
-
-      const rotationST = ScrollTrigger.create({
-        trigger: "#features",
-        start: "top top",
-        end: "bottom top",
-        onEnter: () => rotation.play(),
-        onEnterBack: () => rotation.play(),
-        onLeave: () => rotation.pause(),
-        onLeaveBack: () => rotation.pause(),
-      });
-      triggers.push(rotationST);
-
       // Bloom halo — kept at opacity 1; visibility comes for free from the
       // wrapper's stage opacity (child opacity multiplies with parent).
       // So the halo fades in/out exactly with the flower at every stage,
