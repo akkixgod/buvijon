@@ -9,6 +9,14 @@ const en = {
   },
   hero: {
     eyebrow: "Buvijon · Launching May 15",
+    countdown: {
+      prefix: "Buvijon",
+      suffix: "until launch",
+      liveLabel: "Live now",
+      days: "d",
+      hours: "h",
+      minutes: "m",
+    },
     titleLine1: "Screen time.",
     titleLine2: "Reimagined.",
     lead: "A garden where your child's digital balance blooms. Quiet limits, gentle insights, and a flower that grows when your family's habits do.",

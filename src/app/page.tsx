@@ -8,6 +8,8 @@ import { FlowerScene } from "@/components/FlowerScene";
 import { PhoneMockup } from "@/components/PhoneMockup";
 import { ScrollDownCue } from "@/components/ScrollDownCue";
 import { Logo } from "@/components/Logo";
+import { BrandText } from "@/components/BrandText";
+import { Countdown } from "@/components/Countdown";
 import { useT } from "@/components/I18nProvider";
 
 const FEATURE_ICONS = [
@@ -109,7 +111,7 @@ export default function Home() {
                   <Logo size={52} withWordmark={false} href={null} />
                 </div>
               </Reveal>
-              <Reveal as="p" className="eyebrow mb-6">{t.hero.eyebrow}</Reveal>
+              <Reveal as="p" className="eyebrow mb-6"><Countdown /></Reveal>
               <Reveal delay={0.05}>
                 <h1 className="mb-6">
                   {t.hero.titleLine1}
@@ -157,7 +159,7 @@ export default function Home() {
                 </h2>
               </Reveal>
               <Reveal delay={0.12}>
-                <p className="lead mb-10">{t.story.lead}</p>
+                <p className="lead mb-10"><BrandText>{t.story.lead}</BrandText></p>
               </Reveal>
               <Reveal delay={0.18}>
                 <p className="text-[12px] tracking-[0.22em] uppercase font-medium text-[var(--brand-primary)] mb-4">
@@ -220,7 +222,7 @@ export default function Home() {
                 <div className="step-card">
                   <span className="step-icon">{STEP_ICONS[i]}</span>
                   <span className="step-number">{s.n}</span>
-                  <h3 className="mb-3">{s.t}</h3>
+                  <h3 className="mb-3"><BrandText>{s.t}</BrandText></h3>
                   <p className="step-desc">{s.d}</p>
                 </div>
               </Reveal>
@@ -237,7 +239,7 @@ export default function Home() {
         <div className="container-1100">
           <Reveal>
             <h2 className="mb-8">
-              {t.ctaSection.title1}
+              <BrandText>{t.ctaSection.title1}</BrandText>
               <br />
               <span className="gradient-text">{t.ctaSection.title2}</span>
             </h2>

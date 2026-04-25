@@ -11,6 +11,14 @@ const ru: Dictionary = {
   },
   hero: {
     eyebrow: "Buvijon · Запуск 15 мая",
+    countdown: {
+      prefix: "Buvijon",
+      suffix: "до запуска",
+      liveLabel: "В эфире",
+      days: "д",
+      hours: "ч",
+      minutes: "м",
+    },
     titleLine1: "Экранное время.",
     titleLine2: "По-новому.",
     lead: "Сад, в котором расцветает цифровое равновесие вашего ребёнка. Тихие лимиты, мягкие подсказки и цветок, который растёт вместе с привычками семьи.",
