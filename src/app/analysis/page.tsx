@@ -4,6 +4,7 @@ import { useState, type CSSProperties } from "react";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
+import { CountUp } from "@/components/CountUp";
 import { useT } from "@/components/I18nProvider";
 
 type Period = "today" | "week" | "month";
@@ -130,7 +131,7 @@ export default function AnalysisPage() {
                   className="text-[40px] font-semibold mb-2 tracking-tight"
                   style={{ color: "var(--text-primary)", letterSpacing: "-0.025em" }}
                 >
-                  {s.value}
+                  <CountUp value={s.value} />
                 </div>
                 <div className="text-[14px] text-[var(--text-secondary)]">{s.label}</div>
               </div>
