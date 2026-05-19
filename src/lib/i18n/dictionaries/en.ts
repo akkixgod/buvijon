@@ -6,6 +6,8 @@ const en = {
     family: "Family",
     analysis: "Analysis",
     joinWaitlist: "Join waitlist",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
   },
   hero: {
     eyebrow: "Buvijon · Launching June 1",
@@ -65,6 +67,7 @@ const en = {
   },
   footer: {
     copyright: "© 2026 Buvijon. Made with care for families in Uzbekistan.",
+    explore: "Explore",
     contact: "Contact",
     gmail: "hello@buvijon.com",
     telegram: "@buvijon_uz",

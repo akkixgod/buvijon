@@ -1,13 +1,23 @@
 "use client";
 
+import Link from "next/link";
 import { Logo } from "./Logo";
 import { useT } from "./I18nProvider";
+
+const FOOTER_LINKS = [
+  { href: "/#story", key: "story" as const },
+  { href: "/#features", key: "features" as const },
+  { href: "/#how", key: "how" as const },
+  { href: "/family", key: "family" as const },
+  { href: "/analysis", key: "analysis" as const },
+  { href: "/waitlist", key: "joinWaitlist" as const },
+];
 
 export function Footer() {
   const t = useT();
   return (
     <footer className="bg-[var(--bg-section)] border-t border-[var(--border-subtle)] py-14">
-      <div className="container-1100 grid gap-10 md:grid-cols-[1fr_auto] md:items-end">
+      <div className="container-1100 grid gap-10 lg:grid-cols-[1fr_auto_auto] lg:items-start">
         <div className="flex flex-col gap-4">
           <Logo size={28} />
           <p className="text-[13px] text-[var(--text-muted)] max-w-[420px]">
@@ -15,7 +25,25 @@ export function Footer() {
           </p>
         </div>
 
-        <div className="flex flex-col items-start md:items-end gap-3 text-[13px]">
+        <nav aria-label="Site" className="flex flex-col gap-3">
+          <span className="text-[11px] tracking-[0.22em] uppercase font-medium text-[var(--text-muted)]">
+            {t.footer.explore}
+          </span>
+          <ul className="flex flex-col gap-2">
+            {FOOTER_LINKS.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="text-[14px] text-[var(--text-secondary)] hover:text-[var(--brand-primary)] transition-colors"
+                >
+                  {t.nav[item.key]}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="flex flex-col items-start lg:items-end gap-3 text-[13px]">
           <span className="text-[11px] tracking-[0.22em] uppercase font-medium text-[var(--text-muted)]">
             {t.footer.contact}
           </span>

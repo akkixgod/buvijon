@@ -8,6 +8,8 @@ const ru: Dictionary = {
     family: "Семья",
     analysis: "Аналитика",
     joinWaitlist: "В лист ожидания",
+    openMenu: "Открыть меню",
+    closeMenu: "Закрыть меню",
   },
   hero: {
     eyebrow: "Buvijon · Запуск 1 июня",
@@ -67,6 +69,7 @@ const ru: Dictionary = {
   },
   footer: {
     copyright: "© 2026 Buvijon. Сделано с заботой для семей в Узбекистане.",
+    explore: "Разделы",
     contact: "Связь",
     gmail: "hello@buvijon.com",
     telegram: "@buvijon_uz",

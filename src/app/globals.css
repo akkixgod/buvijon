@@ -31,6 +31,8 @@
 
   --border-subtle: rgba(29, 29, 31, 0.08);
   --border-violet: rgba(124, 58, 237, 0.18);
+  --surface-inset: #F5F5F7;
+  --surface-raised: #FFFFFF;
 }
 
 @theme inline {
@@ -154,6 +156,13 @@ p {
   white-space: nowrap;
 }
 .btn-primary:hover { background: #000000; }
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible,
+.btn-violet:focus-visible,
+.btn-link:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 3px;
+}
 
 /* Secondary CTA — visible against white, not as loud as primary */
 .btn-secondary {
@@ -444,7 +453,7 @@ p {
   width: 100%;
   height: 56px;
   padding: 0 20px;
-  background: #FFFFFF;
+  background: var(--surface-inset);
   border: 1px solid var(--border-subtle);
   border-radius: 16px;
   font-size: 16px;
@@ -465,6 +474,16 @@ p {
 .section { padding-top: 120px; padding-bottom: 120px; }
 .section-tight { padding-top: 80px; padding-bottom: 80px; }
 .section-hero { padding-top: 140px; padding-bottom: 80px; }
+
+.cta-panel {
+  background: var(--bg-section);
+  border: 1px solid var(--border-subtle);
+  border-radius: 32px;
+  padding: clamp(40px, 6vw, 72px) clamp(24px, 5vw, 56px);
+  max-width: 880px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 /* Container */
 .container-1100 {

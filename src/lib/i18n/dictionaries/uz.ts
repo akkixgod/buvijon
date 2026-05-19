@@ -8,6 +8,8 @@ const uz: Dictionary = {
     family: "Oila",
     analysis: "Analiz qilish",
     joinWaitlist: "Ro'yxatga yozilish",
+    openMenu: "Menyuni ochish",
+    closeMenu: "Menyuni yopish",
   },
   hero: {
     eyebrow: "Buvijon · 1-iyun kuni ishga tushadi",
@@ -67,6 +69,7 @@ const uz: Dictionary = {
   },
   footer: {
     copyright: "© 2026 Buvijon. O'zbekiston oilalari uchun mehr bilan yaratilgan.",
+    explore: "Bo'limlar",
     contact: "Bizga bog'laning",
     gmail: "assalom@buvijon.com",
     telegram: "@buvijon_uz",

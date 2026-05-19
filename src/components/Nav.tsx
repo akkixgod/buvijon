@@ -10,9 +10,7 @@ import { useT } from "./I18nProvider";
 type LinkSpec = {
   href: string;
   label: string;
-  // For non-home routes: the pathname to match. For home anchors: undefined.
   pathMatch?: string;
-  // For home anchors: the section id to track in viewport. Undefined for routes.
   section?: string;
 };
 
@@ -20,6 +18,7 @@ export function Nav({ cta = true }: { cta?: boolean }) {
   const pathname = usePathname();
   const t = useT();
   const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -28,28 +27,36 @@ export function Nav({ cta = true }: { cta?: boolean }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   const links = useMemo<LinkSpec[]>(
     () => [
-      { href: "/#story",    label: t.nav.story,    section: "story" },
+      { href: "/#story", label: t.nav.story, section: "story" },
       { href: "/#features", label: t.nav.features, section: "features" },
-      { href: "/#how",      label: t.nav.how,      section: "how" },
-      { href: "/family",    label: t.nav.family,   pathMatch: "/family" },
-      { href: "/analysis",  label: t.nav.analysis, pathMatch: "/analysis" },
+      { href: "/#how", label: t.nav.how, section: "how" },
+      { href: "/family", label: t.nav.family, pathMatch: "/family" },
+      { href: "/analysis", label: t.nav.analysis, pathMatch: "/analysis" },
     ],
     [t],
   );
 
-  // ── Active link tracking ────────────────────────────────────────────────
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  // For non-home routes, derive active from pathname directly.
   useEffect(() => {
-    if (pathname === "/") return; // handled by IntersectionObserver below
+    if (pathname === "/") return;
     const idx = links.findIndex((l) => l.pathMatch === pathname);
     setActiveIndex(idx === -1 ? null : idx);
   }, [pathname, links]);
 
-  // For home page, observe section visibility and pick the most-visible one.
   useEffect(() => {
     if (pathname !== "/") return;
     const sectionEntries = links
@@ -82,8 +89,6 @@ export function Nav({ cta = true }: { cta?: boolean }) {
     };
 
     const observer = new IntersectionObserver(onChange, {
-      // Mid-viewport band: a section "owns" the highlight while its body
-      // sits behind the nav band.
       rootMargin: "-30% 0px -55% 0px",
       threshold: [0, 0.05, 0.12, 0.25, 0.5, 0.75, 1],
     });
@@ -91,7 +96,6 @@ export function Nav({ cta = true }: { cta?: boolean }) {
     return () => observer.disconnect();
   }, [pathname, links]);
 
-  // ── Liquid pill positioning ─────────────────────────────────────────────
   const linkContainerRef = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
@@ -101,7 +105,6 @@ export function Nav({ cta = true }: { cta?: boolean }) {
     opacity: 0,
   });
 
-  // Hover takes precedence; otherwise rest at the section/route the user is on.
   const focusedIndex = hoverIndex ?? activeIndex;
 
   useLayoutEffect(() => {
@@ -130,78 +133,162 @@ export function Nav({ cta = true }: { cta?: boolean }) {
     return () => window.removeEventListener("resize", measure);
   }, [focusedIndex, t]);
 
+  const navSurface = scrolled
+    ? "rgba(255,255,255,0.88)"
+    : "rgba(255,255,255,0.72)";
+
   return (
-    <nav
-      className="fixed top-0 inset-x-0 z-50 transition-[background,border-color,backdrop-filter] duration-300"
-      style={{
-        background: scrolled ? "rgba(255,255,255,0.82)" : "rgba(255,255,255,0)",
-        backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
-        borderBottom: scrolled ? "1px solid rgba(29,29,31,0.06)" : "1px solid transparent",
-      }}
-    >
-      <div className="container-1100 h-14 flex items-center justify-between gap-4">
-        <Logo size={28} />
+    <>
+      <nav
+        className="fixed top-0 inset-x-0 z-50 transition-[background,border-color,backdrop-filter] duration-300"
+        style={{
+          background: mobileOpen ? navSurface : scrolled ? navSurface : "rgba(255,255,255,0)",
+          backdropFilter: scrolled || mobileOpen ? "blur(20px) saturate(180%)" : "none",
+          WebkitBackdropFilter: scrolled || mobileOpen ? "blur(20px) saturate(180%)" : "none",
+          borderBottom:
+            scrolled || mobileOpen
+              ? "1px solid rgba(29,29,31,0.06)"
+              : "1px solid transparent",
+        }}
+      >
+        <div className="container-1100 h-14 flex items-center justify-between gap-3">
+          <Logo size={28} />
 
-        <div
-          ref={linkContainerRef}
-          className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2"
-          onMouseLeave={() => setHoverIndex(null)}
-        >
-          {/* Liquid pill background */}
-          <span
-            aria-hidden
-            className="absolute top-1/2 -translate-y-1/2 rounded-full pointer-events-none"
-            style={{
-              left: pillStyle.left,
-              width: pillStyle.width,
-              height: 32,
-              opacity: pillStyle.opacity,
-              background:
-                "linear-gradient(135deg, rgba(124,58,237,0.10), rgba(236,72,153,0.10))",
-              border: "1px solid rgba(124,58,237,0.18)",
-              backdropFilter: "blur(6px)",
-              WebkitBackdropFilter: "blur(6px)",
-              transition:
-                "left 0.45s cubic-bezier(0.22,1,0.36,1), width 0.45s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease",
-            }}
-          />
-          {links.map((l, i) => {
-            const active = activeIndex === i;
-            const focused = focusedIndex === i;
-            return (
+          <div
+            ref={linkContainerRef}
+            className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2"
+            onMouseLeave={() => setHoverIndex(null)}
+          >
+            <span
+              aria-hidden
+              className="absolute top-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+              style={{
+                left: pillStyle.left,
+                width: pillStyle.width,
+                height: 32,
+                opacity: pillStyle.opacity,
+                background:
+                  "linear-gradient(135deg, rgba(124,58,237,0.10), rgba(236,72,153,0.10))",
+                border: "1px solid rgba(124,58,237,0.18)",
+                backdropFilter: "blur(6px)",
+                WebkitBackdropFilter: "blur(6px)",
+                transition:
+                  "left 0.45s cubic-bezier(0.22,1,0.36,1), width 0.45s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease",
+              }}
+            />
+            {links.map((l, i) => {
+              const active = activeIndex === i;
+              const focused = focusedIndex === i;
+              return (
+                <NavLink
+                  key={l.href}
+                  href={l.href}
+                  ref={(node) => {
+                    linkRefs.current[i] = node;
+                  }}
+                  onClick={() => setHoverIndex(null)}
+                  onMouseEnter={() => setHoverIndex(i)}
+                  className="relative px-3.5 py-2 text-[13px] transition-colors"
+                  style={{
+                    color: focused || active ? "var(--text-primary)" : "var(--text-secondary)",
+                    fontWeight: active ? 600 : 400,
+                  }}
+                >
+                  {l.label}
+                </NavLink>
+              );
+            })}
+          </div>
+
+          <div className="flex items-center gap-2">
+            <LanguageSwitcher />
+            {cta && (
               <NavLink
-                key={l.href}
-                href={l.href}
-                ref={(node) => {
-                  linkRefs.current[i] = node;
-                }}
-                onClick={() => setHoverIndex(null)}
-                onMouseEnter={() => setHoverIndex(i)}
-                className="relative px-3.5 py-2 text-[13px] transition-colors"
-                style={{
-                  color: focused || active ? "var(--text-primary)" : "var(--text-secondary)",
-                  fontWeight: active ? 600 : 400,
-                }}
+                href="/waitlist"
+                className="hidden sm:inline-flex items-center h-9 px-5 rounded-full bg-[var(--text-primary)] text-white text-[13px] font-semibold tracking-tight hover:bg-black/85 transition-colors shadow-[0_6px_18px_-6px_rgba(29,29,31,0.45)]"
               >
-                {l.label}
+                {t.nav.joinWaitlist}
               </NavLink>
-            );
-          })}
-        </div>
-
-        <div className="flex items-center gap-2">
-          <LanguageSwitcher />
-          {cta && (
-            <NavLink
-              href="/waitlist"
-              className="inline-flex items-center h-9 px-5 rounded-full bg-[var(--text-primary)] text-white text-[13px] font-semibold tracking-tight hover:bg-black/85 transition-colors shadow-[0_6px_18px_-6px_rgba(29,29,31,0.45)]"
+            )}
+            <button
+              type="button"
+              className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-[var(--border-subtle)] text-[var(--text-primary)] hover:bg-[var(--surface-inset)] transition-colors"
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-nav-panel"
+              onClick={() => setMobileOpen((o) => !o)}
             >
-              {t.nav.joinWaitlist}
-            </NavLink>
-          )}
+              <span className="sr-only">{mobileOpen ? t.nav.closeMenu : t.nav.openMenu}</span>
+              {mobileOpen ? <CloseIcon /> : <MenuIcon />}
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <div
+        id="mobile-nav-panel"
+        className={`fixed inset-0 z-40 md:hidden transition-opacity duration-300 ${
+          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        aria-hidden={!mobileOpen}
+      >
+        <button
+          type="button"
+          className="absolute inset-0 bg-[rgba(29,29,31,0.35)] backdrop-blur-[2px]"
+          aria-label={t.nav.closeMenu}
+          onClick={() => setMobileOpen(false)}
+        />
+        <div
+          className={`absolute top-14 inset-x-0 bottom-0 bg-[var(--bg-primary)] border-t border-[var(--border-subtle)] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            mobileOpen ? "translate-y-0" : "-translate-y-3"
+          }`}
+        >
+          <div className="container-1100 py-6 flex flex-col gap-1 h-full overflow-y-auto">
+            {links.map((l, i) => {
+              const active = activeIndex === i;
+              return (
+                <NavLink
+                  key={l.href}
+                  href={l.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center min-h-[48px] px-4 rounded-2xl text-[16px] font-medium transition-colors"
+                  style={{
+                    color: active ? "var(--brand-primary)" : "var(--text-primary)",
+                    background: active ? "var(--violet-50)" : "transparent",
+                  }}
+                >
+                  {l.label}
+                </NavLink>
+              );
+            })}
+            {cta && (
+              <NavLink
+                href="/waitlist"
+                onClick={() => setMobileOpen(false)}
+                className="btn-primary w-full mt-4"
+                style={{ height: 52 }}
+              >
+                {t.nav.joinWaitlist}
+              </NavLink>
+            )}
+          </div>
         </div>
       </div>
-    </nav>
+    </>
+  );
+}
+
+function MenuIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+      <path d="M6 6l12 12M18 6 6 18" />
+    </svg>
   );
 }

@@ -7,7 +7,6 @@ import { Reveal } from "@/components/Reveal";
 import { FlowerScene } from "@/components/FlowerScene";
 import { PhoneMockup } from "@/components/PhoneMockup";
 import { ScrollDownCue } from "@/components/ScrollDownCue";
-import { Logo } from "@/components/Logo";
 import { BrandText } from "@/components/BrandText";
 import { Countdown } from "@/components/Countdown";
 import { useT } from "@/components/I18nProvider";
@@ -106,11 +105,6 @@ export default function Home() {
         <div className="container-1100">
           <div className="grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-16 items-center">
             <div>
-              <Reveal>
-                <div className="mb-5">
-                  <Logo size={52} href={null} />
-                </div>
-              </Reveal>
               <Reveal as="p" className="eyebrow mb-6"><Countdown /></Reveal>
               <Reveal delay={0.05}>
                 <h1 className="mb-6">
@@ -235,9 +229,10 @@ export default function Home() {
       <div id="scene-end" className="h-[20vh]" aria-hidden />
 
       {/* Final CTA */}
-      <section className="section text-center">
+      <section className="section-tight text-center">
         <div className="container-1100">
-          <Reveal>
+          <div className="cta-panel">
+                      <Reveal>
             <h2 className="mb-8">
               <BrandText>{t.ctaSection.title1}</BrandText>
               <br />
@@ -251,6 +246,7 @@ export default function Home() {
             <Link href="/waitlist" className="btn-primary">{t.ctaSection.primary}</Link>
             <Link href="/family" className="btn-link">{t.ctaSection.secondary}</Link>
           </Reveal>
+          </div>
         </div>
       </section>
       </main>
