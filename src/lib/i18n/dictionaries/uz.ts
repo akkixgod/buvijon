@@ -1,6 +1,11 @@
 import type { Dictionary } from "../types";
 
 const uz: Dictionary = {
+  common: {
+    preview: "Interaktiv ko‘rinish — namuna ma’lumotlar",
+    productCtaLead: "Haqiqiy bog‘ni oilangiz telefonlarida xohlaysizmi?",
+    selectMember: "Bog‘ini ko‘rish uchun oila a’zosini tanlang",
+  },
   nav: {
     story: "Hikoya",
     features: "Imkoniyatlar",
@@ -158,6 +163,7 @@ const uz: Dictionary = {
     cityError: "Shaharni tanlang",
     duplicate: "Bu email yoki Telegram username allaqachon ro'yxatda",
     agree: "Buvijon yangiliklarini olishga roziman. Istalgan vaqtda obunani bekor qila olaman.",
+    agreeError: "Davom etish uchun rozilik bering",
     submit: "Ro'yxatga yozilish",
     submitDisabled: "Davom etish uchun rozilik bering",
     successTitle: "Siz ro'yxatdasiz.",

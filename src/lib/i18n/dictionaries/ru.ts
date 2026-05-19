@@ -1,6 +1,11 @@
 import type { Dictionary } from "../types";
 
 const ru: Dictionary = {
+  common: {
+    preview: "Интерактивный просмотр — демо-данные",
+    productCtaLead: "Хотите настоящий сад на телефонах семьи?",
+    selectMember: "Выберите члена семьи, чтобы увидеть сад",
+  },
   nav: {
     story: "Идея",
     features: "Возможности",
@@ -158,6 +163,7 @@ const ru: Dictionary = {
     cityError: "Выберите город",
     duplicate: "Этот email или Telegram username уже зарегистрирован",
     agree: "Согласен получать обновления о запуске Buvijon. Можно отписаться в любой момент.",
+    agreeError: "Подтвердите согласие, чтобы продолжить",
     submit: "В лист ожидания",
     submitDisabled: "Подтвердите согласие, чтобы продолжить",
     successTitle: "Вы в листе ожидания.",

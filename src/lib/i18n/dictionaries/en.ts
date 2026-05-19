@@ -1,4 +1,9 @@
 const en = {
+  common: {
+    preview: "Interactive preview — sample data",
+    productCtaLead: "Want the real garden on your family's phones?",
+    selectMember: "Select a family member to see their garden",
+  },
   nav: {
     story: "Story",
     features: "Features",
@@ -156,6 +161,7 @@ const en = {
     cityError: "Please select your city",
     duplicate: "This email or Telegram username is already registered",
     agree: "I agree to receive updates about Buvijon's launch. I can unsubscribe anytime.",
+    agreeError: "Please agree to continue",
     submit: "Join waitlist",
     submitDisabled: "Please agree to continue",
     successTitle: "You're on the list.",

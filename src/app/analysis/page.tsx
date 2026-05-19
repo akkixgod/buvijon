@@ -5,6 +5,9 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
 import { CountUp } from "@/components/CountUp";
+import { PreviewBanner } from "@/components/product/PreviewBanner";
+import { ProductCta } from "@/components/product/ProductCta";
+import { SegmentedControl } from "@/components/product/SegmentedControl";
 import { useT } from "@/components/I18nProvider";
 
 type Period = "today" | "week" | "month";
@@ -80,8 +83,9 @@ export default function AnalysisPage() {
     <>
       <Nav />
 
-      <main className="section-hero pt-[130px]">
-        <div className="container-1100">
+      <main className="product-shell section-hero !pt-[130px]">
+        <div className="container-1100 pb-16">
+          <PreviewBanner />
           <div className="mb-12 max-w-[720px]">
             <Reveal as="p" className="eyebrow mb-5">{t.analysis.eyebrow}</Reveal>
             <Reveal delay={0.05}>
@@ -97,26 +101,15 @@ export default function AnalysisPage() {
           </div>
 
           <Reveal delay={0.14} className="mb-12">
-            <div
-              className="inline-flex gap-1 p-1 rounded-full"
-              style={{ background: "var(--violet-50)", border: "1px solid var(--border-violet)" }}
-            >
-              {(["today", "week", "month"] as Period[]).map((p) => (
-                <button
-                  key={p}
-                  onClick={() => setPeriod(p)}
-                  className="px-6 py-2.5 rounded-full text-[14px] font-medium transition-all duration-300"
-                  style={{
-                    background: period === p ? "var(--brand-primary)" : "transparent",
-                    color: period === p ? "#FFFFFF" : "var(--text-secondary)",
-                    boxShadow: period === p ? "0 8px 22px -10px rgba(124,58,237,0.6)" : undefined,
-                    transform: period === p ? "translateY(-1px)" : undefined,
-                  }}
-                >
-                  {t.analysis.periods[p]}
-                </button>
-              ))}
-            </div>
+            <SegmentedControl
+              value={period}
+              onChange={setPeriod}
+              ariaLabel={t.analysis.eyebrow}
+              options={(["today", "week", "month"] as Period[]).map((p) => ({
+                value: p,
+                label: t.analysis.periods[p],
+              }))}
+            />
           </Reveal>
 
           {/* Stats — re-mount on period change to retrigger animations */}
@@ -140,7 +133,7 @@ export default function AnalysisPage() {
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             <Reveal>
-              <div className="card card-hover h-full">
+              <div className="panel panel-interactive h-full">
                 <h3 className="mb-8">{t.analysis.activity}</h3>
                 <div key={`bars-${period}`} className="space-y-4">
                   {data.bars.map((b, i) => (
@@ -169,7 +162,7 @@ export default function AnalysisPage() {
             </Reveal>
 
             <Reveal delay={0.08}>
-              <div className="card card-hover h-full">
+              <div className="panel panel-interactive h-full">
                 <h3 className="mb-8">{t.analysis.trend}</h3>
                 <div key={`trend-${period}`} className="h-56 flex items-end justify-between gap-2">
                   {data.trend.map((h, i) => (
@@ -201,7 +194,7 @@ export default function AnalysisPage() {
           </div>
 
           <Reveal className="mb-12">
-            <div className="card card-hover">
+            <div className="panel panel-interactive">
               <h3 className="mb-8">{t.analysis.appBreakdown}</h3>
               <div key={`apps-${period}`} className="space-y-5">
                 {data.apps.map((item, i) => (
@@ -232,7 +225,7 @@ export default function AnalysisPage() {
 
           <div className="grid md:grid-cols-2 gap-8">
             <Reveal>
-              <div className="card card-hover h-full">
+              <div className="panel panel-interactive h-full">
                 <p
                   className="text-[12px] tracking-[0.22em] uppercase font-medium mb-5"
                   style={{ color: "var(--text-muted)" }}
@@ -256,7 +249,7 @@ export default function AnalysisPage() {
             </Reveal>
 
             <Reveal delay={0.08}>
-              <div className="card card-hover h-full">
+              <div className="panel panel-interactive h-full">
                 <p
                   className="text-[12px] tracking-[0.22em] uppercase font-medium mb-5"
                   style={{ color: "var(--text-muted)" }}
@@ -279,6 +272,8 @@ export default function AnalysisPage() {
               </div>
             </Reveal>
           </div>
+
+          <ProductCta />
         </div>
       </main>
 

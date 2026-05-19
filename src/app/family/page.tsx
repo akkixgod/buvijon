@@ -4,6 +4,9 @@ import { useState } from "react";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Flower } from "@/components/Flower";
+import { PreviewBanner } from "@/components/product/PreviewBanner";
+import { ProductCta } from "@/components/product/ProductCta";
+import { SegmentedControl } from "@/components/product/SegmentedControl";
 import { useT } from "@/components/I18nProvider";
 
 type FlowerVariant = "violet" | "pink" | "indigo" | "emerald" | "rose" | "amber";
@@ -55,34 +58,29 @@ export default function FamilyPage() {
     <>
       <Nav cta={false} />
 
-      <main className="pt-[100px] min-h-screen bg-[var(--bg-section)]">
+      <main className="product-shell">
         <div className="container-1100 py-10">
+          <PreviewBanner />
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10">
             <div>
               <p className="eyebrow mb-3">{t.family.eyebrow}</p>
               <h1 className="!text-[clamp(2rem,4.5vw,3.5rem)]">{t.family.title}</h1>
             </div>
 
-            <div className="inline-flex p-1 bg-white border border-[var(--border-subtle)] rounded-full">
-              {(["family", "chats", "direct"] as Tab[]).map((tk) => (
-                <button
-                  key={tk}
-                  onClick={() => setTab(tk)}
-                  className={`px-5 h-10 rounded-full text-[13px] font-medium transition-colors ${
-                    tab === tk
-                      ? "bg-[var(--text-primary)] text-white"
-                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                  }`}
-                >
-                  {t.family.tabs[tk]}
-                </button>
-              ))}
-            </div>
+            <SegmentedControl
+              value={tab}
+              onChange={setTab}
+              ariaLabel={t.family.eyebrow}
+              options={(["family", "chats", "direct"] as Tab[]).map((tk) => ({
+                value: tk,
+                label: t.family.tabs[tk],
+              }))}
+            />
           </div>
 
           {tab === "family" && (
             <div className="grid lg:grid-cols-[1fr_1.4fr] gap-8">
-              <div className="card !p-6">
+              <div className="panel">
                 <p className="eyebrow mb-4">{t.family.hub}</p>
                 <h3 className="mb-6 !text-[18px]">{t.family.messages}</h3>
                 <div className="space-y-3">
@@ -113,7 +111,7 @@ export default function FamilyPage() {
                 </div>
               </div>
 
-              <div className="card !p-6">
+              <div className="panel">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <p className="eyebrow mb-2">{t.family.standing}</p>
@@ -121,12 +119,13 @@ export default function FamilyPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {FAMILY.map((m) => (
                     <button
+                      type="button"
                       key={m.id}
                       onClick={() => setSelected(selected === m.id ? null : m.id)}
-                      className={`p-5 rounded-2xl border text-center transition-all ${
+                      className={`p-5 rounded-2xl border text-center transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-primary)] ${
                         selected === m.id
                           ? "border-[var(--brand-primary)] bg-[var(--violet-50)]"
                           : "border-[var(--border-subtle)] bg-white hover:border-[var(--border-violet)]"
@@ -147,6 +146,13 @@ export default function FamilyPage() {
                     </button>
                   ))}
                 </div>
+
+                {selected === null && (
+                  <div className="empty-state mt-8">
+                    <p className="empty-state__title">{t.family.standingHint}</p>
+                    <p className="empty-state__hint">{t.common.selectMember}</p>
+                  </div>
+                )}
 
                 {selected !== null && (() => {
                   const m = FAMILY.find((x) => x.id === selected);
@@ -242,7 +248,7 @@ export default function FamilyPage() {
           {tab === "chats" && (
             <div className="grid md:grid-cols-2 gap-6">
               {CHATS.map((c) => (
-                <div key={c.id} className="card !p-6 card-hover">
+                <div key={c.id} className="panel panel-interactive">
                   <div className="flex items-start gap-4">
                     <Avatar initials={c.initials} system={c.isSystem} large />
                     <div className="flex-1 min-w-0">
@@ -271,7 +277,7 @@ export default function FamilyPage() {
           {tab === "direct" && (
             <div className="space-y-4 max-w-[640px] mx-auto">
               {DIRECT.map((m) => (
-                <div key={m.id} className="card !p-6">
+                <div key={m.id} className="panel panel-interactive">
                   <div className="flex items-start gap-4">
                     <Avatar initials={m.initials} large />
                     <div className="flex-1 min-w-0">
@@ -287,6 +293,8 @@ export default function FamilyPage() {
               ))}
             </div>
           )}
+
+          <ProductCta />
         </div>
       </main>
 
