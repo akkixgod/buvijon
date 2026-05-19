@@ -108,7 +108,7 @@ export default function Home() {
             <div>
               <Reveal>
                 <div className="mb-5">
-                  <Logo size={52} withWordmark={false} href={null} />
+                  <Logo size={52} href={null} />
                 </div>
               </Reveal>
               <Reveal as="p" className="eyebrow mb-6"><Countdown /></Reveal>

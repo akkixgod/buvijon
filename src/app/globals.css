@@ -121,24 +121,11 @@ p {
   max-width: 640px;
 }
 
-/* Inline brand: small logo + bold "Buvijon" inside body copy */
+/* Inline brand: bold "Buvijon" inside body copy */
 .brand-inline {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.3em;
-  white-space: nowrap;
-  vertical-align: baseline;
-}
-.brand-inline img {
-  display: inline-block;
-  width: 0.95em;
-  height: 0.95em;
-  border-radius: 0.2em;
-  transform: translateY(0.12em);
-}
-.brand-inline strong {
   font-weight: 700;
   color: var(--text-primary);
+  white-space: nowrap;
 }
 
 /* Apple gradient accent for select words */

@@ -7,19 +7,7 @@ export function BrandText({ children }: { children: string }) {
       {parts.map((part, i) => (
         <Fragment key={i}>
           {part}
-          {i < parts.length - 1 && (
-            <span className="brand-inline">
-              <img
-                src="/logo.png"
-                alt=""
-                width={18}
-                height={18}
-                aria-hidden
-                draggable={false}
-              />
-              <strong>Buvijon</strong>
-            </span>
-          )}
+          {i < parts.length - 1 && <strong className="brand-inline">Buvijon</strong>}
         </Fragment>
       ))}
     </>
