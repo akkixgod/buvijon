@@ -10,7 +10,7 @@ const uz: Dictionary = {
     joinWaitlist: "Ro'yxatga yozilish",
   },
   hero: {
-    eyebrow: "Buvijon · 15-may kuni ishga tushadi",
+    eyebrow: "Buvijon · 1-iyun kuni ishga tushadi",
     countdown: {
       prefix: "Buvijon",
       suffix: "ishga tushishigacha",
@@ -61,7 +61,7 @@ const uz: Dictionary = {
   ctaSection: {
     title1: "Farzandingizni Buvijon",
     title2: "qaramog'iga bering.",
-    lead: "15-may kuni ishga tushamiz. Birinchi oilalardan biri bo'ling — bog'ga qo'shiling.",
+    lead: "1-iyun kuni ishga tushamiz. Birinchi oilalardan biri bo'ling — bog'ga qo'shiling.",
     primary: "Ro'yxatga yozilish",
     secondary: "Ilovani vizual ko'zdan kechirish ›",
   },
@@ -139,7 +139,7 @@ const uz: Dictionary = {
     titleHighlight: "o'saylik",
     titleEnd: " — birinchi bo'ling.",
     leadPart1: "Erta kirish",
-    leadDate: "15-may",
+    leadDate: "1-iyun",
     leadPart2: " kuni ochiladi. Buvijon ishga tushgan zahoti siz bilan bog'lanamiz.",
     fullName: "To'liq ism",
     fullNamePlaceholder: "Ismingiz",

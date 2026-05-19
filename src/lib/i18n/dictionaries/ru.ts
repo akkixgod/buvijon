@@ -10,7 +10,7 @@ const ru: Dictionary = {
     joinWaitlist: "В лист ожидания",
   },
   hero: {
-    eyebrow: "Buvijon · Запуск 15 мая",
+    eyebrow: "Buvijon · Запуск 1 июня",
     countdown: {
       prefix: "Buvijon",
       suffix: "до запуска",
@@ -61,7 +61,7 @@ const ru: Dictionary = {
   ctaSection: {
     title1: "Будем расти",
     title2: "вместе.",
-    lead: "Запуск 15 мая. Зайдите первыми — окажитесь среди первых семей в саду.",
+    lead: "Запуск 1 июня. Зайдите первыми — окажитесь среди первых семей в саду.",
     primary: "В лист ожидания",
     secondary: "Открыть дашборд ›",
   },
@@ -139,7 +139,7 @@ const ru: Dictionary = {
     titleHighlight: "вырастет вместе",
     titleEnd: ".",
     leadPart1: "Ранний доступ открывается",
-    leadDate: "15 мая",
+    leadDate: "1 июня",
     leadPart2: ". Мы напишем сразу, как Buvijon запустится.",
     fullName: "Полное имя",
     fullNamePlaceholder: "Ваше имя",

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useT } from "./I18nProvider";
 
-const TARGET_MS = Date.parse("2026-05-15T00:00:00+05:00");
+const TARGET_MS = Date.parse("2026-06-01T00:00:00+05:00");
 
 type Remaining = { days: number; hours: number; minutes: number } | null;
 

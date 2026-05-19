@@ -8,7 +8,7 @@ const en = {
     joinWaitlist: "Join waitlist",
   },
   hero: {
-    eyebrow: "Buvijon · Launching May 15",
+    eyebrow: "Buvijon · Launching June 1",
     countdown: {
       prefix: "Buvijon",
       suffix: "until launch",
@@ -59,7 +59,7 @@ const en = {
   ctaSection: {
     title1: "Let's grow",
     title2: "together.",
-    lead: "Launching May 15. Get in early — be one of the first families in the garden.",
+    lead: "Launching June 1. Get in early — be one of the first families in the garden.",
     primary: "Join the waitlist",
     secondary: "Explore the dashboard ›",
   },
@@ -137,7 +137,7 @@ const en = {
     titleHighlight: "grow together",
     titleEnd: ".",
     leadPart1: "Early access opens on",
-    leadDate: "May 15",
+    leadDate: "June 1",
     leadPart2: ". We'll reach out the moment Buvijon launches.",
     fullName: "Full name",
     fullNamePlaceholder: "Your name",
