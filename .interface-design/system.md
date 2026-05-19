@@ -44,6 +44,12 @@ Pill group: `segmented-control` + `segmented-control__btn` + `.is-active` (ink f
 ### Preview banner
 `preview-banner` — violet-50 strip, 13px, explains demo data.
 
+### How-it-works path (`HowStepsPath`)
+- Timeline: dotted rail on desktop, vertical dashed line on mobile
+- Badge: 40px circle, violet-50 + border (not large gradient numerals)
+- Card: `steps-path__card`, icon in 44px soft square, title leads
+- Step 2 (center): `steps-path__item--focus` — filled badge + subtle violet wash
+
 ### Forms
 Labels above fields. Inset `input` background. Validate on blur; clear error on change. Focus ring: 4px violet at 12% opacity.
 
