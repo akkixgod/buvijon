@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "uz.buvijon.app",
+      "sha256_cert_fingerprints": [
+        "C0:21:5A:39:ED:F2:61:5E:03:22:AC:A4:0B:24:55:7D:45:9B:23:E2:52:48:EC:FB:DD:B3:34:F7:A3:EB:D0:F5"
+      ]
+    }
+  }
+]
