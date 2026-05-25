@@ -14,7 +14,10 @@ const INSIGHT_TONES = ["emerald", "violet"] as const;
 export function PhoneMockup() {
   const t = useT();
   return (
-    <div className="relative mx-auto w-full max-w-[340px] md:max-w-[380px]">
+    // No max-width here — parent (.float-slow wrapper in page.tsx) caps the
+    // mockup so it stays in sync with the surrounding hero column at every
+    // breakpoint (300px on phone, 340 sm, 380 md+).
+    <div className="relative mx-auto w-full">
       <div className="absolute -inset-6 -z-10 rounded-[3rem] opacity-60 blur-3xl"
            style={{ background: "radial-gradient(circle at 30% 20%, rgba(124,58,237,0.35), transparent 60%), radial-gradient(circle at 80% 80%, rgba(236,72,153,0.28), transparent 55%)" }} />
 

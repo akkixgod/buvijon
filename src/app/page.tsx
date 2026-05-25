@@ -73,34 +73,39 @@ export default function Home() {
       />
 
       <main>
-      {/* Hero */}
-      <section className="section-hero pt-[130px]">
+      {/* Hero — section-hero supplies fluid top/bottom padding (clamp tokens) */}
+      <section className="section-hero">
         <div className="container-1100">
-          <div className="grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-16 items-center">
-            <div>
-              <Reveal as="p" className="eyebrow mb-6"><Countdown /></Reveal>
+          <div className="grid lg:grid-cols-[1.1fr_1fr] gap-10 sm:gap-12 lg:gap-16 items-center">
+            <div className="order-2 lg:order-1">
+              <Reveal as="p" className="eyebrow mb-5 sm:mb-6"><Countdown /></Reveal>
               <Reveal delay={0.05}>
-                <h1 className="mb-6">
+                <h1 className="mb-5 sm:mb-6">
                   {t.hero.titleLine1}
                   <br />
                   <span className="gradient-text">{t.hero.titleLine2}</span>
                 </h1>
               </Reveal>
               <Reveal delay={0.12}>
-                <p className="lead mb-10">{t.hero.lead}</p>
+                <p className="lead mb-8 sm:mb-10">{t.hero.lead}</p>
               </Reveal>
-              <Reveal delay={0.18} className="flex flex-wrap items-center gap-3">
-                <Link href="/waitlist" className="btn-primary">{t.hero.joinWaitlist}</Link>
-                <Link href="/family" className="btn-secondary">{t.hero.exploreDashboard}</Link>
-                <Link href="/analysis" className="btn-link">{t.hero.viewAnalytics} ›</Link>
+              <Reveal
+                delay={0.18}
+                className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3"
+              >
+                <Link href="/waitlist" className="btn-primary btn-block-mobile">{t.hero.joinWaitlist}</Link>
+                <Link href="/family" className="btn-secondary btn-block-mobile">{t.hero.exploreDashboard}</Link>
+                <Link href="/analysis" className="btn-link justify-center sm:justify-start">
+                  {t.hero.viewAnalytics} ›
+                </Link>
               </Reveal>
-              <Reveal delay={0.28}>
+              <Reveal delay={0.28} className="hidden md:block">
                 <ScrollDownCue />
               </Reveal>
             </div>
 
-            <Reveal delay={0.1} className="relative flex justify-center">
-              <div className="float-slow">
+            <Reveal delay={0.1} className="order-1 lg:order-2 relative w-full flex justify-center">
+              <div className="float-slow w-full max-w-[300px] sm:max-w-[340px] md:max-w-[380px]">
                 <PhoneMockup />
               </div>
             </Reveal>
@@ -108,13 +113,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Scene spacer — marks where the flower animation begins */}
-      <div id="scene-start" className="h-[60vh]" aria-hidden />
+      {/* Scene spacer — shorter on mobile so the flower animation starts sooner
+          relative to the much smaller hero column on phones. */}
+      <div id="scene-start" className="h-[30vh] md:h-[60vh]" aria-hidden />
 
-      {/* Stage 1 — The idea (text RIGHT, flower LEFT). Right column also lists "Why it matters" bullets. */}
-      <section id="story" className="section min-h-[80vh]">
+      {/* Stage 1 — The idea (text RIGHT, flower LEFT). Right column also lists "Why it matters" bullets.
+          min-height only on lg+: on mobile the flower animation is dimmed
+          (see FlowerScene stageVars opacity: 0.22) so the section doesn't
+          need to be a full viewport tall — that just creates empty space. */}
+      <section id="story" className="section lg:min-h-[80vh]">
         <div className="container-1100">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
             <div className="hidden lg:block" aria-hidden />
             <div>
               <Reveal as="p" className="eyebrow mb-6">{t.story.eyebrow}</Reveal>
@@ -149,15 +158,15 @@ export default function Home() {
       </section>
 
       {/* Stage 2 — Features (text LEFT, flower RIGHT) */}
-      <section id="features" className="section min-h-screen">
+      <section id="features" className="section lg:min-h-screen">
         <div className="container-1100">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
             <div>
-              <Reveal as="p" className="eyebrow mb-6">{t.features.eyebrow}</Reveal>
+              <Reveal as="p" className="eyebrow mb-5 sm:mb-6">{t.features.eyebrow}</Reveal>
               <Reveal delay={0.06}>
-                <h2 className="mb-10">{t.features.title}</h2>
+                <h2 className="mb-8 sm:mb-10">{t.features.title}</h2>
               </Reveal>
-              <div className="grid sm:grid-cols-2 gap-5">
+              <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
                 {t.features.items.map((f, i) => (
                   <Reveal key={f.title} delay={i * 0.06}>
                     <div className="feature-card h-full">
@@ -175,10 +184,10 @@ export default function Home() {
       </section>
 
       {/* Stage 3 — How it works (canvas in background, content centered) */}
-      <section id="how" className="section min-h-screen relative">
+      <section id="how" className="section lg:min-h-screen relative">
         <div className="container-1100 relative z-10">
-          <div className="text-center mb-20">
-            <Reveal as="p" className="eyebrow mb-6">{t.how.eyebrow}</Reveal>
+          <div className="text-center mb-12 sm:mb-16 lg:mb-20">
+            <Reveal as="p" className="eyebrow mb-5 sm:mb-6">{t.how.eyebrow}</Reveal>
             <Reveal delay={0.06}>
               <h2>{t.how.title}</h2>
             </Reveal>
@@ -197,18 +206,21 @@ export default function Home() {
         <div className="container-1100">
           <div className="cta-panel">
           <Reveal>
-            <h2 className="mb-8">
+            <h2 className="mb-6 sm:mb-8">
               <BrandText>{t.ctaSection.title1}</BrandText>
               <br />
               <span className="gradient-text">{t.ctaSection.title2}</span>
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
-            <p className="lead mx-auto mb-10">{t.ctaSection.lead}</p>
+            <p className="lead mx-auto mb-8 sm:mb-10">{t.ctaSection.lead}</p>
           </Reveal>
-          <Reveal delay={0.16} className="flex flex-wrap items-center justify-center gap-5">
-            <Link href="/waitlist" className="btn-primary">{t.ctaSection.primary}</Link>
-            <Link href="/family" className="btn-link">{t.ctaSection.secondary}</Link>
+          <Reveal
+            delay={0.16}
+            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-5"
+          >
+            <Link href="/waitlist" className="btn-primary btn-block-mobile">{t.ctaSection.primary}</Link>
+            <Link href="/family" className="btn-link justify-center sm:justify-start">{t.ctaSection.secondary}</Link>
           </Reveal>
           </div>
         </div>

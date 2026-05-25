@@ -59,27 +59,31 @@ export default function FamilyPage() {
       <Nav cta={false} />
 
       <main className="product-shell">
-        <div className="container-1100 py-10">
+        <div className="container-1100 pb-12 sm:pb-16">
           <PreviewBanner />
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 sm:gap-6 mb-8 sm:mb-10">
             <div>
               <p className="eyebrow mb-3">{t.family.eyebrow}</p>
-              <h1 className="!text-[clamp(2rem,4.5vw,3.5rem)]">{t.family.title}</h1>
+              <h1 className="!text-[clamp(1.75rem,4.5vw,3.5rem)]">{t.family.title}</h1>
             </div>
 
-            <SegmentedControl
-              value={tab}
-              onChange={setTab}
-              ariaLabel={t.family.eyebrow}
-              options={(["family", "chats", "direct"] as Tab[]).map((tk) => ({
-                value: tk,
-                label: t.family.tabs[tk],
-              }))}
-            />
+            <div className="-mx-1 overflow-x-auto sm:overflow-visible">
+              <div className="px-1">
+                <SegmentedControl
+                  value={tab}
+                  onChange={setTab}
+                  ariaLabel={t.family.eyebrow}
+                  options={(["family", "chats", "direct"] as Tab[]).map((tk) => ({
+                    value: tk,
+                    label: t.family.tabs[tk],
+                  }))}
+                />
+              </div>
+            </div>
           </div>
 
           {tab === "family" && (
-            <div className="grid lg:grid-cols-[1fr_1.4fr] gap-8">
+            <div className="grid lg:grid-cols-[1fr_1.4fr] gap-6 sm:gap-8">
               <div className="panel">
                 <p className="eyebrow mb-4">{t.family.hub}</p>
                 <h3 className="mb-6 !text-[18px]">{t.family.messages}</h3>
@@ -119,20 +123,20 @@ export default function FamilyPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
                   {FAMILY.map((m) => (
                     <button
                       type="button"
                       key={m.id}
                       onClick={() => setSelected(selected === m.id ? null : m.id)}
-                      className={`p-5 rounded-2xl border text-center transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-primary)] ${
+                      className={`p-4 sm:p-5 rounded-2xl border text-center transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-primary)] ${
                         selected === m.id
                           ? "border-[var(--brand-primary)] bg-[var(--violet-50)]"
                           : "border-[var(--border-subtle)] bg-white hover:border-[var(--border-violet)]"
                       }`}
                     >
                       <Avatar initials={m.initials} large />
-                      <div className="mt-3 font-semibold text-[14px] text-[var(--text-primary)]">{m.name}</div>
+                      <div className="mt-3 font-semibold text-[14px] text-[var(--text-primary)] truncate">{m.name}</div>
                       <div className="text-[12px] text-[var(--text-muted)]">{t.family.role[m.role]}</div>
                       {m.role === "child" && (
                         <div className="mt-3 flex justify-center">
@@ -158,15 +162,15 @@ export default function FamilyPage() {
                   const m = FAMILY.find((x) => x.id === selected);
                   if (!m) return null;
                   return (
-                    <div className="mt-8 pt-8 border-t border-[var(--border-subtle)]">
+                    <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-[var(--border-subtle)]">
                       <p className="eyebrow mb-4">{m.name}{t.family.gardenSuffix}</p>
 
                       {m.role === "child" && m.screenTimeToday !== undefined && m.dailyLimit !== undefined ? (
                         <>
-                          <div className="p-6 rounded-2xl bg-[var(--bg-section)] mb-5">
-                            <div className="flex items-center justify-between mb-3">
+                          <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-section)] mb-4 sm:mb-5">
+                            <div className="flex items-center justify-between gap-3 mb-3">
                               <span className="text-[14px] font-medium text-[var(--text-primary)]">{t.family.screenTimeToday}</span>
-                              <span className="text-[13px] text-[var(--text-secondary)] tabular-nums">
+                              <span className="text-[13px] text-[var(--text-secondary)] tabular-nums flex-shrink-0">
                                 {m.screenTimeToday} / {m.dailyLimit} min
                               </span>
                             </div>
@@ -182,13 +186,13 @@ export default function FamilyPage() {
                                 }}
                               />
                             </div>
-                            <div className="mt-3 flex items-center justify-between text-[12px] text-[var(--text-muted)]">
+                            <div className="mt-3 flex items-center justify-between gap-3 text-[12px] text-[var(--text-muted)]">
                               <span>{m.dailyLimit - m.screenTimeToday} {t.family.minRemaining}</span>
                               <span>{t.family.limit}: {Math.floor(m.dailyLimit / 60)}h</span>
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-3 gap-3 mb-5">
+                          <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4 sm:mb-5">
                             {([
                               { v: "emerald" as const, label: t.family.states.healthy },
                               { v: "amber"   as const, label: t.family.states.attention },
@@ -196,23 +200,23 @@ export default function FamilyPage() {
                             ]).map((s) => (
                               <div
                                 key={s.label}
-                                className={`p-4 rounded-2xl border text-center ${
+                                className={`p-3 sm:p-4 rounded-2xl border text-center ${
                                   flowerVariantFor(m) === s.v
                                     ? "border-[var(--brand-primary)] bg-white"
                                     : "border-[var(--border-subtle)] bg-white opacity-60"
                                 }`}
                               >
-                                <div className="flex justify-center mb-2"><Flower variant={s.v} size={56} /></div>
-                                <div className="text-[12px] font-medium text-[var(--text-primary)]">{s.label}</div>
+                                <div className="flex justify-center mb-2"><Flower variant={s.v} size={48} /></div>
+                                <div className="text-[11px] sm:text-[12px] font-medium text-[var(--text-primary)] leading-tight">{s.label}</div>
                               </div>
                             ))}
                           </div>
 
-                          <div className="p-6 rounded-2xl bg-[var(--bg-section)]">
+                          <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-section)]">
                             <h3 className="!text-[16px] mb-4">{t.family.weeklyProgress}</h3>
-                            <div className="flex items-end justify-between gap-2 h-28">
+                            <div className="flex items-end justify-between gap-1.5 sm:gap-2 h-28">
                               {[60, 120, 90, 150, 140, 110, 80].map((v, i) => (
-                                <div key={i} className="flex-1 flex flex-col items-center gap-2">
+                                <div key={i} className="flex-1 flex flex-col items-center gap-1.5 sm:gap-2 min-w-0">
                                   <div
                                     className="w-full rounded-t-lg"
                                     style={{
@@ -223,7 +227,7 @@ export default function FamilyPage() {
                                                   "linear-gradient(180deg,#A78BFA,#7C3AED)",
                                     }}
                                   />
-                                  <span className="text-[11px] text-[var(--text-muted)]">
+                                  <span className="text-[10px] sm:text-[11px] text-[var(--text-muted)]">
                                     {[t.days.mon, t.days.tue, t.days.wed, t.days.thu, t.days.fri, t.days.sat, t.days.sun][i]}
                                   </span>
                                 </div>
@@ -232,7 +236,7 @@ export default function FamilyPage() {
                           </div>
                         </>
                       ) : (
-                        <div className="p-6 rounded-2xl bg-[var(--bg-section)] text-center">
+                        <div className="p-5 sm:p-6 rounded-2xl bg-[var(--bg-section)] text-center">
                           <p className="text-[14px] text-[var(--text-secondary)]">
                             {m.name} {t.family.parentNote}
                           </p>
@@ -246,15 +250,15 @@ export default function FamilyPage() {
           )}
 
           {tab === "chats" && (
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               {CHATS.map((c) => (
                 <div key={c.id} className="panel panel-interactive">
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-3 sm:gap-4">
                     <Avatar initials={c.initials} system={c.isSystem} large />
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-semibold text-[15px] text-[var(--text-primary)]">{c.from}</span>
-                        <span className="text-[12px] text-[var(--text-muted)]">{c.timestamp}</span>
+                      <div className="flex items-center justify-between gap-2 mb-2">
+                        <span className="font-semibold text-[15px] text-[var(--text-primary)] truncate">{c.from}</span>
+                        <span className="text-[12px] text-[var(--text-muted)] flex-shrink-0">{c.timestamp}</span>
                       </div>
                       <p className="text-[14px] text-[var(--text-secondary)] leading-[1.5]">{c.message}</p>
                       {c.isSystem && (
@@ -275,15 +279,15 @@ export default function FamilyPage() {
           )}
 
           {tab === "direct" && (
-            <div className="space-y-4 max-w-[640px] mx-auto">
+            <div className="space-y-3 sm:space-y-4 max-w-[640px] mx-auto">
               {DIRECT.map((m) => (
                 <div key={m.id} className="panel panel-interactive">
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-3 sm:gap-4">
                     <Avatar initials={m.initials} large />
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-semibold text-[15px] text-[var(--text-primary)]">{m.from}</span>
-                        <span className="text-[12px] text-[var(--text-muted)]">{m.timestamp}</span>
+                      <div className="flex items-center justify-between gap-2 mb-2">
+                        <span className="font-semibold text-[15px] text-[var(--text-primary)] truncate">{m.from}</span>
+                        <span className="text-[12px] text-[var(--text-muted)] flex-shrink-0">{m.timestamp}</span>
                       </div>
                       <p className="text-[14px] text-[var(--text-secondary)] leading-[1.5]">{m.message}</p>
                     </div>

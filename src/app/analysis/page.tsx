@@ -83,13 +83,13 @@ export default function AnalysisPage() {
     <>
       <Nav />
 
-      <main className="product-shell section-hero !pt-[130px]">
-        <div className="container-1100 pb-16">
+      <main className="product-shell">
+        <div className="container-1100 pb-12 sm:pb-16">
           <PreviewBanner />
-          <div className="mb-12 max-w-[720px]">
-            <Reveal as="p" className="eyebrow mb-5">{t.analysis.eyebrow}</Reveal>
+          <div className="mb-8 sm:mb-12 max-w-[720px]">
+            <Reveal as="p" className="eyebrow mb-4 sm:mb-5">{t.analysis.eyebrow}</Reveal>
             <Reveal delay={0.05}>
-              <h1 className="mb-6">
+              <h1 className="mb-5 sm:mb-6">
                 {t.analysis.title1}{" "}
                 <span className="gradient-text">{t.analysis.titleHighlight}</span>
                 {t.analysis.titleEnd}
@@ -100,45 +100,48 @@ export default function AnalysisPage() {
             </Reveal>
           </div>
 
-          <Reveal delay={0.14} className="mb-12">
-            <SegmentedControl
-              value={period}
-              onChange={setPeriod}
-              ariaLabel={t.analysis.eyebrow}
-              options={(["today", "week", "month"] as Period[]).map((p) => ({
-                value: p,
-                label: t.analysis.periods[p],
-              }))}
-            />
+          <Reveal delay={0.14} className="mb-8 sm:mb-12">
+            <div className="-mx-1 overflow-x-auto sm:overflow-visible">
+              <div className="px-1">
+                <SegmentedControl
+                  value={period}
+                  onChange={setPeriod}
+                  ariaLabel={t.analysis.eyebrow}
+                  options={(["today", "week", "month"] as Period[]).map((p) => ({
+                    value: p,
+                    label: t.analysis.periods[p],
+                  }))}
+                />
+              </div>
+            </div>
           </Reveal>
 
-          {/* Stats — re-mount on period change to retrigger animations */}
-          <div key={`stats-${period}`} className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+          {/* KPI stats — re-mount on period change to retrigger fade animations.
+              Uses the .kpi-card design token (clamped font size) so values
+              never overflow the card on narrow phones. */}
+          <div key={`stats-${period}`} className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5 md:gap-6 mb-12 sm:mb-16 md:mb-20">
             {stats.map((s, i) => (
               <div
                 key={s.label}
-                className="card card-hover h-full anim-fade-up"
-                style={{ padding: 28, animationDelay: `${i * 70}ms` } as CSSProperties}
+                className="kpi-card anim-fade-up"
+                style={{ animationDelay: `${i * 70}ms` } as CSSProperties}
               >
-                <div
-                  className="text-[40px] font-semibold mb-2 tracking-tight"
-                  style={{ color: "var(--text-primary)", letterSpacing: "-0.025em" }}
-                >
+                <div className="kpi-card__value tabular-nums">
                   <CountUp value={s.value} />
                 </div>
-                <div className="text-[14px] text-[var(--text-secondary)]">{s.label}</div>
+                <div className="kpi-card__label">{s.label}</div>
               </div>
             ))}
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
+          <div className="grid md:grid-cols-2 gap-5 sm:gap-6 md:gap-8 mb-10 sm:mb-12">
             <Reveal>
               <div className="panel panel-interactive h-full">
-                <h3 className="mb-8">{t.analysis.activity}</h3>
-                <div key={`bars-${period}`} className="space-y-4">
+                <h3 className="mb-6 sm:mb-8">{t.analysis.activity}</h3>
+                <div key={`bars-${period}`} className="space-y-3 sm:space-y-4">
                   {data.bars.map((b, i) => (
-                    <div key={i} className="flex items-center gap-4">
-                      <span className="w-10 text-[13px] text-[var(--text-muted)]">{b.label}</span>
+                    <div key={i} className="flex items-center gap-3 sm:gap-4">
+                      <span className="w-7 sm:w-10 text-[12px] sm:text-[13px] text-[var(--text-muted)] tabular-nums">{b.label}</span>
                       <div
                         className="flex-1 h-2 rounded-full overflow-hidden"
                         style={{ background: "var(--violet-50)" }}
@@ -152,7 +155,7 @@ export default function AnalysisPage() {
                           } as CSSProperties}
                         />
                       </div>
-                      <span className="w-12 text-[13px] text-right text-[var(--text-secondary)] tabular-nums">
+                      <span className="w-10 sm:w-12 text-[12px] sm:text-[13px] text-right text-[var(--text-secondary)] tabular-nums">
                         {(b.h * 0.018).toFixed(1)}h
                       </span>
                     </div>
@@ -163,10 +166,10 @@ export default function AnalysisPage() {
 
             <Reveal delay={0.08}>
               <div className="panel panel-interactive h-full">
-                <h3 className="mb-8">{t.analysis.trend}</h3>
-                <div key={`trend-${period}`} className="h-56 flex items-end justify-between gap-2">
+                <h3 className="mb-6 sm:mb-8">{t.analysis.trend}</h3>
+                <div key={`trend-${period}`} className="h-48 sm:h-56 flex items-end justify-between gap-1 sm:gap-2">
                   {data.trend.map((h, i) => (
-                    <div key={i} className="flex-1 flex flex-col items-center h-full justify-end gap-2">
+                    <div key={i} className="flex-1 flex flex-col items-center h-full justify-end gap-1.5 sm:gap-2 min-w-0">
                       <div
                         className="w-full rounded-md anim-bar-v"
                         style={{
@@ -178,13 +181,13 @@ export default function AnalysisPage() {
                                      "var(--violet-200)",
                         } as CSSProperties}
                       />
-                      <span className="text-[11px] text-[var(--text-muted)] tabular-nums">
+                      <span className="text-[10px] sm:text-[11px] text-[var(--text-muted)] tabular-nums">
                         {trendLabel(period, i, trendCount)}
                       </span>
                     </div>
                   ))}
                 </div>
-                <div className="flex items-center gap-6 mt-6 pt-6 border-t border-[var(--border-subtle)]">
+                <div className="flex items-center flex-wrap gap-x-4 gap-y-2 sm:gap-x-6 mt-5 sm:mt-6 pt-5 sm:pt-6 border-t border-[var(--border-subtle)]">
                   <LegendDot color="var(--violet-200)" label={t.analysis.legend.healthy} />
                   <LegendDot color="var(--violet-400)" label={t.analysis.legend.borderline} />
                   <LegendDot color="var(--violet-600)" label={t.analysis.legend.overLimit} />
@@ -193,29 +196,27 @@ export default function AnalysisPage() {
             </Reveal>
           </div>
 
-          <Reveal className="mb-12">
+          <Reveal className="mb-10 sm:mb-12">
             <div className="panel panel-interactive">
-              <h3 className="mb-8">{t.analysis.appBreakdown}</h3>
-              <div key={`apps-${period}`} className="space-y-5">
+              <h3 className="mb-6 sm:mb-8">{t.analysis.appBreakdown}</h3>
+              <div key={`apps-${period}`} className="space-y-4 sm:space-y-5">
                 {data.apps.map((item, i) => (
-                  <div key={item.app} className="flex items-center gap-5">
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-medium text-[var(--text-primary)]">{item.app}</span>
-                        <span className="text-[13px] text-[var(--text-muted)] tabular-nums">
-                          {item.time} · {item.pct}%
-                        </span>
-                      </div>
-                      <div className="h-2 rounded-full overflow-hidden" style={{ background: "var(--violet-50)" }}>
-                        <div
-                          className="h-full rounded-full anim-bar-h"
-                          style={{
-                            ["--bar-w" as string]: `${item.pct}%`,
-                            animationDelay: `${i * 80}ms`,
-                            background: "var(--brand-primary)",
-                          } as CSSProperties}
-                        />
-                      </div>
+                  <div key={item.app}>
+                    <div className="flex items-center justify-between gap-3 mb-2">
+                      <span className="font-medium text-[14px] sm:text-[15px] text-[var(--text-primary)] truncate">{item.app}</span>
+                      <span className="text-[12px] sm:text-[13px] text-[var(--text-muted)] tabular-nums flex-shrink-0">
+                        {item.time} · {item.pct}%
+                      </span>
+                    </div>
+                    <div className="h-2 rounded-full overflow-hidden" style={{ background: "var(--violet-50)" }}>
+                      <div
+                        className="h-full rounded-full anim-bar-h"
+                        style={{
+                          ["--bar-w" as string]: `${item.pct}%`,
+                          animationDelay: `${i * 80}ms`,
+                          background: "var(--brand-primary)",
+                        } as CSSProperties}
+                      />
                     </div>
                   </div>
                 ))}
@@ -223,16 +224,16 @@ export default function AnalysisPage() {
             </div>
           </Reveal>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-5 sm:gap-6 md:gap-8">
             <Reveal>
               <div className="panel panel-interactive h-full">
                 <p
-                  className="text-[12px] tracking-[0.22em] uppercase font-medium mb-5"
+                  className="text-[12px] tracking-[0.22em] uppercase font-medium mb-4 sm:mb-5"
                   style={{ color: "var(--text-muted)" }}
                 >
                   {t.analysis.positiveTitle}
                 </p>
-                <ul className="space-y-4">
+                <ul className="space-y-3 sm:space-y-4">
                   {t.analysis.positiveItems.map((line) => (
                     <li key={line} className="flex items-start gap-3">
                       <span
@@ -241,7 +242,7 @@ export default function AnalysisPage() {
                       >
                         ✓
                       </span>
-                      <span className="text-[16px] text-[var(--text-secondary)] leading-[1.55]">{line}</span>
+                      <span className="text-[15px] sm:text-[16px] text-[var(--text-secondary)] leading-[1.55]">{line}</span>
                     </li>
                   ))}
                 </ul>
@@ -251,12 +252,12 @@ export default function AnalysisPage() {
             <Reveal delay={0.08}>
               <div className="panel panel-interactive h-full">
                 <p
-                  className="text-[12px] tracking-[0.22em] uppercase font-medium mb-5"
+                  className="text-[12px] tracking-[0.22em] uppercase font-medium mb-4 sm:mb-5"
                   style={{ color: "var(--text-muted)" }}
                 >
                   {t.analysis.watchTitle}
                 </p>
-                <ul className="space-y-4">
+                <ul className="space-y-3 sm:space-y-4">
                   {t.analysis.watchItems.map((line) => (
                     <li key={line} className="flex items-start gap-3">
                       <span
@@ -265,7 +266,7 @@ export default function AnalysisPage() {
                       >
                         !
                       </span>
-                      <span className="text-[16px] text-[var(--text-secondary)] leading-[1.55]">{line}</span>
+                      <span className="text-[15px] sm:text-[16px] text-[var(--text-secondary)] leading-[1.55]">{line}</span>
                     </li>
                   ))}
                 </ul>

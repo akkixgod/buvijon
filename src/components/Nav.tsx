@@ -242,7 +242,10 @@ export function Nav({ cta = true }: { cta?: boolean }) {
             mobileOpen ? "translate-y-0" : "-translate-y-3"
           }`}
         >
-          <div className="container-1100 py-6 flex flex-col gap-1 h-full overflow-y-auto">
+          <div
+            className="container-1100 py-6 flex flex-col gap-1 h-full overflow-y-auto"
+            style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 24px)" }}
+          >
             {links.map((l, i) => {
               const active = activeIndex === i;
               return (
@@ -250,7 +253,7 @@ export function Nav({ cta = true }: { cta?: boolean }) {
                   key={l.href}
                   href={l.href}
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center min-h-[48px] px-4 rounded-2xl text-[16px] font-medium transition-colors"
+                  className="flex items-center min-h-[52px] px-4 rounded-2xl text-[16px] font-medium transition-colors"
                   style={{
                     color: active ? "var(--brand-primary)" : "var(--text-primary)",
                     background: active ? "var(--violet-50)" : "transparent",
@@ -264,7 +267,7 @@ export function Nav({ cta = true }: { cta?: boolean }) {
               <NavLink
                 href="/waitlist"
                 onClick={() => setMobileOpen(false)}
-                className="btn-primary w-full mt-4"
+                className="btn-primary w-full mt-6"
                 style={{ height: 52 }}
               >
                 {t.nav.joinWaitlist}

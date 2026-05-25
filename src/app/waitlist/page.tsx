@@ -111,11 +111,11 @@ export default function WaitlistPage() {
     <>
       <Nav cta={false} />
 
-      <main className="section-hero pt-[130px] min-h-screen">
+      <main className="section-hero min-h-[100svh]">
         <div className="container-1100 max-w-[640px]">
-          <div className="text-center mb-12">
-            <p className="eyebrow mb-5">{t.waitlist.eyebrow}</p>
-            <h1 className="mb-6">
+          <div className="text-center mb-8 sm:mb-12">
+            <p className="eyebrow mb-4 sm:mb-5">{t.waitlist.eyebrow}</p>
+            <h1 className="mb-5 sm:mb-6">
               {t.waitlist.title1}{" "}
               <span className="gradient-text">{t.waitlist.titleHighlight}</span>
               {t.waitlist.titleEnd}
@@ -130,20 +130,20 @@ export default function WaitlistPage() {
           <div className="panel border-[var(--border-violet)]">
             {success && (
               <div
-                className="mb-8 p-5 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-start gap-4"
+                className="mb-6 sm:mb-8 p-4 sm:p-5 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-start gap-3 sm:gap-4"
                 role="status"
               >
                 <div className="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white text-lg flex-shrink-0">
                   ✓
                 </div>
-                <div>
+                <div className="min-w-0">
                   <div className="font-semibold text-emerald-800 mb-0.5">{t.waitlist.successTitle}</div>
                   <div className="text-sm text-emerald-700">{t.waitlist.successBody}</div>
                 </div>
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5" noValidate>
               <Field
                 id="fullName"
                 label={t.waitlist.fullName}

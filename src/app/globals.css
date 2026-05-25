@@ -33,6 +33,16 @@
   --border-violet: rgba(124, 58, 237, 0.18);
   --surface-inset: #F5F5F7;
   --surface-raised: #FFFFFF;
+
+  /* Fluid spacing tokens — scale smoothly from 360px to 1440px viewports.
+     Used by .section, .section-tight, .section-hero, .product-shell, etc.
+     so we never need viewport-class breakpoints for vertical rhythm. */
+  --space-section-y: clamp(64px, 9vw, 120px);
+  --space-section-tight-y: clamp(48px, 7vw, 80px);
+  --space-hero-top: clamp(96px, 16vw, 140px);
+  --space-hero-bottom: clamp(48px, 8vw, 80px);
+  --space-page-top: clamp(88px, 14vw, 130px);
+  --container-pad-x: clamp(16px, 4vw, 48px);
 }
 
 @theme inline {
@@ -79,26 +89,28 @@ body {
   overflow-x: hidden;
 }
 
-/* Apple typography */
+/* Apple typography — clamps tuned to keep type readable from 360px up.
+   Floors lowered (h1 32px / h2 26px / h3 18px) so hero copy never feels
+   oversized on small phones; ceilings unchanged for desktop richness. */
 h1, .h1 {
-  font-size: clamp(2.75rem, 7vw, 5.5rem);
-  line-height: 1.05;
+  font-size: clamp(2rem, 6.4vw, 5.5rem);
+  line-height: 1.06;
   font-weight: 600;
   letter-spacing: -0.035em;
   color: var(--text-primary);
 }
 
 h2, .h2 {
-  font-size: clamp(2rem, 4.5vw, 3.75rem);
-  line-height: 1.08;
+  font-size: clamp(1.625rem, 4.5vw, 3.75rem);
+  line-height: 1.1;
   font-weight: 600;
   letter-spacing: -0.025em;
   color: var(--text-primary);
 }
 
 h3, .h3 {
-  font-size: clamp(1.25rem, 2vw, 1.75rem);
-  line-height: 1.2;
+  font-size: clamp(1.125rem, 2vw, 1.75rem);
+  line-height: 1.25;
   font-weight: 600;
   letter-spacing: -0.015em;
   color: var(--text-primary);
@@ -117,7 +129,7 @@ p {
 }
 
 .lead {
-  font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+  font-size: clamp(1rem, 1.6vw, 1.375rem);
   line-height: 1.5;
   color: var(--text-secondary);
   max-width: 640px;
@@ -249,7 +261,7 @@ p {
   position: relative;
   background: var(--bg-card);
   border-radius: 24px;
-  padding: 32px;
+  padding: clamp(20px, 4vw, 32px);
   overflow: hidden;
   isolation: isolate;
   transition:
@@ -386,7 +398,7 @@ p {
   background: var(--surface-raised);
   border: 1px solid var(--border-subtle);
   border-radius: 20px;
-  padding: 24px;
+  padding: clamp(18px, 3vw, 24px);
   transition:
     border-color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
     background 0.3s ease,
@@ -622,10 +634,20 @@ p {
   border-color: var(--wilting);
 }
 
-/* Section padding (Apple generous) */
-.section { padding-top: 120px; padding-bottom: 120px; }
-.section-tight { padding-top: 80px; padding-bottom: 80px; }
-.section-hero { padding-top: 140px; padding-bottom: 80px; }
+/* Section padding — fluid (clamp) so small phones get airier ratios while
+   desktops keep the Apple-esque generous rhythm. */
+.section {
+  padding-top: var(--space-section-y);
+  padding-bottom: var(--space-section-y);
+}
+.section-tight {
+  padding-top: var(--space-section-tight-y);
+  padding-bottom: var(--space-section-tight-y);
+}
+.section-hero {
+  padding-top: var(--space-hero-top);
+  padding-bottom: var(--space-hero-bottom);
+}
 
 .cta-panel {
   background: var(--bg-section);
@@ -637,10 +659,13 @@ p {
   margin-right: auto;
 }
 
-/* Product / dashboard shell (interface-design) */
+/* Product / dashboard shell (interface-design).
+   Uses 100svh so the chrome bar on mobile browsers can shrink without
+   adding empty space below the fold; fluid top padding keeps the
+   first row of content clear of the fixed nav at any viewport. */
 .product-shell {
-  padding-top: 100px;
-  min-height: 100vh;
+  padding-top: var(--space-page-top);
+  min-height: 100svh;
   background: var(--bg-section);
 }
 
@@ -648,14 +673,22 @@ p {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 24px;
-  padding: 10px 16px;
+  margin-bottom: 20px;
+  padding: 9px 14px;
   border-radius: 9999px;
   background: var(--violet-50);
   border: 1px solid var(--border-violet);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--brand-primary);
+  max-width: 100%;
+}
+@media (min-width: 640px) {
+  .preview-banner {
+    margin-bottom: 24px;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
 }
 .preview-banner__dot {
   width: 8px;
@@ -676,12 +709,16 @@ p {
 }
 .segmented-control__btn {
   min-height: 40px;
-  padding: 0 20px;
+  padding: 0 14px;
   border-radius: 9999px;
   font-size: 13px;
   font-weight: 500;
   color: var(--text-secondary);
   transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+@media (min-width: 640px) {
+  .segmented-control__btn { padding: 0 20px; }
 }
 .segmented-control__btn:hover {
   color: var(--text-primary);
@@ -699,9 +736,12 @@ p {
 .panel {
   background: var(--surface-raised);
   border: 1px solid var(--border-subtle);
-  border-radius: 24px;
-  padding: 24px;
+  border-radius: 20px;
+  padding: clamp(16px, 3.5vw, 24px);
   transition: border-color 0.25s ease;
+}
+@media (min-width: 640px) {
+  .panel { border-radius: 24px; }
 }
 @media (min-width: 768px) {
   .panel { padding: 32px; }
@@ -713,19 +753,28 @@ p {
 .kpi-card {
   background: var(--surface-raised);
   border: 1px solid var(--border-subtle);
-  border-radius: 24px;
-  padding: 28px;
+  border-radius: 20px;
+  padding: clamp(16px, 3.5vw, 28px);
   height: 100%;
+  transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+@media (min-width: 640px) {
+  .kpi-card { border-radius: 24px; }
+}
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -22px rgba(124, 58, 237, 0.18);
 }
 .kpi-card__value {
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-size: clamp(1.5rem, 5.5vw, 2.5rem);
   font-weight: 600;
   letter-spacing: -0.025em;
   color: var(--text-primary);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  line-height: 1.1;
 }
 .kpi-card__label {
-  font-size: 14px;
+  font-size: clamp(12px, 1.4vw, 14px);
   color: var(--text-secondary);
 }
 
@@ -748,20 +797,21 @@ p {
 }
 
 .product-cta {
-  margin-top: 48px;
-  padding: 32px;
+  margin-top: clamp(32px, 6vw, 48px);
+  padding: clamp(24px, 4vw, 32px);
   text-align: center;
   border-radius: 24px;
   background: var(--surface-raised);
   border: 1px solid var(--border-subtle);
 }
 .product-cta__lead {
-  font-size: 16px;
+  font-size: clamp(14px, 1.6vw, 16px);
   color: var(--text-secondary);
   margin-bottom: 20px;
   max-width: 420px;
   margin-left: auto;
   margin-right: auto;
+  line-height: 1.5;
 }
 
 .input:focus-visible,
@@ -770,16 +820,46 @@ select.input:focus-visible {
   box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12);
 }
 
-/* Container */
+/* Responsive form sizing — slightly smaller height on tiny screens to
+   keep enough usable viewport above the keyboard. */
+@media (max-width: 480px) {
+  .input { height: 52px; padding-left: 16px; padding-right: 16px; }
+}
+
+/* Utility: stack CTAs full-width on mobile, auto on >=sm. */
+.btn-block-mobile { width: 100%; }
+@media (min-width: 640px) { .btn-block-mobile { width: auto; } }
+
+/* Background decor scales down on small screens so the blobs don't dominate
+   the canvas and burn battery on weaker GPUs. */
+@media (max-width: 640px) {
+  .bg-decor .blob { filter: blur(60px); opacity: 0.42; }
+  .bg-decor .blob-a { width: 360px; height: 360px; top: -120px; left: -120px; }
+  .bg-decor .blob-b { width: 380px; height: 380px; right: -160px; }
+  .bg-decor .blob-c { width: 320px; height: 320px; bottom: -120px; }
+}
+
+/* Prevent media from punching outside the viewport — common cause
+   of horizontal scroll on phones. SVGs are excluded because most are
+   sized explicitly via Tailwind utility classes and `height: auto` would
+   collapse those that only declare width. */
+img, video, canvas { max-width: 100%; height: auto; }
+
+/* Container — fluid horizontal padding via clamp.
+   Respects iOS safe-area insets so content never slides under the notch
+   in landscape. */
 .container-1100 {
   max-width: 1100px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: var(--container-pad-x);
+  padding-right: var(--container-pad-x);
 }
-@media (min-width: 768px) {
-  .container-1100 { padding-left: 48px; padding-right: 48px; }
+@supports (padding: max(0px)) {
+  .container-1100 {
+    padding-left: max(var(--container-pad-x), env(safe-area-inset-left));
+    padding-right: max(var(--container-pad-x), env(safe-area-inset-right));
+  }
 }
 
 /* Selection */

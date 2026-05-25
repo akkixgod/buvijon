@@ -16,11 +16,11 @@ const FOOTER_LINKS = [
 export function Footer() {
   const t = useT();
   return (
-    <footer className="bg-[var(--bg-section)] border-t border-[var(--border-subtle)] py-14">
-      <div className="container-1100 grid gap-10 lg:grid-cols-[1fr_auto_auto] lg:items-start">
-        <div className="flex flex-col gap-4">
+    <footer className="bg-[var(--bg-section)] border-t border-[var(--border-subtle)] py-10 sm:py-14">
+      <div className="container-1100 grid gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-[1fr_auto_auto] lg:items-start">
+        <div className="flex flex-col gap-3 sm:gap-4 md:col-span-2 lg:col-span-1">
           <Logo size={28} />
-          <p className="text-[13px] text-[var(--text-muted)] max-w-[420px]">
+          <p className="text-[13px] text-[var(--text-muted)] max-w-[420px] leading-relaxed">
             {t.footer.copyright}
           </p>
         </div>
