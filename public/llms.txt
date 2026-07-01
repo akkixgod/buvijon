@@ -1,0 +1,29 @@
+# Buvijon
+
+> A garden where your child's digital balance blooms. Beautiful, calm screen
+> time management for families. Each child's daily screen time becomes a living
+> flower that thrives with balance and wilts when limits are exceeded.
+
+Buvijon is pre-launch. The waitlist is open. Launch date: June 1.
+
+## Pages
+- [Home](https://buvijon.com/): product overview and call to action.
+- [Family dashboard](https://buvijon.com/family): shared family garden, member
+  standing, chats, and per-child screen time detail (interactive preview with
+  sample data).
+- [Analysis](https://buvijon.com/analysis): screen time KPIs, activity, trend,
+  and app breakdown (interactive preview with sample data).
+- [Waitlist](https://buvijon.com/waitlist): early-access sign-up form.
+
+## For agents
+- Every page also serves Markdown: send `Accept: text/markdown` to receive a
+  markdown representation (`Content-Type: text/markdown`, `x-markdown-tokens`).
+- API catalog: https://buvijon.com/.well-known/api-catalog
+- Health check: https://buvijon.com/api/health
+- Agent skills index: https://buvijon.com/.well-known/agent-skills/index.json
+- Content usage preferences are declared in https://buvijon.com/robots.txt
+  (Content-Signal: ai-train=no, search=yes, ai-input=yes).
+
+## Notes
+- There is no public authenticated API at this time. OAuth/OIDC and MCP
+  discovery documents, if present, are non-production placeholders.

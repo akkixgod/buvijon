@@ -1,0 +1,7 @@
+{
+  "note": "PLACEHOLDER — Buvijon does not operate an OpenID Connect provider at this time. No authorization_endpoint, token_endpoint, or jwks_uri exist yet. This document exists only to make the absence of a production identity provider explicit for agent discovery. Do not treat any field here as a live endpoint.",
+  "status": "no_production_api",
+  "issuer": "https://buvijon.com",
+  "contact": "https://buvijon.com/",
+  "grant_types_supported": []
+}

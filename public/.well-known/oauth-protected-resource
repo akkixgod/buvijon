@@ -1,0 +1,7 @@
+{
+  "note": "PLACEHOLDER — Buvijon exposes no OAuth-protected API resource at this time. There are no authorization servers that issue tokens for this origin. This document exists only to make that absence explicit for agent discovery. Do not treat any field here as a live endpoint.",
+  "status": "no_production_api",
+  "resource": "https://buvijon.com",
+  "authorization_servers": [],
+  "scopes_supported": []
+}

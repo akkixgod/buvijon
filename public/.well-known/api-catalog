@@ -1,0 +1,21 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://buvijon.com/",
+      "service-doc": [
+        {
+          "href": "https://buvijon.com/llms.txt",
+          "type": "text/markdown",
+          "title": "Buvijon site documentation for agents"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://buvijon.com/api/health",
+          "type": "application/json",
+          "title": "Health check"
+        }
+      ]
+    }
+  ]
+}

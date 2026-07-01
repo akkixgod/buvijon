@@ -1,0 +1,10 @@
+{
+  "note": "PLACEHOLDER — Buvijon does not run a Model Context Protocol (MCP) server at this time. The transport endpoint below is not live. This document exists only to make the absence of an MCP server explicit for agent discovery (SEP-1649). Note: the site does expose browser-side WebMCP tools via navigator.modelContext on its pages.",
+  "status": "no_production_api",
+  "serverInfo": {
+    "name": "buvijon-web",
+    "version": "0.0.0"
+  },
+  "transport": null,
+  "capabilities": {}
+}

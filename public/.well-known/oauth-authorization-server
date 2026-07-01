@@ -1,0 +1,6 @@
+{
+  "note": "PLACEHOLDER — Buvijon does not operate an OAuth 2.0 authorization server at this time. No authorization_endpoint or token_endpoint exist yet. This document exists only to make the absence of a production OAuth server explicit for agent discovery. Do not treat any field here as a live endpoint.",
+  "status": "no_production_api",
+  "issuer": "https://buvijon.com",
+  "grant_types_supported": []
+}

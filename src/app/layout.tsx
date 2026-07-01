@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { I18nProvider } from "@/components/I18nProvider";
+import { WebMcpProvider } from "@/components/WebMcpProvider";
 import { DEFAULT_LOCALE, LOCALE_COOKIE, isLocale } from "@/lib/i18n";
 
 export const viewport: Viewport = {
@@ -69,6 +70,7 @@ export default async function RootLayout({
           <span className="grain" />
         </div>
         <I18nProvider initialLocale={locale}>
+          <WebMcpProvider />
           <SmoothScrollProvider>{children}</SmoothScrollProvider>
         </I18nProvider>
       </body>

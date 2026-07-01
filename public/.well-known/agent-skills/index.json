@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agentskills.io/schema/index/v0.2.0.json",
+  "version": "0.2.0",
+  "skills": [
+    {
+      "name": "buvijon-overview",
+      "type": "markdown",
+      "description": "Explore the Buvijon website and its content the way an agent should — pages, markdown negotiation, health, and the waitlist.",
+      "url": "https://buvijon.com/.well-known/agent-skills/overview/SKILL.md",
+      "sha256": "8ec2c6088e3bab66bdcc9a6d9e87e1a366f5ca98afc573a3df91c9d9bbb46567"
+    }
+  ]
+}
