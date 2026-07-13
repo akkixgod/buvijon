@@ -4,7 +4,7 @@ import { useCallback, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
-import { addEntry, isDuplicate, UZBEK_CITIES } from "@/lib/waitlistStorage";
+import { UZBEK_CITIES } from "@/lib/waitlistStorage";
 import { useT } from "@/components/I18nProvider";
 
 type FormState = {
@@ -31,6 +31,8 @@ export default function WaitlistPage() {
   const [errors, setErrors] = useState<Partial<Record<FieldKey | "agreed", string>>>({});
   const [touched, setTouched] = useState<Partial<Record<FieldKey | "agreed", boolean>>>({});
   const [success, setSuccess] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const validate = useCallback(
     (key: FieldKey | "agreed", values: FormState = form): string | undefined => {
@@ -70,8 +72,10 @@ export default function WaitlistPage() {
     setErrors((e) => ({ ...e, [k]: validate(k) }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (submitting) return;
+    setFormError(null);
     const keys: (FieldKey | "agreed")[] = [
       "fullName",
       "telegramUsername",
@@ -89,22 +93,40 @@ export default function WaitlistPage() {
       setErrors(next);
       return;
     }
-    if (isDuplicate(form.gmail, form.telegramUsername)) {
-      setErrors({ gmail: t.waitlist.duplicate });
-      setTouched((tch) => ({ ...tch, gmail: true }));
-      return;
+
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: form.fullName.trim(),
+          telegramUsername: form.telegramUsername.trim(),
+          gmail: form.gmail.trim(),
+          city: form.city,
+        }),
+      });
+
+      if (res.status === 409) {
+        setErrors({ gmail: t.waitlist.duplicate });
+        setTouched((tch) => ({ ...tch, gmail: true }));
+        return;
+      }
+      if (!res.ok) {
+        setFormError(t.waitlist.submitError);
+        return;
+      }
+
+      setForm(EMPTY);
+      setErrors({});
+      setTouched({});
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 6000);
+    } catch {
+      setFormError(t.waitlist.submitError);
+    } finally {
+      setSubmitting(false);
     }
-    addEntry({
-      fullName: form.fullName.trim(),
-      telegramUsername: form.telegramUsername.trim(),
-      gmail: form.gmail.trim(),
-      city: form.city,
-    });
-    setForm(EMPTY);
-    setErrors({});
-    setTouched({});
-    setSuccess(true);
-    setTimeout(() => setSuccess(false), 6000);
   };
 
   return (
@@ -256,8 +278,20 @@ export default function WaitlistPage() {
                 )}
               </div>
 
-              <button type="submit" className="btn-primary w-full mt-2" style={{ height: 56 }}>
-                {t.waitlist.submit}
+              {formError && (
+                <p className="text-[13px] text-[var(--wilting)] text-center" role="alert">
+                  {formError}
+                </p>
+              )}
+
+              <button
+                type="submit"
+                className="btn-primary w-full mt-2"
+                style={{ height: 56 }}
+                disabled={submitting}
+                aria-busy={submitting}
+              >
+                {submitting ? t.waitlist.submitBusy : t.waitlist.submit}
               </button>
             </form>
 
