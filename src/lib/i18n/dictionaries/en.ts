@@ -63,6 +63,17 @@ const en = {
       { n: "03", t: "Bloom", d: "Watch the garden. Celebrate together." },
     ],
   },
+  trust: {
+    eyebrow: "Trust & privacy",
+    title: "Built to be trusted with your family.",
+    lead: "Parental care shouldn't mean surveillance. Buvijon collects the minimum, protects it, and keeps you in control.",
+    items: [
+      { title: "Your data, protected", desc: "We collect only what the garden needs to work — never sold, never shared with advertisers." },
+      { title: "Only you hold the key", desc: "Settings are locked behind a parent PIN and biometrics. Children can't disable protection." },
+      { title: "No spying, no shame", desc: "Your child sees their own garden — gentle nudges, not covert tracking or punishment." },
+      { title: "Local, in your language", desc: "Made in Uzbekistan. Support in Uzbek and Russian, from a team that knows your family's world." },
+    ],
+  },
   ctaSection: {
     title1: "Let's grow",
     title2: "together.",

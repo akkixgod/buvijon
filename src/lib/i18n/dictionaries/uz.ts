@@ -65,6 +65,17 @@ const uz: Dictionary = {
       { n: "03", t: "Sog'lom va Yetuk farzandlar", d: "Farzandingizning va boshqa shajara a'zolarining ekran vaqtlarini va aqliy tetikligini kuzatib boring." },
     ],
   },
+  trust: {
+    eyebrow: "Ishonch va maxfiylik",
+    title: "Oilangizni ishonib topshirish uchun yaratilgan.",
+    lead: "Ota-onalik g'amxo'rligi — bu kuzatuv emas. Buvijon eng zarurini yig'adi, uni himoya qiladi va boshqaruvni sizga qoldiradi.",
+    items: [
+      { title: "Ma'lumotlaringiz himoyada", desc: "Faqat bog' ishlashi uchun zarurini yig'amiz — hech qachon sotmaymiz va reklama beruvchilarga bermaymiz." },
+      { title: "Kalit faqat sizda", desc: "Sozlamalar ota-ona PIN-kodi va biometriya bilan himoyalangan. Farzand himoyani o'chira olmaydi." },
+      { title: "Kuzatuvsiz va uyaltirmasdan", desc: "Farzandingiz o'z bog'ini ko'radi — yashirin kuzatuv yoki jazo emas, yumshoq turtkilar." },
+      { title: "Mahalliy va sizning tilingizda", desc: "O'zbekistonda yaratilgan. O'zbek va rus tillarida qo'llab-quvvatlash — oilangiz dunyosini biladigan jamoadan." },
+    ],
+  },
   ctaSection: {
     title1: "Farzandingizni Buvijon",
     title2: "qaramog'iga bering.",
