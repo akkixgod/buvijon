@@ -38,7 +38,15 @@ export async function POST(req: NextRequest) {
     return json({ error: "invalid" }, 422);
   }
 
-  const dbUrl = process.env.DATABASE_URL;
+  // Accept the manual name (DATABASE_URL) plus the names Vercel's Neon /
+  // Postgres integrations commonly inject, so the route works regardless of
+  // how the connection string was added.
+  const dbUrl =
+    process.env.DATABASE_URL ??
+    process.env.POSTGRES_URL ??
+    process.env.NEON_DATABASE_URL ??
+    process.env.DATABASE_URL_UNPOOLED ??
+    process.env.POSTGRES_URL_NON_POOLING;
   if (!dbUrl) {
     // Not wired up yet — surface a clear 503 so the form shows a retry/contact
     // message instead of silently dropping the lead.
