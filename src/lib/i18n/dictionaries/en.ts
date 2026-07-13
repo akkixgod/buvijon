@@ -15,7 +15,7 @@ const en = {
     closeMenu: "Close menu",
   },
   hero: {
-    eyebrow: "Buvijon · Launching June 1",
+    eyebrow: "Buvijon · Coming soon",
     countdown: {
       prefix: "Buvijon",
       suffix: "until launch",
@@ -66,7 +66,7 @@ const en = {
   ctaSection: {
     title1: "Let's grow",
     title2: "together.",
-    lead: "Launching June 1. Get in early — be one of the first families in the garden.",
+    lead: "Get in early — be one of the first families in the garden.",
     primary: "Join the waitlist",
     secondary: "Explore the dashboard ›",
   },
@@ -144,8 +144,8 @@ const en = {
     title1: "Be the first to",
     titleHighlight: "grow together",
     titleEnd: ".",
-    leadPart1: "Early access opens on",
-    leadDate: "June 1",
+    leadPart1: "We're opening early access to the",
+    leadDate: "first families",
     leadPart2: ". We'll reach out the moment Buvijon launches.",
     fullName: "Full name",
     fullNamePlaceholder: "Your name",
@@ -164,6 +164,8 @@ const en = {
     agreeError: "Please agree to continue",
     submit: "Join waitlist",
     submitDisabled: "Please agree to continue",
+    submitBusy: "Submitting…",
+    submitError: "Couldn't submit — please try again, or message us on Telegram.",
     successTitle: "You're on the list.",
     successBody: "We'll write to you when Buvijon opens for early access.",
     backHome: "← Back to home",

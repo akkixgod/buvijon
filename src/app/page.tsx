@@ -8,7 +8,6 @@ import { FlowerScene } from "@/components/FlowerScene";
 import { PhoneMockup } from "@/components/PhoneMockup";
 import { ScrollDownCue } from "@/components/ScrollDownCue";
 import { BrandText } from "@/components/BrandText";
-import { Countdown } from "@/components/Countdown";
 import { useT } from "@/components/I18nProvider";
 import { HowStepsPath } from "@/components/HowStepsPath";
 
@@ -78,7 +77,7 @@ export default function Home() {
         <div className="container-1100">
           <div className="grid lg:grid-cols-[1.1fr_1fr] gap-10 sm:gap-12 lg:gap-16 items-center">
             <div className="order-2 lg:order-1">
-              <Reveal as="p" className="eyebrow mb-5 sm:mb-6"><Countdown /></Reveal>
+              <Reveal as="p" className="eyebrow mb-5 sm:mb-6">{t.hero.eyebrow}</Reveal>
               <Reveal delay={0.05}>
                 <h1 className="mb-5 sm:mb-6">
                   {t.hero.titleLine1}

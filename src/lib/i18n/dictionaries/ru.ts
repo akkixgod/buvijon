@@ -17,7 +17,7 @@ const ru: Dictionary = {
     closeMenu: "Закрыть меню",
   },
   hero: {
-    eyebrow: "Buvijon · Запуск 1 июня",
+    eyebrow: "Buvijon · Скоро запуск",
     countdown: {
       prefix: "Buvijon",
       suffix: "до запуска",
@@ -68,7 +68,7 @@ const ru: Dictionary = {
   ctaSection: {
     title1: "Будем расти",
     title2: "вместе.",
-    lead: "Запуск 1 июня. Зайдите первыми — окажитесь среди первых семей в саду.",
+    lead: "Зайдите первыми — окажитесь среди первых семей в саду.",
     primary: "В лист ожидания",
     secondary: "Открыть дашборд ›",
   },
@@ -146,8 +146,8 @@ const ru: Dictionary = {
     title1: "Будьте первыми, кто",
     titleHighlight: "вырастет вместе",
     titleEnd: ".",
-    leadPart1: "Ранний доступ открывается",
-    leadDate: "1 июня",
+    leadPart1: "Мы открываем ранний доступ",
+    leadDate: "первым семьям",
     leadPart2: ". Мы напишем сразу, как Buvijon запустится.",
     fullName: "Полное имя",
     fullNamePlaceholder: "Ваше имя",
@@ -166,6 +166,8 @@ const ru: Dictionary = {
     agreeError: "Подтвердите согласие, чтобы продолжить",
     submit: "В лист ожидания",
     submitDisabled: "Подтвердите согласие, чтобы продолжить",
+    submitBusy: "Отправляем…",
+    submitError: "Не удалось отправить. Попробуйте ещё раз или напишите нам в Telegram.",
     successTitle: "Вы в листе ожидания.",
     successBody: "Мы напишем, как только Buvijon откроет ранний доступ.",
     backHome: "← На главную",
