@@ -11,32 +11,6 @@ import { ProblemDialogue } from "@/components/ProblemDialogue";
 import { useT } from "@/components/I18nProvider";
 import { HowStepsPath } from "@/components/HowStepsPath";
 
-const FEATURE_ICONS = [
-  (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" key="i1">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v5l3 2" />
-    </svg>
-  ),
-  (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" key="i2">
-      <path d="M4 19V5" /><path d="M4 19h16" /><path d="M8 15v-4" /><path d="M13 15V8" /><path d="M18 15v-2" />
-    </svg>
-  ),
-  (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" key="i3">
-      <path d="M6 19a3 3 0 0 0 6 0" />
-      <path d="M18 16H6l1.5-2V10a4.5 4.5 0 1 1 9 0v4Z" />
-    </svg>
-  ),
-  (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" key="i4">
-      <circle cx="12" cy="12" r="9" /><path d="M3 12h18" />
-      <path d="M12 3a14 14 0 0 1 0 18" /><path d="M12 3a14 14 0 0 0 0 18" />
-    </svg>
-  ),
-];
-
 const TRUST_ICONS = [
   (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" key="t1">
@@ -67,25 +41,6 @@ const TRUST_ICONS = [
   ),
 ];
 
-const WHY_ICONS = [
-  (
-    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" key="w1">
-      <path d="M7 12s-4-2.5-4-6a2.3 2.3 0 0 1 4-1.5A2.3 2.3 0 0 1 11 6c0 3.5-4 6-4 6Z" />
-    </svg>
-  ),
-  (
-    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" key="w2">
-      <path d="M2 7h2l2-5 2 10 2-5h2" />
-    </svg>
-  ),
-  (
-    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" key="w3">
-      <rect x="3" y="6" width="8" height="6" rx="1.4" />
-      <path d="M5 6V5a2 2 0 0 1 4 0v1" />
-    </svg>
-  ),
-];
-
 export default function Home() {
   const t = useT();
 
@@ -110,71 +65,14 @@ export default function Home() {
           relative to the much smaller hero column on phones. */}
       <div id="scene-start" className="h-[30vh] md:h-[60vh]" aria-hidden />
 
-      {/* Stage 1 — The idea (text RIGHT, flower LEFT). Right column also lists "Why it matters" bullets.
-          min-height only on lg+: on mobile the flower animation is dimmed
-          (see FlowerScene stageVars opacity: 0.22) so the section doesn't
-          need to be a full viewport tall — that just creates empty space. */}
-      <section id="story" className="section lg:min-h-[80vh]">
-        <div className="container-1100">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
-            <div className="hidden lg:block" aria-hidden />
-            <div>
-              <Reveal as="p" className="eyebrow mb-6">{t.story.eyebrow}</Reveal>
-              <Reveal delay={0.06}>
-                <h2 className="mb-8">
-                  {t.story.title1}
-                  <br />
-                  {t.story.title2}
-                </h2>
-              </Reveal>
-              <Reveal delay={0.12}>
-                <p className="lead mb-10"><BrandText>{t.story.lead}</BrandText></p>
-              </Reveal>
-              <Reveal delay={0.18}>
-                <p className="text-[12px] tracking-[0.22em] uppercase font-medium text-[var(--brand-primary)] mb-4">
-                  {t.story.whyTitle}
-                </p>
-                <ul className="space-y-3">
-                  {t.story.whyItems.map((line, i) => (
-                    <li key={i} className="flex items-start gap-3 text-[15px] text-[var(--text-primary)]/85 leading-[1.55]">
-                      <span className="mt-0.5 w-6 h-6 rounded-full bg-[var(--violet-50)] text-[var(--brand-primary)] inline-flex items-center justify-center flex-shrink-0">
-                        {WHY_ICONS[i]}
-                      </span>
-                      {line}
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stage 2 — Features (text LEFT, flower RIGHT) */}
-      <section id="features" className="section lg:min-h-screen">
-        <div className="container-1100">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
-            <div>
-              <Reveal as="p" className="eyebrow mb-5 sm:mb-6">{t.features.eyebrow}</Reveal>
-              <Reveal delay={0.06}>
-                <h2 className="mb-8 sm:mb-10">{t.features.title}</h2>
-              </Reveal>
-              <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
-                {t.features.items.map((f, i) => (
-                  <Reveal key={f.title} delay={i * 0.06}>
-                    <div className="feature-card h-full">
-                      <span className="feature-icon">{FEATURE_ICONS[i]}</span>
-                      <h3 className="mb-2">{f.title}</h3>
-                      <p className="text-[16px] leading-[1.55]">{f.desc}</p>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-            <div className="hidden lg:block" aria-hidden />
-          </div>
-        </div>
-      </section>
+      {/* Stages 1 & 2 — intentionally empty. The idea/features copy was removed,
+          but these anchors and their heights are kept so the FlowerScene stages
+          (tied to #story and #features) and the shared frame scrub across
+          #scene-start → #scene-end keep firing at the same scroll positions.
+          The flower glides left (over #story) then right (over #features) across
+          this open space exactly as before. */}
+      <section id="story" className="section min-h-[60vh] lg:min-h-[80vh]" aria-hidden />
+      <section id="features" className="section min-h-[70vh] lg:min-h-screen" aria-hidden />
 
       {/* Stage 3 — How it works (canvas in background, content centered) */}
       <section id="how" className="section lg:min-h-screen relative">
