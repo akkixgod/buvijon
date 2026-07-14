@@ -7,7 +7,7 @@ const ru: Dictionary = {
     selectMember: "Выберите члена семьи, чтобы увидеть сад",
   },
   nav: {
-    story: "Идея",
+    story: "Главная",
     features: "Возможности",
     featuresPage: "Функции",
     how: "Как это работает",

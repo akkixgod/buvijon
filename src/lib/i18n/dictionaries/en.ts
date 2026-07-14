@@ -5,7 +5,7 @@ const en = {
     selectMember: "Select a family member to see their garden",
   },
   nav: {
-    story: "Story",
+    story: "Main",
     features: "Features",
     featuresPage: "Features",
     how: "How",

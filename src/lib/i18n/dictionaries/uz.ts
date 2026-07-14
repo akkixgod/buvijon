@@ -7,7 +7,7 @@ const uz: Dictionary = {
     selectMember: "Bog‘ini ko‘rish uchun oila a’zosini tanlang",
   },
   nav: {
-    story: "Hikoya",
+    story: "Asosiy",
     features: "Imkoniyatlar",
     featuresPage: "Funksiyalar",
     how: "Qanday ishlaydi",
