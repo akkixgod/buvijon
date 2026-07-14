@@ -91,91 +91,72 @@ export function FlowerScene({
       tweens.push(playback);
       if (playback.scrollTrigger) triggers.push(playback.scrollTrigger);
 
-      const stage1Vars = isMobile
-        ? { x: 0, y: 0, scale: 0.5, opacity: 0.22 }
-        : { x: "-26vw", y: 0, scale: 0.7, opacity: 1 };
-      const stage2Vars = isMobile
-        ? { x: 0, y: 0, scale: 0.5, opacity: 0.22 }
-        : { x: "26vw", y: 0, scale: 0.7, opacity: 1 };
-      const stage3Vars = { x: 0, y: 0, scale: 1.35, opacity: 1 };
+      // Reduced-stage choreography. The former #story and #features screens were
+      // removed, so the flower no longer glides left/right beside side-text.
+      // Instead it fades in right after the dialogue, blooms while scrolling,
+      // settles as a centered background behind #how, then fades out at
+      // scene-end. Fewer sections → the whole journey is compressed into a
+      // shorter scroll, so it plays noticeably faster.
+      const inViewVars = isMobile
+        ? { x: 0, y: 0, scale: 0.55, opacity: 0.85 }
+        : { x: 0, y: 0, scale: 0.95, opacity: 1 };
+      const bgVars = isMobile
+        ? { x: 0, y: 0, scale: 0.95, opacity: 0.5 }
+        : { x: 0, y: 0, scale: 1.35, opacity: 1 };
 
       // Initial state — hidden, slightly under-scaled, centered.
       gsap.set(wrapper, { x: 0, y: 0, scale: 0.6, opacity: 0 });
 
       // Each stage is its OWN ScrollTrigger so the flower SETTLES at its target
-      // when its section is in view, then HOLDS while the user reads. Movement
-      // happens only between sections. A single scrubbed timeline interpolated
-      // continuously across all sections — leaving the flower mid-flight every
-      // time a section was in view (which read as "late").
+      // when its section is in view, then HOLDS. Stages 2–3 use fromTo with the
+      // previous stage's vars as `from` (immediateRender:false) so scrub
+      // interpolates from the actual settled position, not the captured initial
+      // state (which would jump back to center on entry).
 
-      // Stage 1: fade in + glide LEFT.
-      // Tied to #story (not #scene-start) so fade-in only begins after hero,
-      // even on short laptop viewports where #scene-start sits near viewport
-      // bottom at scroll=0.
+      // Stage 1: fade in + gentle rise as the scene-start spacer scrolls past,
+      // so the bloom is visible right after the dialogue section.
       const t1 = gsap.to(wrapper, {
-        ...stage1Vars,
+        ...inViewVars,
         ease: "power2.out",
         scrollTrigger: {
-          trigger: "#story",
-          start: "top bottom",
-          end: "top 60%",
+          trigger: startSelector,
+          start: "top 75%",
+          end: "top 25%",
           scrub: 0.4,
         },
       });
       tweens.push(t1);
       if (t1.scrollTrigger) triggers.push(t1.scrollTrigger);
 
-      // Stages 2–4 use fromTo with explicit `from = previous stage's vars` so
-      // scrub interpolates from the wrapper's actual settled position rather
-      // than the captured initial state (which would cause a jump back to
-      // center on entry). immediateRender:false prevents GSAP from snapping
-      // the wrapper to `from` at creation time.
-
-      // Stage 2: LEFT → RIGHT during #story → #features handoff.
-      const t2 = gsap.fromTo(wrapper, stage1Vars, {
-        ...stage2Vars,
+      // Stage 2: grow into a centered background as #how comes into view.
+      const t2 = gsap.fromTo(wrapper, inViewVars, {
+        ...bgVars,
         ease: "power2.inOut",
         immediateRender: false,
         scrollTrigger: {
-          trigger: "#features",
-          start: "top 90%",
-          end: "top 40%",
+          trigger: "#how",
+          start: "top bottom",
+          end: "top 45%",
           scrub: 0.4,
         },
       });
       tweens.push(t2);
       if (t2.scrollTrigger) triggers.push(t2.scrollTrigger);
 
-      // Stage 3: RIGHT → CENTER BACKGROUND during #features → #how handoff.
-      const t3 = gsap.fromTo(wrapper, stage2Vars, {
-        ...stage3Vars,
-        ease: "power2.inOut",
-        immediateRender: false,
-        scrollTrigger: {
-          trigger: "#how",
-          start: "top 90%",
-          end: "top 40%",
-          scrub: 0.4,
-        },
-      });
-      tweens.push(t3);
-      if (t3.scrollTrigger) triggers.push(t3.scrollTrigger);
-
-      // Stage 4: slow opacity-only fade as scene-end approaches.
-      // start moved to "top 60%" so it doesn't overlap with Stage 3's range.
-      const t4 = gsap.fromTo(wrapper, stage3Vars, {
+      // Stage 3: slow opacity-only fade as scene-end approaches.
+      const t3 = gsap.fromTo(wrapper, bgVars, {
         opacity: 0,
         ease: "power2.in",
         immediateRender: false,
         scrollTrigger: {
           trigger: endSelector,
-          start: "top 60%",
+          start: "top 65%",
           end: "top top",
           scrub: 1,
         },
       });
-      tweens.push(t4);
-      if (t4.scrollTrigger) triggers.push(t4.scrollTrigger);
+      tweens.push(t3);
+      if (t3.scrollTrigger) triggers.push(t3.scrollTrigger);
 
       // Bloom halo — kept at opacity 1; visibility comes for free from the
       // wrapper's stage opacity (child opacity multiplies with parent).

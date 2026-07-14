@@ -40,7 +40,7 @@ export function Nav({ cta = true }: { cta?: boolean }) {
 
   const links = useMemo<LinkSpec[]>(
     () => [
-      { href: "/#story", label: t.nav.story, section: "story" },
+      { href: "/#problem", label: t.nav.story, section: "problem" },
       { href: "/features", label: t.nav.featuresPage, pathMatch: "/features" },
       { href: "/#how", label: t.nav.how, section: "how" },
     ],

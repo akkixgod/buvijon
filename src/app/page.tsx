@@ -65,16 +65,10 @@ export default function Home() {
           relative to the much smaller hero column on phones. */}
       <div id="scene-start" className="h-[30vh] md:h-[60vh]" aria-hidden />
 
-      {/* Stages 1 & 2 — intentionally empty. The idea/features copy was removed,
-          but these anchors and their heights are kept so the FlowerScene stages
-          (tied to #story and #features) and the shared frame scrub across
-          #scene-start → #scene-end keep firing at the same scroll positions.
-          The flower glides left (over #story) then right (over #features) across
-          this open space exactly as before. */}
-      <section id="story" className="section min-h-[60vh] lg:min-h-[80vh]" aria-hidden />
-      <section id="features" className="section min-h-[70vh] lg:min-h-screen" aria-hidden />
-
-      {/* Stage 3 — How it works (canvas in background, content centered) */}
+      {/* How it works — the flower blooms in behind this section (canvas in the
+          background, content centered). The former idea/features screens were
+          removed, so this now follows the dialogue directly and the flower
+          choreography is compressed into the shorter scroll (see FlowerScene). */}
       <section id="how" className="section lg:min-h-screen relative">
         <div className="container-1100 relative z-10">
           <div className="text-center mb-12 sm:mb-16 lg:mb-20">
