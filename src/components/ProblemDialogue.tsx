@@ -52,18 +52,20 @@ export function ProblemDialogue() {
       />
 
       <div className="container-1100">
-        <Reveal as="p" className="eyebrow mb-4">
-          {p.eyebrow}
-        </Reveal>
-        <Reveal delay={0.05}>
-          <h1 className="mb-10 sm:mb-12 max-w-[18ch] text-[clamp(1.5rem,3.4vw,2.6rem)] font-semibold leading-[1.14] tracking-[-0.025em] text-[var(--text-primary)]">
-            {p.title}
-          </h1>
-        </Reveal>
+        <div className="text-center max-w-[680px] mx-auto mb-12 sm:mb-16">
+          <Reveal as="p" className="eyebrow mb-3">
+            {p.eyebrow}
+          </Reveal>
+          <Reveal delay={0.05}>
+            <h1 className="mx-auto max-w-[24ch] text-[clamp(1.375rem,2.6vw,1.9rem)] font-semibold leading-[1.2] tracking-[-0.02em] text-[var(--text-primary)]">
+              {p.title}
+            </h1>
+          </Reveal>
+        </div>
 
-        <div className="flex flex-col lg:grid lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-12 xl:gap-16 lg:items-start">
+        <div className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-10 xl:gap-14 lg:items-start">
           {/* Dialogue timeline (left) */}
-          <div className="order-2 lg:order-1 space-y-8 sm:space-y-9">
+          <div className="order-2 lg:order-1 w-full lg:max-w-[500px] lg:mx-auto space-y-8 sm:space-y-9">
             {p.rows.map((row, i) => (
               <Reveal key={row.age} delay={Math.min(i * 0.05, 0.25)}>
                 <div>
@@ -116,7 +118,7 @@ export function ProblemDialogue() {
             delay={0.1}
             className="order-1 lg:order-2 mb-10 lg:mb-0 lg:sticky lg:top-24 w-full flex justify-center"
           >
-            <div className="float-slow w-full max-w-[290px] sm:max-w-[320px] lg:max-w-none">
+            <div className="float-slow w-full max-w-[300px] sm:max-w-[330px] lg:max-w-[350px]">
               <AppHomeMockup />
             </div>
           </Reveal>
