@@ -52,7 +52,7 @@ export function ProblemDialogue() {
       />
 
       <div className="container-1100">
-        <div className="text-right max-w-[560px] ml-auto mb-8 sm:mb-10">
+        <div className="text-left max-w-[560px] mr-auto mb-8 sm:mb-10">
           <Reveal as="p" className="eyebrow mb-2">
             {p.eyebrow}
           </Reveal>
