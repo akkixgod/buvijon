@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { forwardRef, MouseEvent, ReactNode, CSSProperties } from "react";
+import { setPendingScroll } from "@/lib/pendingScroll";
 
 type Props = {
   href: string;
@@ -48,6 +49,16 @@ export const NavLink = forwardRef<HTMLAnchorElement, Props>(function NavLink(
       e.preventDefault();
       if (lenis) lenis.scrollTo(0, { duration: 0.8, easing: easeOutCubic });
       else window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    // Cross-page link that targets a section (e.g. /#how from /features):
+    // stash the target and navigate to the bare path; <ScrollOnLoad> on the
+    // destination page smooth-scrolls to it instead of the browser hard-jumping.
+    if (url.hash) {
+      e.preventDefault();
+      setPendingScroll(url.hash);
+      router.push(url.pathname);
       return;
     }
 

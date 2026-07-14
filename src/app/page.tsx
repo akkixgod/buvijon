@@ -8,6 +8,7 @@ import { FlowerScene } from "@/components/FlowerScene";
 import { PhoneMockup } from "@/components/PhoneMockup";
 import { ScrollDownCue } from "@/components/ScrollDownCue";
 import { BrandText } from "@/components/BrandText";
+import { ScrollOnLoad } from "@/components/ScrollOnLoad";
 import { useT } from "@/components/I18nProvider";
 import { HowStepsPath } from "@/components/HowStepsPath";
 
@@ -91,6 +92,7 @@ export default function Home() {
 
   return (
     <>
+      <ScrollOnLoad />
       <Nav />
 
       <FlowerScene

@@ -259,11 +259,14 @@ p {
 /* Feature card — gradient border, icon, hover glow */
 .feature-card {
   position: relative;
-  background: var(--bg-card);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FBFAFF 100%);
   border-radius: 24px;
   padding: clamp(20px, 4vw, 32px);
   overflow: hidden;
   isolation: isolate;
+  box-shadow:
+    0 14px 40px -24px rgba(124, 58, 237, 0.28),
+    0 4px 12px -8px rgba(29, 29, 31, 0.05);
   transition:
     transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -273,8 +276,8 @@ p {
   position: absolute;
   inset: 0;
   border-radius: 24px;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(124,58,237,0.18), rgba(236,72,153,0.10) 50%, rgba(124,58,237,0.04));
+  padding: 1.25px;
+  background: linear-gradient(135deg, rgba(124,58,237,0.35), rgba(236,72,153,0.20) 50%, rgba(124,58,237,0.08));
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -299,8 +302,8 @@ p {
 .feature-card:hover {
   transform: translateY(-6px);
   box-shadow:
-    0 30px 60px -20px rgba(124, 58, 237, 0.22),
-    0 8px 24px -8px rgba(29, 29, 31, 0.06);
+    0 36px 70px -24px rgba(124, 58, 237, 0.34),
+    0 10px 28px -10px rgba(29, 29, 31, 0.08);
 }
 .feature-card:hover::after { opacity: 1; }
 .feature-card > * { position: relative; z-index: 2; }
@@ -735,10 +738,11 @@ p {
 
 .panel {
   background: var(--surface-raised);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-violet);
   border-radius: 20px;
   padding: clamp(16px, 3.5vw, 24px);
-  transition: border-color 0.25s ease;
+  box-shadow: 0 16px 40px -28px rgba(124, 58, 237, 0.28);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 @media (min-width: 640px) {
   .panel { border-radius: 24px; }
@@ -751,19 +755,20 @@ p {
 }
 
 .kpi-card {
-  background: var(--surface-raised);
-  border: 1px solid var(--border-subtle);
+  background: linear-gradient(180deg, #FFFFFF 0%, var(--violet-50) 140%);
+  border: 1px solid var(--border-violet);
   border-radius: 20px;
   padding: clamp(16px, 3.5vw, 28px);
   height: 100%;
+  box-shadow: 0 14px 34px -24px rgba(124, 58, 237, 0.28);
   transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 @media (min-width: 640px) {
   .kpi-card { border-radius: 24px; }
 }
 .kpi-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 18px 40px -22px rgba(124, 58, 237, 0.18);
+  transform: translateY(-3px);
+  box-shadow: 0 26px 50px -24px rgba(124, 58, 237, 0.32);
 }
 .kpi-card__value {
   font-size: clamp(1.5rem, 5.5vw, 2.5rem);
