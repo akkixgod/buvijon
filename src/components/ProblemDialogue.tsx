@@ -57,7 +57,7 @@ export function ProblemDialogue() {
             {p.eyebrow}
           </Reveal>
           <Reveal delay={0.05}>
-            <h1 className="mx-auto max-w-[24ch] text-[clamp(1.375rem,2.6vw,1.9rem)] font-semibold leading-[1.2] tracking-[-0.02em] text-[var(--text-primary)]">
+            <h1 className="mx-auto max-w-[30ch] text-[clamp(1.05rem,1.7vw,1.375rem)] font-semibold leading-[1.3] tracking-[-0.01em] text-[var(--text-primary)]">
               {p.title}
             </h1>
           </Reveal>
