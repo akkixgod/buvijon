@@ -5,10 +5,7 @@ import { Logo } from "./Logo";
 import { useT } from "./I18nProvider";
 
 const FOOTER_LINKS = [
-  { href: "/#story", key: "story" as const },
-  { href: "/#features", key: "features" as const },
   { href: "/#how", key: "how" as const },
-  { href: "/family", key: "family" as const },
   { href: "/analysis", key: "analysis" as const },
   { href: "/waitlist", key: "joinWaitlist" as const },
 ];
