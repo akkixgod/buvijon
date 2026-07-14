@@ -17,28 +17,29 @@ export default function FeaturesPage() {
       <Nav />
 
       <main>
-        {/* Hero */}
-        <section className="section-hero pb-0">
+        {/* Functions — compact header, then sequential rows with real screenshots */}
+        <section className="section-hero">
           <div className="container-1100">
-            <div className="max-w-[760px]">
-              <Reveal as="p" className="eyebrow mb-4 sm:mb-5">{f.eyebrow}</Reveal>
+            <div className="max-w-[600px] mb-14 sm:mb-20">
+              <Reveal as="p" className="eyebrow mb-2">{f.eyebrow}</Reveal>
               <Reveal delay={0.05}>
-                <h1 className="mb-5 sm:mb-6">
+                {/* Size set inline so it beats the unlayered global `h1` rule. */}
+                <h1
+                  className="font-semibold text-[var(--text-primary)]"
+                  style={{ fontSize: "clamp(1.15rem, 1.9vw, 1.6rem)", lineHeight: 1.3, letterSpacing: "-0.01em" }}
+                >
                   {f.title1}{" "}
                   <span className="gradient-text">{f.titleHighlight}</span>
                   {f.titleEnd}
                 </h1>
               </Reveal>
               <Reveal delay={0.1}>
-                <p className="lead"><BrandText>{f.lead}</BrandText></p>
+                <p className="text-[14px] sm:text-[15px] leading-[1.6] text-[var(--text-secondary)] mt-3">
+                  <BrandText>{f.lead}</BrandText>
+                </p>
               </Reveal>
             </div>
-          </div>
-        </section>
 
-        {/* Functions — sequential rows, each with a real app screenshot */}
-        <section className="section">
-          <div className="container-1100">
             <FeatureShowcase />
           </div>
         </section>
