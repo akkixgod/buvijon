@@ -52,12 +52,12 @@ export function ProblemDialogue() {
       />
 
       <div className="container-1100">
-        <div className="text-center max-w-[680px] mx-auto mb-12 sm:mb-16">
-          <Reveal as="p" className="eyebrow mb-3">
+        <div className="text-center max-w-[620px] mx-auto mb-8 sm:mb-10">
+          <Reveal as="p" className="eyebrow mb-2.5">
             {p.eyebrow}
           </Reveal>
           <Reveal delay={0.05}>
-            <h1 className="mx-auto max-w-[30ch] text-[clamp(1.05rem,1.7vw,1.375rem)] font-semibold leading-[1.3] tracking-[-0.01em] text-[var(--text-primary)]">
+            <h1 className="mx-auto max-w-[42ch] text-[clamp(0.9375rem,1.35vw,1.0625rem)] font-semibold leading-[1.4] tracking-[-0.005em] text-[var(--text-primary)]">
               {p.title}
             </h1>
           </Reveal>
