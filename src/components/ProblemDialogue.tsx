@@ -52,12 +52,18 @@ export function ProblemDialogue() {
       />
 
       <div className="container-1100">
-        <div className="text-center max-w-[620px] mx-auto mb-8 sm:mb-10">
-          <Reveal as="p" className="eyebrow mb-2.5">
+        <div className="text-right max-w-[560px] ml-auto mb-8 sm:mb-10">
+          <Reveal as="p" className="eyebrow mb-2">
             {p.eyebrow}
           </Reveal>
           <Reveal delay={0.05}>
-            <h1 className="mx-auto max-w-[42ch] text-[clamp(0.9375rem,1.35vw,1.0625rem)] font-semibold leading-[1.4] tracking-[-0.005em] text-[var(--text-primary)]">
+            {/* Size set inline so it beats the unlayered global `h1` rule in
+                globals.css (cascade layers make that rule win over Tailwind
+                utilities otherwise). */}
+            <h1
+              className="font-semibold text-[var(--text-primary)]"
+              style={{ fontSize: "clamp(0.95rem, 1.3vw, 1.125rem)", lineHeight: 1.4, letterSpacing: "-0.01em" }}
+            >
               {p.title}
             </h1>
           </Reveal>
