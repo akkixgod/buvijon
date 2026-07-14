@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
@@ -9,6 +10,7 @@ import { PhoneMockup } from "@/components/PhoneMockup";
 import { ScrollDownCue } from "@/components/ScrollDownCue";
 import { BrandText } from "@/components/BrandText";
 import { ScrollOnLoad } from "@/components/ScrollOnLoad";
+import { ProblemDialogue } from "@/components/ProblemDialogue";
 import { useT } from "@/components/I18nProvider";
 import { HowStepsPath } from "@/components/HowStepsPath";
 
@@ -87,6 +89,55 @@ const WHY_ICONS = [
   ),
 ];
 
+// Hero side-chip icons: family tree · Buvijon AI · calm analytics · gentle limits
+const CHIP_ICONS: ReactNode[] = [
+  (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" key="c1">
+      <circle cx="12" cy="5" r="2.2" /><circle cx="6" cy="18" r="2.2" /><circle cx="18" cy="18" r="2.2" />
+      <path d="M12 7.2v3.6M12 10.8H6v4.8M12 10.8h6v4.8" />
+    </svg>
+  ),
+  (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" key="c2">
+      <path d="M12 3l1.5 3.7L17 8.2l-3.5 1.5L12 13.4l-1.5-3.7L7 8.2l3.5-1.5L12 3Z" />
+      <path d="M18.5 13.5l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8.8-1.9Z" />
+    </svg>
+  ),
+  (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" key="c3">
+      <path d="M4 20V5" /><path d="M4 20h16" /><path d="M8 16v-3" /><path d="M12 16v-7" /><path d="M16 16v-5" />
+    </svg>
+  ),
+  (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" key="c4">
+      <path d="M12 3l7 3v5c0 4.4-3 7.4-7 9-4-1.6-7-4.6-7-9V6l7-3Z" />
+    </svg>
+  ),
+];
+
+function HeroChip({
+  icon,
+  label,
+  className = "",
+}: {
+  icon: ReactNode;
+  label: string;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`items-center gap-2.5 rounded-full border border-[var(--border-violet)] bg-white/85 backdrop-blur-md px-4 py-2.5 shadow-[0_20px_46px_-26px_rgba(124,58,237,0.6)] ${className}`}
+    >
+      <span className="w-7 h-7 flex-shrink-0 rounded-lg bg-gradient-to-br from-violet-100 to-violet-50 text-[var(--brand-primary)] inline-flex items-center justify-center">
+        {icon}
+      </span>
+      <span className="text-[13px] font-semibold text-[var(--text-primary)] whitespace-nowrap">
+        {label}
+      </span>
+    </div>
+  );
+}
+
 export default function Home() {
   const t = useT();
 
@@ -104,43 +155,56 @@ export default function Home() {
       />
 
       <main>
-      {/* Hero — section-hero supplies fluid top/bottom padding (clamp tokens) */}
+      {/* Problem — generational dialogue timeline, first screen */}
+      <ProblemDialogue />
+
+      {/* Hero — centered phone with floating feature chips flanking it */}
       <section className="section-hero">
         <div className="container-1100">
-          <div className="grid lg:grid-cols-[1.1fr_1fr] gap-10 sm:gap-12 lg:gap-16 items-center">
-            <div className="order-2 lg:order-1">
-              <Reveal as="p" className="eyebrow mb-5 sm:mb-6">{t.hero.eyebrow}</Reveal>
-              <Reveal delay={0.05}>
-                <h1 className="mb-5 sm:mb-6">
-                  {t.hero.titleLine1}
-                  <br />
-                  <span className="gradient-text">{t.hero.titleLine2}</span>
-                </h1>
-              </Reveal>
-              <Reveal delay={0.12}>
-                <p className="lead mb-8 sm:mb-10">{t.hero.lead}</p>
-              </Reveal>
-              <Reveal
-                delay={0.18}
-                className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3"
-              >
-                <Link href="/waitlist" className="btn-primary btn-block-mobile">{t.hero.joinWaitlist}</Link>
-                <Link href="/family" className="btn-secondary btn-block-mobile">{t.hero.exploreDashboard}</Link>
-                <Link href="/analysis" className="btn-link justify-center sm:justify-start">
-                  {t.hero.viewAnalytics} ›
-                </Link>
-              </Reveal>
-              <Reveal delay={0.28} className="hidden md:block">
-                <ScrollDownCue />
-              </Reveal>
-            </div>
+          <div className="text-center max-w-[760px] mx-auto">
+            <Reveal as="p" className="eyebrow mb-5 sm:mb-6">{t.hero.eyebrow}</Reveal>
+            <Reveal delay={0.05}>
+              <h1 className="mb-5 sm:mb-6">
+                {t.hero.titleLine1}{" "}
+                <span className="gradient-text">{t.hero.titleLine2}</span>
+              </h1>
+            </Reveal>
+            <Reveal delay={0.12}>
+              <p className="lead mx-auto mb-8 sm:mb-10">{t.hero.lead}</p>
+            </Reveal>
+            <Reveal
+              delay={0.18}
+              className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3"
+            >
+              <Link href="/waitlist" className="btn-primary btn-block-mobile">{t.hero.joinWaitlist}</Link>
+              <Link href="/features" className="btn-secondary btn-block-mobile">{t.hero.exploreDashboard}</Link>
+            </Reveal>
+          </div>
 
-            <Reveal delay={0.1} className="order-1 lg:order-2 relative w-full flex justify-center">
-              <div className="float-slow w-full max-w-[300px] sm:max-w-[340px] md:max-w-[380px]">
+          {/* Phone stage — centered, with chips floating on both sides (desktop) */}
+          <div className="relative mx-auto mt-14 sm:mt-16 max-w-[1000px]">
+            <HeroChip className="hidden lg:flex absolute left-0 top-[8%] float-a" icon={CHIP_ICONS[0]} label={t.hero.chips[0]} />
+            <HeroChip className="hidden lg:flex absolute left-[3%] bottom-[15%] float-c" icon={CHIP_ICONS[2]} label={t.hero.chips[2]} />
+            <HeroChip className="hidden lg:flex absolute right-0 top-[14%] float-b" icon={CHIP_ICONS[1]} label={t.hero.chips[1]} />
+            <HeroChip className="hidden lg:flex absolute right-[3%] bottom-[8%] float-d" icon={CHIP_ICONS[3]} label={t.hero.chips[3]} />
+
+            <Reveal delay={0.1} className="relative flex justify-center">
+              <div className="float-slow w-full max-w-[290px] sm:max-w-[320px]">
                 <PhoneMockup />
               </div>
             </Reveal>
+
+            {/* Mobile / tablet: chips as a centered wrapping row below the phone */}
+            <div className="lg:hidden flex flex-wrap justify-center gap-2 mt-8">
+              {t.hero.chips.map((c, i) => (
+                <HeroChip key={c} className="flex" icon={CHIP_ICONS[i]} label={c} />
+              ))}
+            </div>
           </div>
+
+          <Reveal delay={0.28} className="hidden md:flex justify-center mt-10">
+            <ScrollDownCue />
+          </Reveal>
         </div>
       </section>
 

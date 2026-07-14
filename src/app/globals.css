@@ -910,6 +910,17 @@ img, video, canvas { max-width: 100%; height: auto; }
 }
 .float-slow { animation: float-slow 6s ease-in-out infinite; }
 
+/* Staggered floats for hero side-chips — gentle, offset so they don't move in
+   unison. Globally disabled under prefers-reduced-motion (see bottom of file). */
+@keyframes float-a { 0%, 100% { transform: translateY(0); }   50% { transform: translateY(-12px); } }
+@keyframes float-b { 0%, 100% { transform: translateY(0); }   50% { transform: translateY(-16px); } }
+@keyframes float-c { 0%, 100% { transform: translateY(0); }   50% { transform: translateY(-10px); } }
+@keyframes float-d { 0%, 100% { transform: translateY(0); }   50% { transform: translateY(-14px); } }
+.float-a { animation: float-a 5.5s ease-in-out infinite; }
+.float-b { animation: float-b 6.5s ease-in-out infinite 0.4s; }
+.float-c { animation: float-c 6s ease-in-out infinite 0.8s; }
+.float-d { animation: float-d 7s ease-in-out infinite 0.2s; }
+
 /* Background decor layer */
 .bg-decor {
   position: fixed;
