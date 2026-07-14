@@ -41,10 +41,8 @@ export function Nav({ cta = true }: { cta?: boolean }) {
   const links = useMemo<LinkSpec[]>(
     () => [
       { href: "/#story", label: t.nav.story, section: "story" },
-      { href: "/#features", label: t.nav.features, section: "features" },
+      { href: "/features", label: t.nav.featuresPage, pathMatch: "/features" },
       { href: "/#how", label: t.nav.how, section: "how" },
-      { href: "/family", label: t.nav.family, pathMatch: "/family" },
-      { href: "/analysis", label: t.nav.analysis, pathMatch: "/analysis" },
     ],
     [t],
   );
@@ -99,43 +97,57 @@ export function Nav({ cta = true }: { cta?: boolean }) {
   const linkContainerRef = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
-  const [pillStyle, setPillStyle] = useState<{ left: number; width: number; opacity: number }>({
-    left: 0,
-    width: 0,
-    opacity: 0,
+  // Transform-based indicator: translateX + width animate on the GPU, which is
+  // far smoother than animating `left`. `ready` gates the transition so the
+  // pill fades in at its first position instead of sliding from the origin.
+  const [pill, setPill] = useState<{ x: number; w: number; shown: boolean }>({
+    x: 0,
+    w: 0,
+    shown: false,
   });
+  const [ready, setReady] = useState(false);
 
   const focusedIndex = hoverIndex ?? activeIndex;
 
   useLayoutEffect(() => {
     const measure = () => {
       const container = linkContainerRef.current;
-      if (!container) return;
-      if (focusedIndex === null) {
-        setPillStyle((prev) => ({ ...prev, opacity: 0 }));
+      if (!container || focusedIndex === null) {
+        setPill((p) => ({ ...p, shown: false }));
         return;
       }
       const el = linkRefs.current[focusedIndex];
       if (!el) {
-        setPillStyle((prev) => ({ ...prev, opacity: 0 }));
+        setPill((p) => ({ ...p, shown: false }));
         return;
       }
-      const elRect = el.getBoundingClientRect();
-      const parentRect = container.getBoundingClientRect();
-      setPillStyle({
-        left: elRect.left - parentRect.left,
-        width: elRect.width,
-        opacity: 1,
-      });
+      const er = el.getBoundingClientRect();
+      const pr = container.getBoundingClientRect();
+      setPill({ x: er.left - pr.left, w: er.width, shown: true });
     };
     measure();
     window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    let cancelled = false;
+    // Re-measure once webfonts settle so the pill matches final text metrics.
+    if (typeof document !== "undefined" && "fonts" in document) {
+      document.fonts.ready.then(() => {
+        if (!cancelled) measure();
+      }).catch(() => {});
+    }
+    return () => {
+      cancelled = true;
+      window.removeEventListener("resize", measure);
+    };
   }, [focusedIndex, t]);
 
-  const navSurface = scrolled
-    ? "rgba(255,255,255,0.88)"
-    : "rgba(255,255,255,0.72)";
+  useEffect(() => {
+    if (pill.shown && !ready) {
+      const id = requestAnimationFrame(() => setReady(true));
+      return () => cancelAnimationFrame(id);
+    }
+  }, [pill.shown, ready]);
+
+  const navSurface = scrolled ? "rgba(255,255,255,0.88)" : "rgba(255,255,255,0.72)";
 
   return (
     <>
@@ -146,9 +158,7 @@ export function Nav({ cta = true }: { cta?: boolean }) {
           backdropFilter: scrolled || mobileOpen ? "blur(20px) saturate(180%)" : "none",
           WebkitBackdropFilter: scrolled || mobileOpen ? "blur(20px) saturate(180%)" : "none",
           borderBottom:
-            scrolled || mobileOpen
-              ? "1px solid rgba(29,29,31,0.06)"
-              : "1px solid transparent",
+            scrolled || mobileOpen ? "1px solid rgba(29,29,31,0.06)" : "1px solid transparent",
         }}
       >
         <div className="container-1100 h-14 flex items-center justify-between gap-3">
@@ -161,19 +171,19 @@ export function Nav({ cta = true }: { cta?: boolean }) {
           >
             <span
               aria-hidden
-              className="absolute top-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+              className="absolute top-1/2 left-0 rounded-full pointer-events-none"
               style={{
-                left: pillStyle.left,
-                width: pillStyle.width,
+                width: pill.w,
                 height: 32,
-                opacity: pillStyle.opacity,
+                transform: `translate(${pill.x}px, -50%)`,
+                opacity: pill.shown ? 1 : 0,
                 background:
-                  "linear-gradient(135deg, rgba(124,58,237,0.10), rgba(236,72,153,0.10))",
+                  "linear-gradient(135deg, rgba(124,58,237,0.12), rgba(236,72,153,0.12))",
                 border: "1px solid rgba(124,58,237,0.18)",
-                backdropFilter: "blur(6px)",
-                WebkitBackdropFilter: "blur(6px)",
-                transition:
-                  "left 0.45s cubic-bezier(0.22,1,0.36,1), width 0.45s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease",
+                willChange: "transform, width",
+                transition: ready
+                  ? "transform 0.42s cubic-bezier(0.22,1,0.36,1), width 0.42s cubic-bezier(0.22,1,0.36,1), opacity 0.25s ease"
+                  : "opacity 0.25s ease",
               }}
             />
             {links.map((l, i) => {
@@ -188,7 +198,7 @@ export function Nav({ cta = true }: { cta?: boolean }) {
                   }}
                   onClick={() => setHoverIndex(null)}
                   onMouseEnter={() => setHoverIndex(i)}
-                  className="relative px-3.5 py-2 text-[13px] transition-colors"
+                  className="relative px-3.5 py-2 text-[13px] transition-colors duration-200"
                   style={{
                     color: focused || active ? "var(--text-primary)" : "var(--text-secondary)",
                     fontWeight: active ? 600 : 400,

@@ -17,55 +17,44 @@ management for families.
   instead of surveillance-style dashboards.
 
 ## Key pages
-- [Family dashboard](${SITE_ORIGIN}/family) — the shared family garden and
-  per-child standing.
-- [Analysis](${SITE_ORIGIN}/analysis) — screen time trends, activity, and app
-  breakdown.
+- [Features](${SITE_ORIGIN}/features) — family tree, per-child screen-time
+  analysis, in-app connection, and Buvijon AI.
 - [Join the waitlist](${SITE_ORIGIN}/waitlist) — sign up for early access.
 
 ## Status
-Buvijon is pre-launch. The waitlist is open. Launch date: June 1.
+Buvijon is pre-launch. The waitlist is open.
 `,
 
-  "/family": `# Buvijon — Family dashboard
+  "/features": `# Buvijon — Features
 
-The family garden shows every member of the household and each child's current
-standing at a glance. This page is an interactive preview populated with sample
-data.
+Everything a family needs in one garden. Four core functions, with a live
+interactive preview of the screen-time analysis.
 
-## Sections
-- **Family** — members with avatars, roles, online status, and each child's
-  flower reflecting today's balance.
-- **Chats** — family group conversations, including gentle system nudges from
-  Buvijon.
-- **Direct** — one-to-one messages between family members.
+## Family tree
+Every parent and child in one shared tree. Co-parents manage the same children
+and see the same garden — a child belongs to the family, not a single phone.
 
-## Per-child detail
-Selecting a child reveals screen time today vs. their daily limit, the flower
-state (healthy / attention / exceeded), and a weekly progress chart.
+## Screen-time analysis
+See when, how much, and for what each child used their screen — by app, by hour,
+by day. Cross-device: if a child uses any family member's phone, that time still
+counts toward their total.
 
-Join the waitlist: ${SITE_ORIGIN}/waitlist
-`,
+## In-app connection
+A built-in family messenger, plus posting a child's achievements to the family
+tree — encouragement, not surveillance.
 
-  "/analysis": `# Buvijon — Screen time analysis
-
-Calm, readable analytics for a child's digital habits. This page is an
-interactive preview populated with sample data.
-
-## What it shows
-- **KPI summary** — headline numbers for the selected period (today / week /
-  month).
-- **Activity** — screen time distributed across the day.
-- **Trend** — usage trend with healthy / borderline / over-limit banding.
-- **App breakdown** — time and share per app.
-- **Positives and things to watch** — plain-language guidance.
+## Buvijon AI
+Plain-language reports on each child's wellbeing, flagging meaningful changes and
+improvements. When screen time gets out of hand, Buvijon AI can suggest booking a
+consultation with a vetted child psychologist or doctor in the app, or point to
+trusted local sports coaches.
 
 Join the waitlist: ${SITE_ORIGIN}/waitlist
 `,
 
   "/waitlist": `# Buvijon — Join the waitlist
 
-Sign up for early access to Buvijon. Launch date: June 1.
+Sign up for early access to Buvijon. The waitlist is open.
 
 ## Fields
 - Full name

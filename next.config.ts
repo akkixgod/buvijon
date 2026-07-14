@@ -12,11 +12,18 @@ const AGENT_LINK_HEADER = [
 // Page routes that support HTML + Markdown content negotiation. They must send
 // `Vary: Accept` so shared caches don't serve markdown to a browser (or vice
 // versa) after the middleware branches on the Accept header.
-const PAGE_ROUTES = ["/", "/family", "/analysis", "/waitlist"];
+const PAGE_ROUTES = ["/", "/features", "/waitlist"];
 
 const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
+  },
+  async redirects() {
+    // The former /family and /analysis pages were folded into /features.
+    return [
+      { source: "/family", destination: "/features", permanent: true },
+      { source: "/analysis", destination: "/features", permanent: true },
+    ];
   },
   async rewrites() {
     return [{ source: "/join/:code", destination: "/invite/join.html" }];

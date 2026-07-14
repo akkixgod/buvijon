@@ -9,6 +9,7 @@ const uz: Dictionary = {
   nav: {
     story: "Hikoya",
     features: "Imkoniyatlar",
+    featuresPage: "Funksiyalar",
     how: "Qanday ishlaydi",
     family: "Oila",
     analysis: "Analiz qilish",
@@ -75,6 +76,58 @@ const uz: Dictionary = {
       { title: "Kuzatuvsiz va uyaltirmasdan", desc: "Farzandingiz o'z bog'ini ko'radi — yashirin kuzatuv yoki jazo emas, yumshoq turtkilar." },
       { title: "Mahalliy va sizning tilingizda", desc: "O'zbekistonda yaratilgan. O'zbek va rus tillarida qo'llab-quvvatlash — oilangiz dunyosini biladigan jamoadan." },
     ],
+  },
+  featuresPage: {
+    eyebrow: "Funksiyalar",
+    title1: "Oilaga kerak bo'lgan hamma narsa —",
+    titleHighlight: "bitta bog'da",
+    titleEnd: ".",
+    lead: "Buvijon oilangizga ekran bilan sog'lom munosabat qurishga yordam beradigan to'rt yo'l — bloklar, shovqin va uyalishsiz.",
+    items: [
+      {
+        category: "Oila",
+        title: "Oila shajarasi",
+        desc: "Barcha ota-onalar va farzandlar — bitta umumiy shajarada. Ota-onalar bir xil farzandlarni birga yuritadi va bitta bog'ni ko'radi: farzand bitta telefonga emas, oilaga tegishli.",
+        points: [
+          "Bir nechta ota-ona umumiy farzandlarni yuritadi",
+          "Ota-onani @username orqali taklif qilish",
+          "Butun oila ko'radigan yagona bog'",
+        ],
+      },
+      {
+        category: "Tahlil",
+        title: "Har bir farzandning ekran vaqti tahlili",
+        desc: "Farzand qachon, qancha va nimaga ekran vaqtini sarflaganini ko'ring — ilovalar, soatlar va kunlar bo'yicha. Agar farzand oilaning istalgan a'zosi telefonidan foydalansa ham, bu vaqt uning umumiy hisobiga qo'shiladi.",
+        points: [
+          "Ilovalar, soatlar va kunlar bo'yicha taqsimot",
+          "Qurilmalararo hisob: oilaning istalgan telefoni farzandga qo'shiladi",
+          "Ortiqcha grafiklarsiz, aniq tendensiyalar",
+        ],
+      },
+      {
+        category: "Muloqot",
+        title: "Muloqot qiling, ulashing, quvoning",
+        desc: "O'rnatilgan oilaviy messenjer hammani yaqin tutadi. Farzandning yutuqlarini oila shajarasiga joylang va taraqqiyotni qo'llab-quvvatlashga aylantiring — bu kuzatuv emas, aloqa.",
+        points: [
+          "O'rnatilgan oilaviy chat",
+          "Farzand yutuqlarini shajaraga joylash",
+          "Jazo emas, qo'llab-quvvatlash",
+        ],
+      },
+      {
+        category: "Buvijon AI",
+        title: "Buvijon AI — nazorat emas, g'amxo'rlik",
+        desc: "Buvijon AI har bir farzandning raqamli ritmini o'qiydi va uning haqiqiy holatini bildiradi — muhim o'zgarishlar va yaxshilanishlarni belgilaydi hamda odatlar ortida nima turganini tushuntiradi. Agar ekran vaqti nazoratdan chiqsa, AI ilovada to'g'ridan-to'g'ri ishonchli bolalar psixologi yoki shifokoriga yozilishni taklif qilishi — yoki shahringizdagi ishonchli sport murabbiylari profillarini ko'rsatishi mumkin.",
+        points: [
+          "Farzand holati haqida tushunarli hisobotlar",
+          "Muhim o'zgarish va yaxshilanishlarni bildiradi",
+          "Kerak bo'lganda psixolog, shifokor yoki mahalliy murabbiyni taklif qiladi",
+        ],
+      },
+    ],
+    demoEyebrow: "Jonli ko'rinish",
+    demoTitle: "Har soat, har ilova",
+    demoNote: "Namuna ma'lumotlar — qurilmalararo vaqt har bir hisobga allaqachon kiritilgan.",
   },
   ctaSection: {
     title1: "Farzandingizni Buvijon",

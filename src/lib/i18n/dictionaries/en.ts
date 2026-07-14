@@ -7,6 +7,7 @@ const en = {
   nav: {
     story: "Story",
     features: "Features",
+    featuresPage: "Features",
     how: "How",
     family: "Family",
     analysis: "Analysis",
@@ -73,6 +74,58 @@ const en = {
       { title: "No spying, no shame", desc: "Your child sees their own garden — gentle nudges, not covert tracking or punishment." },
       { title: "Local, in your language", desc: "Made in Uzbekistan. Support in Uzbek and Russian, from a team that knows your family's world." },
     ],
+  },
+  featuresPage: {
+    eyebrow: "Features",
+    title1: "Everything your family needs,",
+    titleHighlight: "in one garden",
+    titleEnd: ".",
+    lead: "Four ways Buvijon helps your family grow a healthy relationship with screens — without blocklists, noise, or shame.",
+    items: [
+      {
+        category: "Family",
+        title: "Family tree",
+        desc: "Every parent and child in one shared tree. Co-parents manage the same kids and see the same garden — a child belongs to the family, not to a single phone.",
+        points: [
+          "Multiple parents share the same children",
+          "Invite a co-parent by @username",
+          "One garden the whole family can see",
+        ],
+      },
+      {
+        category: "Analysis",
+        title: "Screen-time analysis for every child",
+        desc: "See when, how much, and for what each child used their screen — by app, by hour, by day. And if a child uses any family member's phone, that time still counts toward their total.",
+        points: [
+          "Broken down by app, hour and day",
+          "Cross-device: any family phone counts toward the child",
+          "Clear trends, not pages of charts",
+        ],
+      },
+      {
+        category: "Connection",
+        title: "Talk, share, celebrate",
+        desc: "A built-in family messenger keeps everyone close. Post a child's achievements to the family tree and turn progress into encouragement — connection, not surveillance.",
+        points: [
+          "Built-in family chat",
+          "Post a child's achievements to the tree",
+          "Encouragement over punishment",
+        ],
+      },
+      {
+        category: "Buvijon AI",
+        title: "Buvijon AI — care, not control",
+        desc: "Buvijon AI reads each child's digital rhythm and reports on how they're really doing — flagging meaningful changes and improvements, and explaining what the patterns mean. If screen time gets out of hand, it can suggest booking a consultation with a vetted child psychologist or doctor right in the app, or point you to trusted sports coaches in your city.",
+        points: [
+          "Plain-language reports on your child's wellbeing",
+          "Flags important changes and improvements",
+          "Suggests a psychologist, doctor or local coach when it matters",
+        ],
+      },
+    ],
+    demoEyebrow: "Live preview",
+    demoTitle: "See every hour, every app",
+    demoNote: "Sample data — cross-device time is already included in each total.",
   },
   ctaSection: {
     title1: "Let's grow",
