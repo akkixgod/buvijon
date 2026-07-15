@@ -212,7 +212,8 @@ export default function WaitlistPage() {
                     onBlur={() => blur("telegramUsername")}
                     placeholder={t.waitlist.telegramPlaceholder}
                     aria-invalid={!!(errors.telegramUsername && touched.telegramUsername)}
-                    className={`input pl-9 ${errors.telegramUsername && touched.telegramUsername ? "error" : ""}`}
+                    style={{ paddingLeft: 36 }}
+                    className={`input ${errors.telegramUsername && touched.telegramUsername ? "error" : ""}`}
                   />
                 </div>
               </Field>
