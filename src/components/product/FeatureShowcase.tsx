@@ -8,10 +8,11 @@ import { PhoneFrame } from "@/components/PhoneFrame";
 import { useT } from "@/components/I18nProvider";
 import oilaShot from "../../../public/features/oila-shajarasi.png";
 import tahlilShot from "../../../public/features/tahlil.png";
+import aiShot from "../../../public/features/buvijon-ai.jpg";
 
 // Real app screenshots per function, in dictionary order. `null` = not shot yet
 // → a neutral "Tez orada" placeholder fills the frame.
-const SHOTS: (StaticImageData | null)[] = [oilaShot, tahlilShot, null, null];
+const SHOTS: (StaticImageData | null)[] = [oilaShot, tahlilShot, null, aiShot];
 
 // One icon per function, in dictionary order:
 // Family tree · Screen-time analysis · In-app connection · Buvijon AI
