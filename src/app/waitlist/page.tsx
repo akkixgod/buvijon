@@ -146,11 +146,40 @@ export default function WaitlistPage() {
               <span className="gradient-text">{t.waitlist.titleHighlight}</span>
               {t.waitlist.titleEnd}
             </h1>
-            <p className="text-[14px] sm:text-[15px] leading-[1.6] text-[var(--text-secondary)] mx-auto max-w-[440px]">
-              {t.waitlist.leadPart1}{" "}
-              <span className="text-[var(--text-primary)] font-medium">{t.waitlist.leadDate}</span>
-              {t.waitlist.leadPart2}
-            </p>
+            <div className="mt-1 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <a
+                href="https://t.me/buvijon_uz"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-full px-6 py-3 text-white font-semibold text-[15px] transition-transform duration-300 hover:-translate-y-0.5"
+                style={{
+                  background: "linear-gradient(135deg, #2AABEE, #229ED9)",
+                  boxShadow: "0 14px 32px -12px rgba(34,158,217,0.65)",
+                }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                  <path d="M9.78 16.61 9.6 13.7l8.05-7.27c.37-.33-.08-.49-.57-.19L7.13 12.7l-4.3-1.36c-.92-.27-.93-.92.21-1.37L19.6 3.5c.78-.36 1.51.18 1.21 1.36l-2.9 13.6c-.21.96-.79 1.2-1.6.74l-4.36-3.22-2.1 2.04c-.24.24-.45.45-.92.45z" />
+                </svg>
+                Telegram
+              </a>
+              <a
+                href="https://instagram.com/buvijon_uz"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-full px-6 py-3 text-white font-semibold text-[15px] transition-transform duration-300 hover:-translate-y-0.5"
+                style={{
+                  background: "linear-gradient(135deg, #F58529 0%, #DD2A7B 55%, #8134AF 100%)",
+                  boxShadow: "0 14px 32px -12px rgba(221,42,123,0.6)",
+                }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <rect x="3" y="3" width="18" height="18" rx="5.5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none" />
+                </svg>
+                Instagram
+              </a>
+            </div>
           </div>
 
           <div className="panel border-[var(--border-violet)]">

@@ -54,11 +54,8 @@ export default function FeaturesPage() {
                   <span className="gradient-text">{t.ctaSection.title2}</span>
                 </h2>
               </Reveal>
-              <Reveal delay={0.08}>
-                <p className="lead mx-auto mb-8 sm:mb-10">{t.ctaSection.lead}</p>
-              </Reveal>
               <Reveal
-                delay={0.16}
+                delay={0.12}
                 className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-5"
               >
                 <Link href="/waitlist" className="btn-primary btn-block-mobile">
