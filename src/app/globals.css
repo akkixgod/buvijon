@@ -39,7 +39,7 @@
      so we never need viewport-class breakpoints for vertical rhythm. */
   --space-section-y: clamp(64px, 9vw, 120px);
   --space-section-tight-y: clamp(48px, 7vw, 80px);
-  --space-hero-top: clamp(96px, 16vw, 140px);
+  --space-hero-top: clamp(72px, 9vw, 100px);
   --space-hero-bottom: clamp(48px, 8vw, 80px);
   --space-page-top: clamp(88px, 14vw, 130px);
   --container-pad-x: clamp(16px, 4vw, 48px);
