@@ -42,7 +42,6 @@ export function Nav({ cta = true }: { cta?: boolean }) {
     () => [
       { href: "/#problem", label: t.nav.story, section: "problem" },
       { href: "/features", label: t.nav.featuresPage, pathMatch: "/features" },
-      { href: "/#how", label: t.nav.how, section: "how" },
     ],
     [t],
   );
@@ -57,12 +56,15 @@ export function Nav({ cta = true }: { cta?: boolean }) {
 
   useEffect(() => {
     if (pathname !== "/") return;
+    // On the home page "Asosiy" (index 0) is the default active tab, so the
+    // floating pill sits around it from load and whenever no other section wins.
+    setActiveIndex(0);
     const sectionEntries = links
       .map((l, i) => (l.section ? { i, el: document.getElementById(l.section) } : null))
       .filter((x): x is { i: number; el: HTMLElement } => !!x && !!x.el);
 
     if (sectionEntries.length === 0) {
-      setActiveIndex(null);
+      setActiveIndex(0);
       return;
     }
 
@@ -83,7 +85,8 @@ export function Nav({ cta = true }: { cta?: boolean }) {
           bestI = i;
         }
       });
-      setActiveIndex(bestRatio < 0.12 ? null : bestI);
+      // Fall back to Asosiy (0) rather than clearing, so its pill persists.
+      setActiveIndex(bestRatio < 0.12 ? 0 : bestI);
     };
 
     const observer = new IntersectionObserver(onChange, {
