@@ -122,13 +122,13 @@ const uz: Dictionary = {
   },
   trust: {
     eyebrow: "Ishonch va maxfiylik",
-    title: "Oilangizni ishonib topshirish uchun yaratilgan.",
-    lead: "Ota-onalik g'amxo'rligi — bu kuzatuv emas. Buvijon eng zarurini yig'adi, uni himoya qiladi va boshqaruvni sizga qoldiradi.",
+    title: "Oilangizga birgalikda g'amxo'rlik qilamiz",
+    lead: "Ilova telefoningizdan talab qiluvchi barcha ruxsatnomalar sizning qulayligingiz uchun.",
     items: [
-      { title: "Ma'lumotlaringiz himoyada", desc: "Faqat bog' ishlashi uchun zarurini yig'amiz — hech qachon sotmaymiz va reklama beruvchilarga bermaymiz." },
-      { title: "Kalit faqat sizda", desc: "Sozlamalar ota-ona PIN-kodi va biometriya bilan himoyalangan. Farzand himoyani o'chira olmaydi." },
-      { title: "Kuzatuvsiz va uyaltirmasdan", desc: "Farzandingiz o'z bog'ini ko'radi — yashirin kuzatuv yoki jazo emas, yumshoq turtkilar." },
-      { title: "Mahalliy va sizning tilingizda", desc: "O'zbekistonda yaratilgan. O'zbek va rus tillarida qo'llab-quvvatlash — oilangiz dunyosini biladigan jamoadan." },
+      { title: "Xavfsiz ma'lumotlar", desc: "Ilovada farzand harakatlariga oid ma'lumotlarnigina o'rganib chiqamiz va ularni boshqalar bilan bo'lishmaymiz." },
+      { title: "Himoya tizimi", desc: "Siz farzandingiz foydalanadigan ilovalarga (taxminan 3–4) qulay tarzda biometrik tizim bilan kirasiz, farzandlaringizning esa shaxsiy paroli mavjud bo'ladi." },
+      { title: "Shaxsiy chegaralar", desc: "Sizning oila shajarangizga faqat asosiy oila a'zosining ruxsati bilan yoki link orqali qo'shilish mumkin." },
+      { title: "Barcha muhim tillarda", desc: "Ilovadan ingliz, rus va o'zbek tillarida foydalanish mumkin. Yozuv shriftini esa krill alifbosiga o'tkazish mumkin." },
     ],
   },
   featuresPage: {

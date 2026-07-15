@@ -120,13 +120,13 @@ const en = {
   },
   trust: {
     eyebrow: "Trust & privacy",
-    title: "Built to be trusted with your family.",
-    lead: "Parental care shouldn't mean surveillance. Buvijon collects the minimum, protects it, and keeps you in control.",
+    title: "Caring for your family, together.",
+    lead: "Every permission the app requests on your phone is there for your convenience.",
     items: [
-      { title: "Your data, protected", desc: "We collect only what the garden needs to work — never sold, never shared with advertisers." },
-      { title: "Only you hold the key", desc: "Settings are locked behind a parent PIN and biometrics. Children can't disable protection." },
-      { title: "No spying, no shame", desc: "Your child sees their own garden — gentle nudges, not covert tracking or punishment." },
-      { title: "Local, in your language", desc: "Made in Uzbekistan. Support in Uzbek and Russian, from a team that knows your family's world." },
+      { title: "Safe data", desc: "In the app we only study data about your child's activity — and we never share it with anyone else." },
+      { title: "Protection system", desc: "You unlock the apps your child uses (around 3–4) conveniently with biometrics, while your children have their own personal passcode." },
+      { title: "Private boundaries", desc: "People can join your family tree only with the main family member's approval or via an invite link." },
+      { title: "In every language that matters", desc: "The app works in English, Russian and Uzbek — and the script can be switched to the Cyrillic alphabet." },
     ],
   },
   featuresPage: {
