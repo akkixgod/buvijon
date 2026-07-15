@@ -135,14 +135,18 @@ export default function WaitlistPage() {
 
       <main className="section-hero min-h-[100svh]">
         <div className="container-1100 max-w-[640px]">
-          <div className="text-center mb-8 sm:mb-12">
-            <p className="eyebrow mb-4 sm:mb-5">{t.waitlist.eyebrow}</p>
-            <h1 className="mb-5 sm:mb-6">
+          <div className="text-center mb-6 sm:mb-8">
+            <p className="eyebrow mb-2">{t.waitlist.eyebrow}</p>
+            {/* Size set inline so it beats the unlayered global `h1` rule. */}
+            <h1
+              className="font-semibold text-[var(--text-primary)] mb-2.5"
+              style={{ fontSize: "clamp(1.15rem, 1.9vw, 1.6rem)", lineHeight: 1.3, letterSpacing: "-0.01em" }}
+            >
               {t.waitlist.title1}{" "}
               <span className="gradient-text">{t.waitlist.titleHighlight}</span>
               {t.waitlist.titleEnd}
             </h1>
-            <p className="lead mx-auto">
+            <p className="text-[14px] sm:text-[15px] leading-[1.6] text-[var(--text-secondary)] mx-auto max-w-[440px]">
               {t.waitlist.leadPart1}{" "}
               <span className="text-[var(--text-primary)] font-medium">{t.waitlist.leadDate}</span>
               {t.waitlist.leadPart2}
