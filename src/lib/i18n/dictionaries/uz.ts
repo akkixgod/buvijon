@@ -115,9 +115,9 @@ const uz: Dictionary = {
     eyebrow: "Ilovadan foydalanish",
     title: "Muhim uch bosqich",
     steps: [
-      { n: "01", t: "Oila Shajarangizni quring",  d: "Har bir farzandni qo'shing. Uning gulini tanlang." },
-      { n: "02", t: "Buvijonga Ishoning",  d: "Mos ekran vaqtlarini va limitlarini belgilab, qarindoshlaringiz bilan ilovada o'z Oila Shajarangizni yarating." },
-      { n: "03", t: "Sog'lom va Yetuk farzandlar", d: "Farzandingizning va boshqa shajara a'zolarining ekran vaqtlarini va aqliy tetikligini kuzatib boring." },
+      { n: "01", t: "Ilovani boshlash",  d: "Ilovani yuklab oling. Parametrlardan ilova uchun ruxsatlarni ta'minlang — telefoningizdagi ma'lumotlar doimo xavfsiz." },
+      { n: "02", t: "Bolalarni ilovaga qo'shish",  d: "Har bir farzandingiz uchun alohida parol yarating. Farzandlaringiz odatda ishlatadigan ilovalarni tanlang." },
+      { n: "03", t: "Ilovada qarindoshlaringizni toping", d: "Oila shajarasini yaratib, boshqa qarindoshlarni link orqali taklif qiling." },
     ],
   },
   trust: {

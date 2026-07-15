@@ -110,12 +110,12 @@ const en = {
     ],
   },
   how: {
-    eyebrow: "How it works",
-    title: "Three steps. No manual.",
+    eyebrow: "Getting started",
+    title: "Three important steps",
     steps: [
-      { n: "01", t: "Plant", d: "Add each child. Pick their flower." },
-      { n: "02", t: "Grow", d: "Set healthy budgets. Forget the rest." },
-      { n: "03", t: "Bloom", d: "Watch the garden. Celebrate together." },
+      { n: "01", t: "Set up the app", d: "Download the app and grant the permissions it needs — the data on your phone always stays safe." },
+      { n: "02", t: "Add your children", d: "Create a separate passcode for each child, then pick the apps they usually use." },
+      { n: "03", t: "Find your relatives in the app", d: "Build your family tree and invite other relatives with a link." },
     ],
   },
   trust: {
