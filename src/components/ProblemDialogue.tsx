@@ -75,26 +75,23 @@ export function ProblemDialogue() {
             {p.rows.map((row, i) => (
               <Reveal key={row.age} delay={Math.min(i * 0.05, 0.25)}>
                 <div>
-                  <span
-                    className="float-soft inline-flex items-center justify-center rounded-full text-white text-[11px] font-semibold px-3.5 py-2 mb-3 whitespace-nowrap ring-1 ring-white/30 shadow-[0_12px_26px_-12px_rgba(124,58,237,0.75)]"
-                    style={{
-                      background: "linear-gradient(135deg, #7C3AED, #A855F7)",
-                      animationDelay: `${i * 0.5}s`,
-                    }}
-                  >
-                    {row.age}
-                  </span>
-
                   <div className="space-y-2.5">
-                    <div className="flex items-end gap-2.5">
+                    {/* Child line: age is plain text to the LEFT of the icon
+                        (no pill), which drops the old badge row and saves space. */}
+                    <div className="flex items-end gap-2 sm:gap-2.5 pr-6 sm:pr-10">
+                      <span className="self-center w-[42px] sm:w-[46px] flex-shrink-0 text-right text-[11px] font-semibold text-[var(--brand-primary)] whitespace-nowrap">
+                        {row.age}
+                      </span>
                       <Avatar kind="child" />
-                      <div className="chat-bubble chat-bubble--child max-w-[86%] rounded-2xl rounded-bl-md border border-[var(--border-violet)] bg-white px-4 py-2.5 text-[13.5px] leading-[1.45] text-[var(--text-primary)] shadow-[0_8px_22px_-16px_rgba(124,58,237,0.4)] transition-transform duration-300 hover:-translate-y-0.5">
+                      <div className="chat-bubble chat-bubble--child max-w-[82%] rounded-2xl rounded-bl-md border border-[var(--border-violet)] bg-white px-4 py-2.5 text-[13.5px] leading-[1.45] text-[var(--text-primary)] shadow-[0_8px_22px_-16px_rgba(124,58,237,0.4)] transition-transform duration-300 hover:-translate-y-0.5">
                         {row.child}
                       </div>
                     </div>
-                    <div className="flex items-end gap-2.5 flex-row-reverse">
+                    {/* Parent line: indented from the left so it clearly sits to
+                        the right of the child's line — easier to tell apart. */}
+                    <div className="flex items-end gap-2 sm:gap-2.5 flex-row-reverse pl-10 sm:pl-16">
                       <Avatar kind="parent" />
-                      <div className="chat-bubble chat-bubble--parent max-w-[86%] rounded-2xl rounded-br-md bg-[var(--violet-50)] border border-[var(--border-violet)] px-4 py-2.5 text-[13.5px] leading-[1.45] text-[var(--text-secondary)] transition-transform duration-300 hover:-translate-y-0.5">
+                      <div className="chat-bubble chat-bubble--parent max-w-[82%] rounded-2xl rounded-br-md bg-[var(--violet-50)] border border-[var(--border-violet)] px-4 py-2.5 text-[13.5px] leading-[1.45] text-[var(--text-secondary)] transition-transform duration-300 hover:-translate-y-0.5">
                         {row.parent}
                       </div>
                     </div>
@@ -132,13 +129,13 @@ export function ProblemDialogue() {
 
         {/* Legend */}
         <Reveal delay={0.1}>
-          <div className="mt-12 sm:mt-14 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+          <div className="mt-12 sm:mt-14 flex flex-wrap items-center justify-center gap-3 sm:gap-3.5">
             {p.legend.map((item) => (
               <span
                 key={item.label}
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--border-violet)] bg-white px-3.5 py-2 text-[13px] font-medium text-[var(--text-primary)] shadow-[0_8px_22px_-18px_rgba(124,58,237,0.5)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--brand-primary)] hover:shadow-[0_14px_30px_-18px_rgba(124,58,237,0.6)]"
+                className="inline-flex items-center gap-2.5 rounded-full border border-[var(--border-violet)] bg-white px-4 sm:px-5 py-2.5 sm:py-3 text-[14px] sm:text-[15px] font-semibold text-[var(--text-primary)] shadow-[0_10px_26px_-18px_rgba(124,58,237,0.55)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--brand-primary)] hover:shadow-[0_16px_34px_-18px_rgba(124,58,237,0.6)]"
               >
-                <span className="text-[15px] leading-none select-none" aria-hidden>
+                <span className="text-[18px] sm:text-[20px] leading-none select-none" aria-hidden>
                   {item.emoji}
                 </span>
                 {item.label}
