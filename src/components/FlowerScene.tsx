@@ -100,9 +100,11 @@ export function FlowerScene({
       const inViewVars = isMobile
         ? { x: 0, y: 0, scale: 0.55, opacity: 0.85 }
         : { x: 0, y: 0, scale: 0.95, opacity: 1 };
+      // Dimmed once parked behind #how so it reads as a soft ambient backdrop
+      // and doesn't wash out the (violet) eyebrow + heading sitting over it.
       const bgVars = isMobile
-        ? { x: 0, y: 0, scale: 0.95, opacity: 0.5 }
-        : { x: 0, y: 0, scale: 1.35, opacity: 1 };
+        ? { x: 0, y: 0, scale: 0.95, opacity: 0.32 }
+        : { x: 0, y: 0, scale: 1.35, opacity: 0.38 };
 
       // Initial state — hidden, slightly under-scaled, centered.
       gsap.set(wrapper, { x: 0, y: 0, scale: 0.6, opacity: 0 });

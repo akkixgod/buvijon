@@ -71,11 +71,24 @@ export default function Home() {
           choreography is compressed into the shorter scroll (see FlowerScene). */}
       <section id="how" className="section lg:min-h-screen relative">
         <div className="container-1100 relative z-10">
-          <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-            <Reveal as="p" className="eyebrow mb-5 sm:mb-6">{t.how.eyebrow}</Reveal>
-            <Reveal delay={0.06}>
-              <h2>{t.how.title}</h2>
-            </Reveal>
+          <div className="relative text-center mb-12 sm:mb-16 lg:mb-20">
+            {/* Soft white scrim lifts the eyebrow + heading off the pink flower
+                behind them so the violet text stays legible. */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[170%] z-0"
+              style={{
+                background:
+                  "radial-gradient(ellipse at center, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.6) 42%, rgba(255,255,255,0) 72%)",
+                filter: "blur(10px)",
+              }}
+            />
+            <div className="relative z-10">
+              <Reveal as="p" className="eyebrow mb-5 sm:mb-6">{t.how.eyebrow}</Reveal>
+              <Reveal delay={0.06}>
+                <h2>{t.how.title}</h2>
+              </Reveal>
+            </div>
           </div>
           <Reveal delay={0.1}>
             <HowStepsPath />
