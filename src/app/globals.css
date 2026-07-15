@@ -308,6 +308,17 @@ p {
 .feature-card:hover::after { opacity: 1; }
 .feature-card > * { position: relative; z-index: 2; }
 
+/* Card titles are smaller than page-level h3s (the cards get narrow at 3–4
+   columns) and long words wrap instead of being clipped by overflow:hidden —
+   e.g. the Uzbek "Ma'lumotlaringiz". */
+.feature-card h3 {
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+  line-height: 1.3;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
 .feature-icon {
   display: inline-flex;
   align-items: center;
